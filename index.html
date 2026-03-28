@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MediEase – Smart Appointments</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --sage: #8aab8a;
+    --sage-light: #c8ddc8;
+    --sage-pale: #eef5ee;
+    --sky: #a8c8e8;
+    --sky-pale: #eaf3fb;
+    --mist: #f4f7f4;
+    --stone: #5a6a5a;
+    --petal: #e8c4b8;
+    --petal-pale: #fdf0ec;
+    --text: #2d3d2d;
+    --text-soft: #6b7e6b;
+    --white: #ffffff;
+    --border: #dde8dd;
+    --shadow: 0 4px 24px rgba(90,106,90,0.10);
+    --shadow-lg: 0 8px 40px rgba(90,106,90,0.14);
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--mist); color:var(--text); min-height:100vh; }
+
+  /* NAV */
+  nav {
+    background:var(--white);
+    border-bottom:1px solid var(--border);
+    padding:0 40px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 12px rgba(90,106,90,0.06);
+  }
+  .logo { font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--sage); letter-spacing:-0.5px; }
+  .logo span { color:var(--stone); }
+  .nav-steps { display:flex; gap:6px; }
+  .nav-step {
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:0.78rem;
+    font-weight:500;
+    color:var(--text-soft);
+    cursor:pointer;
+    transition:all 0.2s;
+    border:1.5px solid transparent;
+  }
+  .nav-step.active { background:var(--sage-pale); color:var(--stone); border-color:var(--sage-light); }
+  .nav-step.done { color:var(--sage); }
+  .nav-step.done::before { content:'✓ '; }
+
+  /* SCREENS */
+  .screen { display:none; min-height:calc(100vh - 64px); padding:40px 20px; animation:fadeUp 0.4s ease; }
+  .screen.visible { display:block; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .container { max-width:780px; margin:0 auto; }
+  .screen-header { text-align:center; margin-bottom:36px; }
+  .screen-title { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--text); margin-bottom:8px; }
+  .screen-subtitle { color:var(--text-soft); font-size:0.95rem; font-weight:300; }
+
+  /* CARDS */
+  .card {
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:32px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+    border:1px solid var(--border);
+  }
+
+  /* FORM */
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .form-group { display:flex; flex-direction:column; gap:6px; }
+  .form-group.full { grid-column:1/-1; }
+  label { font-size:0.82rem; font-weight:500; color:var(--stone); }
+  input, select, textarea {
+    padding:12px 16px;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    font-family:'DM Sans',sans-serif;
+    font-size:0.92rem;
+    color:var(--text);
+    background:var(--white);
+    transition:border 0.2s, box-shadow 0.2s;
+    outline:none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color:var(--sage);
+    box-shadow:0 0 0 3px rgba(138,171,138,0.15);
+  }
+  textarea { resize:none; height:90px; }
+
+  /* BUTTONS */
+  .btn {
+    padding:13px 32px;
+    border-radius:12px;
+    border:none;
+    font-family:'DM Sans',sans-serif;
+    font-size:0.95rem;
+    font-weight:500;
+    cursor:pointer;
+    transition:all 0.2s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary {
+    background:var(--sage);
+    color:var(--white);
+  }
+  .btn-primary:hover { background:var(--stone); transform:translateY(-1px); box-shadow:var(--shadow); }
+  .btn-outline {
+    background:transparent;
+    color:var(--stone);
+    border:1.5px solid var(--border);
+  }
+  .btn-outline:hover { border-color:var(--sage); background:var(--sage-pale); }
+  .btn-block { width:100%; justify-content:center; margin-top:24px; }
+
+  /* HOSPITAL GRID */
+  .hospital-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .hospital-card {
+    border:2px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:18px;
+    cursor:pointer;
+    transition:all 0.2s;
+    background:var(--white);
+  }
+  .hospital-card:hover { border-color:var(--sage-light); background:var(--sage-pale); }
+  .hospital-card.selected { border-color:var(--sage); background:var(--sage-pale); }
+  .hospital-card .h-name { font-weight:600; font-size:0.95rem; margin-bottom:4px; }
+  .hospital-card .h-loc { font-size:0.8rem; color:var(--text-soft); }
+  .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; margin-top:6px; }
+
+  /* DOCTOR CARDS */
+  .doctor-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .doctor-card {
+    border:2px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:18px;
+    cursor:pointer;
+    transition:all 0.2s;
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+  }
+  .doctor-card:hover { border-color:var(--sage-light); background:var(--sage-pale); }
+  .doctor-card.selected { border-color:var(--sage); background:var(--sage-pale); }
+  .doc-avatar {
+    width:48px; height:48px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem;
+    flex-shrink:0;
+  }
+  .doc-name { font-weight:600; font-size:0.92rem; }
+  .doc-spec { font-size:0.78rem; color:var(--text-soft); }
+  .doc-avail { font-size:0.75rem; margin-top:4px; }
+  .avail-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; }
+  .avail-green .avail-dot { background:#5cb85c; }
+  .avail-yellow .avail-dot { background:#f0a500; }
+
+  /* TIME SLOTS */
+  .slots-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .slot {
+    padding:10px;
+    border:1.5px solid var(--border);
+    border-radius:8px;
+    text-align:center;
+    font-size:0.84rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    background:var(--white);
+  }
+  .slot:hover { border-color:var(--sage); background:var(--sage-pale); }
+  .slot.selected { border-color:var(--sage); background:var(--sage); color:var(--white); }
+  .slot.taken { background:#f0f0f0; color:#bbb; cursor:not-allowed; text-decoration:line-through; }
+
+  /* APPOINTMENTS */
+  .appt-card {
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:20px 24px;
+    margin-bottom:14px;
+    background:var(--white);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    transition:box-shadow 0.2s;
+  }
+  .appt-card:hover { box-shadow:var(--shadow); }
+  .appt-badge { padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+  .badge-confirmed { background:#e7f5e7; color:#3a7a3a; }
+  .badge-pending { background:#fff8e1; color:#b07800; }
+  .appt-doc { font-weight:600; font-size:0.97rem; }
+  .appt-meta { font-size:0.82rem; color:var(--text-soft); margin-top:3px; }
+  .map-link { font-size:0.8rem; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:4px; margin-top:6px; }
+  .map-link:hover { color:var(--stone); }
+
+  /* LIVE INDICATOR */
+  .live-pill {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.75rem;
+    background:#e7f5e7;
+    color:#3a7a3a;
+    padding:3px 10px;
+    border-radius:20px;
+    font-weight:500;
+  }
+  .live-dot { width:7px; height:7px; border-radius:50%; background:#5cb85c; animation:pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* PROGRESS BAR */
+  .progress-bar { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:32px; }
+  .prog-step { display:flex; align-items:center; gap:0; }
+  .prog-dot { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); background:var(--white); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; color:var(--text-soft); transition:all 0.3s; }
+  .prog-dot.active { border-color:var(--sage); background:var(--sage); color:var(--white); }
+  .prog-dot.done { border-color:var(--sage); background:var(--sage-pale); color:var(--sage); }
+  .prog-line { width:48px; height:2px; background:var(--border); transition:background 0.3s; }
+  .prog-line.done { background:var(--sage-light); }
+  .prog-label { font-size:0.7rem; text-align:center; margin-top:4px; color:var(--text-soft); }
+
+  /* HERO */
+  .hero-card {
+    background:linear-gradient(135deg, var(--sage-pale) 0%, var(--sky-pale) 100%);
+    border:1px solid var(--sage-light);
+    border-radius:var(--radius);
+    padding:40px;
+    text-align:center;
+    margin-bottom:32px;
+  }
+  .hero-icon { font-size:3rem; margin-bottom:12px; }
+  .hero-title { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--text); margin-bottom:10px; }
+  .hero-sub { color:var(--text-soft); font-size:1rem; font-weight:300; line-height:1.6; }
+
+  /* SUCCESS */
+  .success-card {
+    text-align:center;
+    padding:48px 32px;
+    background:linear-gradient(135deg, var(--sage-pale), var(--sky-pale));
+    border-radius:var(--radius);
+    border:1px solid var(--sage-light);
+  }
+  .success-icon { font-size:4rem; margin-bottom:16px; }
+  .success-title { font-family:'DM Serif Display',serif; font-size:1.8rem; margin-bottom:8px; color:var(--text); }
+  .success-sub { color:var(--text-soft); font-size:0.95rem; }
+
+  /* SECTION LABEL */
+  .section-label { font-size:0.8rem; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+
+  /* DIVIDER */
+  .divider { height:1px; background:var(--border); margin:24px 0; }
+
+  /* EMPTY STATE */
+  .empty { text-align:center; padding:48px 24px; color:var(--text-soft); }
+  .empty-icon { font-size:3rem; margin-bottom:12px; }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .form-grid, .hospital-grid, .doctor-grid { grid-template-columns:1fr; }
+    .slots-grid { grid-template-columns:repeat(3,1fr); }
+    nav { padding:0 16px; }
+    .screen { padding:24px 12px; }
+    .card { padding:20px; }
+    .nav-steps { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Medi<span>Ease</span></div>
+  <div class="nav-steps">
+    <div class="nav-step active" id="ns1" onclick="goToScreen(1)">1. Register</div>
+    <div class="nav-step" id="ns2" onclick="goToScreen(2)">2. Hospital</div>
+    <div class="nav-step" id="ns3" onclick="goToScreen(3)">3. Doctor</div>
+    <div class="nav-step" id="ns4" onclick="goToScreen(4)">4. Book Slot</div>
+    <div class="nav-step" id="ns5" onclick="goToScreen(5)">📋 My Appointments</div>
+  </div>
+</nav>
+
+<!-- SCREEN 1: REGISTER -->
+<div class="screen visible" id="screen1">
+  <div class="container">
+    <div class="hero-card">
+      <div class="hero-icon">🌿</div>
+      <div class="hero-title">Book Your Appointment</div>
+      <div class="hero-sub">Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Patient Registration</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" id="fname" placeholder="Arjun"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" id="lname" placeholder="Sharma"/>
+        </div>
+        <div class="form-group">
+          <label>Age *</label>
+          <input type="number" id="age" placeholder="28" min="1" max="120"/>
+        </div>
+        <div class="form-group">
+          <label>Gender *</label>
+          <select id="gender">
+            <option value="">Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="arjun@email.com"/>
+        </div>
+        <div class="form-group full">
+          <label>Blood Group</label>
+          <select id="blood">
+            <option value="">Select (optional)</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>O+</option><option>O-</option>
+            <option>AB+</option><option>AB-</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="registerPatient()">Continue to Select Hospital →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 2: HOSPITAL -->
+<div class="screen" id="screen2">
+  <div class="container">
+    <div class="screen-header">
+      <div class="screen-title">Choose a Hospital</div>
+      <div class="screen-subtitle">Select the hospital nearest to you or preferred by your doctor</div>
+    </div>
+    <div class="progress-bar" id="prog2"></div>
+    <div class="card">
+      <div class="section-label">Available Hospitals</div>
+      <div class="hospital-grid" id="hospitalGrid"></div>
+      <button class="btn btn-primary btn-block" onclick="selectHospital()">Continue to Select Doctor →</button>
+    </div>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(1)">← Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: PROBLEM + DOCTOR -->
+<div class="screen" id="screen3">
+  <div class="container">
+    <div class="screen-header">
+      <div class="screen-title">Describe & Select Doctor</div>
+      <div class="screen-subtitle">Tell us about your concern, then pick the right specialist</div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="section-label">Your Health Concern</div>
+      <div class="form-group">
+        <label>Describe your problem *</label>
+        <textarea id="problem" placeholder="e.g. I have had a persistent headache for 3 days, along with mild fever and fatigue..."></textarea>
+      </div>
+      <div class="form-group" style="margin-top:14px">
+        <label>Specialization Needed</label>
+        <select id="specFilter" onchange="filterDoctors()">
+          <option value="">All Specializations</option>
+          <option>General Physician</option>
+          <option>Cardiologist</option>
+          <option>Dermatologist</option>
+          <option>Orthopedic</option>
+          <option>Pediatrician</option>
+          <option>ENT Specialist</option>
+          <option>Neurologist</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">Available Doctors</div>
+      <div class="doctor-grid" id="doctorGrid"></div>
+      <button class="btn btn-primary btn-block" onclick="selectDoctor()">Continue to Book Slot →</button>
+    </div>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(2)">← Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: TIME SLOT -->
+<div class="screen" id="screen4">
+  <div class="container">
+    <div class="screen-header">
+      <div class="screen-title">Pick a Time Slot</div>
+      <div class="screen-subtitle">Select a date and your preferred time</div>
+    </div>
+    <div class="card" id="apptSummary" style="margin-bottom:16px; background:var(--sage-pale); border-color:var(--sage-light);">
+    </div>
+    <div class="card">
+      <div class="section-label">Select Date</div>
+      <div style="display:flex; gap:10px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px;" id="dateRow"></div>
+      <div class="divider"></div>
+      <div class="section-label">Morning Slots</div>
+      <div class="slots-grid" id="slotsAM"></div>
+      <div class="section-label" style="margin-top:20px">Afternoon Slots</div>
+      <div class="slots-grid" id="slotsPM"></div>
+      <button class="btn btn-primary btn-block" onclick="bookAppointment()">✅ Confirm Appointment</button>
+    </div>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(3)">← Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: SUCCESS + MY APPOINTMENTS -->
+<div class="screen" id="screen5">
+  <div class="container">
+    <div id="successBanner" style="display:none" class="success-card" style="margin-bottom:24px">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Appointment Confirmed!</div>
+      <div class="success-sub">Your appointment has been booked successfully.<br>We'll send a reminder before your visit.</div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; margin-top:16px">
+      <div style="font-family:'DM Serif Display',serif; font-size:1.6rem">My Appointments</div>
+      <button class="btn btn-outline" onclick="goToScreen(1)" style="font-size:0.82rem">+ New Appointment</button>
+    </div>
+
+    <div id="apptList"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const HOSPITALS = [
+  { id:1, name:"AIIMS Rishikesh",       loc:"Rishikesh, Uttarakhand", badge:"Government", lat:30.1158, lng:78.7933 },
+  { id:2, name:"Shivalik Hospital",      loc:"Haridwar, Uttarakhand",  badge:"Private",    lat:29.9457, lng:78.1642 },
+  { id:3, name:"Himalayan Institute",    loc:"Dehradun, Uttarakhand",  badge:"Multi-Specialty", lat:30.3165, lng:78.0322 },
+  { id:4, name:"Max Super Specialty",   loc:"Saharanpur, UP",         badge:"Private",    lat:29.9609, lng:77.5460 },
+  { id:5, name:"Kailash Hospital",       loc:"Roorkee, Uttarakhand",   badge:"Private",    lat:29.8543, lng:77.8880 },
+  { id:6, name:"Gangotri Medical",       loc:"Haridwar, Uttarakhand",  badge:"Clinic",     lat:29.9492, lng:78.1642 },
+  { id:7, name:"Drishti Eye Centre",     loc:"Rishikesh",              badge:"Eye Specialist", lat:30.0869, lng:78.2676 },
+  { id:8, name:"Life Care Hospital",     loc:"Muzaffarnagar, UP",      badge:"General",    lat:29.4727, lng:77.7085 },
+];
+
+const DOCTORS = [
+  { id:1, name:"Dr. Priya Sharma",   spec:"General Physician",  avail:"Available Now",   status:"green", emoji:"👩‍⚕️", bg:"#e8f5e9" },
+  { id:2, name:"Dr. Rohan Mehta",    spec:"Cardiologist",        avail:"Available in 30m", status:"yellow",emoji:"👨‍⚕️", bg:"#fff8e1" },
+  { id:3, name:"Dr. Anita Gupta",    spec:"Dermatologist",       avail:"Available Now",   status:"green", emoji:"👩‍⚕️", bg:"#e8f5e9" },
+  { id:4, name:"Dr. Suresh Verma",   spec:"Orthopedic",          avail:"Available Now",   status:"green", emoji:"👨‍⚕️", bg:"#e3f2fd" },
+  { id:5, name:"Dr. Kavita Nair",    spec:"Pediatrician",        avail:"Available in 1h",  status:"yellow",emoji:"👩‍⚕️", bg:"#fce4ec" },
+  { id:6, name:"Dr. Arun Tiwari",    spec:"ENT Specialist",      avail:"Available Now",   status:"green", emoji:"👨‍⚕️", bg:"#e8f5e9" },
+  { id:7, name:"Dr. Neha Singh",     spec:"Neurologist",         avail:"Available in 45m", status:"yellow",emoji:"👩‍⚕️", bg:"#f3e5f5" },
+  { id:8, name:"Dr. Vikram Das",     spec:"General Physician",   avail:"Available Now",   status:"green", emoji:"👨‍⚕️", bg:"#e8f5e9" },
+];
+
+const AM_SLOTS = ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM"];
+const PM_SLOTS = ["12:00 PM","12:30 PM","02:00 PM","02:30 PM","03:00 PM","04:00 PM","04:30 PM","05:00 PM"];
+const TAKEN = { "09:30 AM":true, "11:00 AM":true, "02:30 PM":true, "04:00 PM":true };
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {
+  patient: null,
+  hospital: null,
+  doctor: null,
+  problem: "",
+  date: null,
+  slot: null,
+  appointments: []
+};
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function goToScreen(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('visible'));
+  document.getElementById('screen'+n).classList.add('visible');
+  document.querySelectorAll('.nav-step').forEach((el,i) => {
+    el.classList.toggle('active', i+1===n);
+    el.classList.toggle('done', i+1<n);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── SCREEN 1 ──────────────────────────────────────────────────────────────────
+function registerPatient() {
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const age   = document.getElementById('age').value.trim();
+  const gender= document.getElementById('gender').value;
+  const phone = document.getElementById('phone').value.trim();
+  if (!fname||!lname||!age||!gender||!phone) { alert("Please fill all required fields."); return; }
+  state.patient = { fname, lname, age, gender, phone,
+    email: document.getElementById('email').value,
+    blood: document.getElementById('blood').value };
+  renderHospitals();
+  goToScreen(2);
+}
+
+// ── SCREEN 2 ──────────────────────────────────────────────────────────────────
+function renderHospitals() {
+  const grid = document.getElementById('hospitalGrid');
+  grid.innerHTML = HOSPITALS.map(h => `
+    <div class="hospital-card ${state.hospital?.id===h.id?'selected':''}" onclick="pickHospital(${h.id})">
+      <div class="h-name">🏥 ${h.name}</div>
+      <div class="h-loc">📍 ${h.loc}</div>
+      <div class="h-badge">${h.badge}</div>
+    </div>
+  `).join('');
+}
+
+function pickHospital(id) {
+  state.hospital = HOSPITALS.find(h=>h.id===id);
+  renderHospitals();
+}
+
+function selectHospital() {
+  if (!state.hospital) { alert("Please select a hospital."); return; }
+  renderDoctors();
+  goToScreen(3);
+}
+
+// ── SCREEN 3 ──────────────────────────────────────────────────────────────────
+function renderDoctors(filter="") {
+  const grid = document.getElementById('doctorGrid');
+  const docs = filter ? DOCTORS.filter(d=>d.spec===filter) : DOCTORS;
+  grid.innerHTML = docs.map(d => `
+    <div class="doctor-card ${state.doctor?.id===d.id?'selected':''}" onclick="pickDoctor(${d.id})">
+      <div class="doc-avatar" style="background:${d.bg}">${d.emoji}</div>
+      <div>
+        <div class="doc-name">${d.name}</div>
+        <div class="doc-spec">${d.spec}</div>
+        <div class="doc-avail avail-${d.status}">
+          <span class="avail-dot"></span>${d.avail}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterDoctors() {
+  renderDoctors(document.getElementById('specFilter').value);
+}
+
+function pickDoctor(id) {
+  state.doctor = DOCTORS.find(d=>d.id===id);
+  renderDoctors(document.getElementById('specFilter').value);
+}
+
+function selectDoctor() {
+  state.problem = document.getElementById('problem').value.trim();
+  if (!state.problem) { alert("Please describe your health concern."); return; }
+  if (!state.doctor) { alert("Please select a doctor."); return; }
+  renderSlotScreen();
+  goToScreen(4);
+}
+
+// ── SCREEN 4 ──────────────────────────────────────────────────────────────────
+function renderSlotScreen() {
+  // Summary
+  document.getElementById('apptSummary').innerHTML = `
+    <div style="display:flex; gap:24px; flex-wrap:wrap">
+      <div><div class="section-label">Patient</div><div style="font-weight:600">${state.patient.fname} ${state.patient.lname}</div></div>
+      <div><div class="section-label">Hospital</div><div style="font-weight:600">${state.hospital.name}</div></div>
+      <div><div class="section-label">Doctor</div><div style="font-weight:600">${state.doctor.name} — ${state.doctor.spec}</div></div>
+    </div>
+  `;
+
+  // Dates (next 7 days)
+  const dateRow = document.getElementById('dateRow');
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  dateRow.innerHTML = '';
+  for (let i=0;i<7;i++) {
+    const d = new Date(); d.setDate(d.getDate()+i);
+    const label = `${days[d.getDay()]}<br><strong>${d.getDate()} ${months[d.getMonth()]}</strong>`;
+    const iso = d.toISOString().split('T')[0];
+    const btn = document.createElement('div');
+    btn.innerHTML = label;
+    btn.style.cssText = `min-width:68px;padding:10px 8px;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.82rem;background:var(--white);transition:all 0.2s;flex-shrink:0`;
+    btn.onclick = () => {
+      state.date = iso;
+      dateRow.querySelectorAll('div').forEach(x=>{ x.style.borderColor='var(--border)'; x.style.background='var(--white)'; x.style.color='var(--text)'; });
+      btn.style.borderColor='var(--sage)'; btn.style.background='var(--sage)'; btn.style.color='#fff';
+    };
+    if (i===0) { btn.style.borderColor='var(--sage)'; btn.style.background='var(--sage)'; btn.style.color='#fff'; state.date = iso; }
+    dateRow.appendChild(btn);
+  }
+
+  // Slots
+  renderSlots('slotsAM', AM_SLOTS);
+  renderSlots('slotsPM', PM_SLOTS);
+}
+
+function renderSlots(gridId, slots) {
+  const g = document.getElementById(gridId);
+  g.innerHTML = slots.map(s => `
+    <div class="slot ${TAKEN[s]?'taken':''} ${state.slot===s?'selected':''}"
+      onclick="${TAKEN[s]?'':` pickSlot('${s}')`}">
+      ${s}${TAKEN[s]?' 🚫':''}
+    </div>
+  `).join('');
+}
+
+function pickSlot(s) {
+  state.slot = s;
+  renderSlots('slotsAM', AM_SLOTS);
+  renderSlots('slotsPM', PM_SLOTS);
+}
+
+function bookAppointment() {
+  if (!state.slot) { alert("Please select a time slot."); return; }
+  // Save
+  state.appointments.unshift({
+    id: Date.now(),
+    patient: {...state.patient},
+    hospital: {...state.hospital},
+    doctor: {...state.doctor},
+    problem: state.problem,
+    date: state.date,
+    slot: state.slot,
+    status: "Confirmed",
+    booked: new Date().toLocaleDateString('en-IN')
+  });
+  renderAppointments(true);
+  goToScreen(5);
+  // Reset slot
+  state.slot = null;
+}
+
+// ── SCREEN 5 ──────────────────────────────────────────────────────────────────
+function renderAppointments(justBooked=false) {
+  const banner = document.getElementById('successBanner');
+  banner.style.display = justBooked ? 'block' : 'none';
+
+  const list = document.getElementById('apptList');
+  if (!state.appointments.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><div>No appointments yet.<br>Book your first appointment above.</div></div>`;
+    return;
+  }
+  list.innerHTML = state.appointments.map(a => {
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.hospital.name+', '+a.hospital.loc)}`;
+    return `
+      <div class="appt-card">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span class="appt-badge badge-confirmed">${a.status}</span>
+            <span class="live-pill"><span class="live-dot"></span>Live Tracking</span>
+          </div>
+          <div class="appt-doc">${a.doctor.emoji} ${a.doctor.name}</div>
+          <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${a.hospital.loc}</div>
+          <div class="appt-meta">📅 ${a.date} · ⏰ ${a.slot}</div>
+          <div class="appt-meta" style="margin-top:4px">🩺 ${a.doctor.spec}</div>
+          <a class="map-link" href="${mapUrl}" target="_blank">🗺️ Get Directions</a>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">Doctor Availability</div>
+          <div class="doc-avail avail-${a.doctor.status}" style="font-size:0.82rem;white-space:nowrap">
+            <span class="avail-dot"></span>${a.doctor.avail}
+          </div>
+          <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">Booked on</div>
+          <div style="font-size:0.82rem;font-weight:500">${a.booked}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+</script>
+</body>
+</html>

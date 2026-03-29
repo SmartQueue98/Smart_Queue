@@ -28,7 +28,6 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'DM Sans',sans-serif; background:var(--mist); color:var(--text); min-height:100vh; }
 
-  /* NAV */
   nav {
     background:var(--white);
     border-bottom:1px solid var(--border);
@@ -59,7 +58,6 @@
   .nav-step.done { color:var(--sage); }
   .nav-step.done::before { content:'✓ '; }
 
-  /* SCREENS */
   .screen { display:none; min-height:calc(100vh - 64px); padding:40px 20px; animation:fadeUp 0.4s ease; }
   .screen.visible { display:block; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -69,7 +67,6 @@
   .screen-title { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--text); margin-bottom:8px; }
   .screen-subtitle { color:var(--text-soft); font-size:0.95rem; font-weight:300; }
 
-  /* CARDS */
   .card {
     background:var(--white);
     border-radius:var(--radius);
@@ -79,7 +76,6 @@
     border:1px solid var(--border);
   }
 
-  /* FORM */
   .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .form-group { display:flex; flex-direction:column; gap:6px; }
   .form-group.full { grid-column:1/-1; }
@@ -101,7 +97,6 @@
   }
   textarea { resize:none; height:90px; }
 
-  /* BUTTONS */
   .btn {
     padding:13px 32px;
     border-radius:12px;
@@ -115,20 +110,12 @@
     align-items:center;
     gap:8px;
   }
-  .btn-primary {
-    background:var(--sage);
-    color:var(--white);
-  }
+  .btn-primary { background:var(--sage); color:var(--white); }
   .btn-primary:hover { background:var(--stone); transform:translateY(-1px); box-shadow:var(--shadow); }
-  .btn-outline {
-    background:transparent;
-    color:var(--stone);
-    border:1.5px solid var(--border);
-  }
+  .btn-outline { background:transparent; color:var(--stone); border:1.5px solid var(--border); }
   .btn-outline:hover { border-color:var(--sage); background:var(--sage-pale); }
   .btn-block { width:100%; justify-content:center; margin-top:24px; }
 
-  /* HOSPITAL GRID */
   .hospital-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .hospital-card {
     border:2px solid var(--border);
@@ -144,7 +131,6 @@
   .hospital-card .h-loc { font-size:0.8rem; color:var(--text-soft); }
   .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; margin-top:6px; }
 
-  /* DOCTOR CARDS */
   .doctor-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .doctor-card {
     border:2px solid var(--border);
@@ -172,7 +158,6 @@
   .avail-green .avail-dot { background:#5cb85c; }
   .avail-yellow .avail-dot { background:#f0a500; }
 
-  /* TIME SLOTS */
   .slots-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
   .slot {
     padding:10px;
@@ -188,7 +173,6 @@
   .slot.selected { border-color:var(--sage); background:var(--sage); color:var(--white); }
   .slot.taken { background:#f0f0f0; color:#bbb; cursor:not-allowed; text-decoration:line-through; }
 
-  /* APPOINTMENTS */
   .appt-card {
     border:1px solid var(--border);
     border-radius:var(--radius-sm);
@@ -210,7 +194,6 @@
   .map-link { font-size:0.8rem; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:4px; margin-top:6px; }
   .map-link:hover { color:var(--stone); }
 
-  /* LIVE INDICATOR */
   .live-pill {
     display:inline-flex;
     align-items:center;
@@ -225,7 +208,6 @@
   .live-dot { width:7px; height:7px; border-radius:50%; background:#5cb85c; animation:pulse 1.4s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  /* PROGRESS BAR */
   .progress-bar { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:32px; }
   .prog-step { display:flex; align-items:center; gap:0; }
   .prog-dot { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); background:var(--white); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; color:var(--text-soft); transition:all 0.3s; }
@@ -235,7 +217,6 @@
   .prog-line.done { background:var(--sage-light); }
   .prog-label { font-size:0.7rem; text-align:center; margin-top:4px; color:var(--text-soft); }
 
-  /* HERO */
   .hero-card {
     background:linear-gradient(135deg, var(--sage-pale) 0%, var(--sky-pale) 100%);
     border:1px solid var(--sage-light);
@@ -248,7 +229,6 @@
   .hero-title { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--text); margin-bottom:10px; }
   .hero-sub { color:var(--text-soft); font-size:1rem; font-weight:300; line-height:1.6; }
 
-  /* SUCCESS */
   .success-card {
     text-align:center;
     padding:48px 32px;
@@ -260,17 +240,12 @@
   .success-title { font-family:'DM Serif Display',serif; font-size:1.8rem; margin-bottom:8px; color:var(--text); }
   .success-sub { color:var(--text-soft); font-size:0.95rem; }
 
-  /* SECTION LABEL */
   .section-label { font-size:0.8rem; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
-
-  /* DIVIDER */
   .divider { height:1px; background:var(--border); margin:24px 0; }
 
-  /* EMPTY STATE */
   .empty { text-align:center; padding:48px 24px; color:var(--text-soft); }
   .empty-icon { font-size:3rem; margin-bottom:12px; }
 
-  /* RESPONSIVE */
   @media(max-width:600px) {
     .form-grid, .hospital-grid, .doctor-grid { grid-template-columns:1fr; }
     .slots-grid { grid-template-columns:repeat(3,1fr); }
@@ -302,7 +277,6 @@
       <div class="hero-title">Book Your Appointment</div>
       <div class="hero-sub">Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.</div>
     </div>
-
     <div class="card">
       <div class="section-label">Patient Registration</div>
       <div class="form-grid">
@@ -412,8 +386,7 @@
       <div class="screen-title">Pick a Time Slot</div>
       <div class="screen-subtitle">Select a date and your preferred time</div>
     </div>
-    <div class="card" id="apptSummary" style="margin-bottom:16px; background:var(--sage-pale); border-color:var(--sage-light);">
-    </div>
+    <div class="card" id="apptSummary" style="margin-bottom:16px; background:var(--sage-pale); border-color:var(--sage-light);"></div>
     <div class="card">
       <div class="section-label">Select Date</div>
       <div style="display:flex; gap:10px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px;" id="dateRow"></div>
@@ -436,38 +409,57 @@
       <div class="success-title">Appointment Confirmed!</div>
       <div class="success-sub">Your appointment has been booked successfully.<br>We'll send a reminder before your visit.</div>
     </div>
-
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; margin-top:16px">
       <div style="font-family:'DM Serif Display',serif; font-size:1.6rem">My Appointments</div>
       <button class="btn btn-outline" onclick="goToScreen(1)" style="font-size:0.82rem">+ New Appointment</button>
     </div>
-
     <div id="apptList"></div>
   </div>
 </div>
 
 <script>
+// ══════════════════════════════════════════════════════════════
+//  AUTOMATION CONFIG
+//  Replace the URL below with your Google Apps Script Web App URL
+//  after you deploy it from script.google.com
+// ══════════════════════════════════════════════════════════════
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+
+async function sendAppointmentData(appt) {
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(appt)
+    });
+    console.log("✅ Appointment sent to automation.");
+  } catch (err) {
+    console.error("❌ Automation error:", err);
+  }
+}
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
 const HOSPITALS = [
-  { id:1, name:"AIIMS Rishikesh",       loc:"Rishikesh, Uttarakhand", badge:"Government", lat:30.1158, lng:78.7933 },
-  { id:2, name:"Shivalik Hospital",      loc:"Haridwar, Uttarakhand",  badge:"Private",    lat:29.9457, lng:78.1642 },
+  { id:1, name:"AIIMS Rishikesh",       loc:"Rishikesh, Uttarakhand", badge:"Government",      lat:30.1158, lng:78.7933 },
+  { id:2, name:"Shivalik Hospital",      loc:"Haridwar, Uttarakhand",  badge:"Private",         lat:29.9457, lng:78.1642 },
   { id:3, name:"Himalayan Institute",    loc:"Dehradun, Uttarakhand",  badge:"Multi-Specialty", lat:30.3165, lng:78.0322 },
-  { id:4, name:"Max Super Specialty",   loc:"Saharanpur, UP",         badge:"Private",    lat:29.9609, lng:77.5460 },
-  { id:5, name:"Kailash Hospital",       loc:"Roorkee, Uttarakhand",   badge:"Private",    lat:29.8543, lng:77.8880 },
-  { id:6, name:"Gangotri Medical",       loc:"Haridwar, Uttarakhand",  badge:"Clinic",     lat:29.9492, lng:78.1642 },
-  { id:7, name:"Drishti Eye Centre",     loc:"Rishikesh",              badge:"Eye Specialist", lat:30.0869, lng:78.2676 },
-  { id:8, name:"Life Care Hospital",     loc:"Muzaffarnagar, UP",      badge:"General",    lat:29.4727, lng:77.7085 },
+  { id:4, name:"Max Super Specialty",   loc:"Saharanpur, UP",         badge:"Private",         lat:29.9609, lng:77.5460 },
+  { id:5, name:"Kailash Hospital",       loc:"Roorkee, Uttarakhand",   badge:"Private",         lat:29.8543, lng:77.8880 },
+  { id:6, name:"Gangotri Medical",       loc:"Haridwar, Uttarakhand",  badge:"Clinic",          lat:29.9492, lng:78.1642 },
+  { id:7, name:"Drishti Eye Centre",     loc:"Rishikesh",              badge:"Eye Specialist",  lat:30.0869, lng:78.2676 },
+  { id:8, name:"Life Care Hospital",     loc:"Muzaffarnagar, UP",      badge:"General",         lat:29.4727, lng:77.7085 },
 ];
 
 const DOCTORS = [
-  { id:1, name:"Dr. Priya Sharma",   spec:"General Physician",  avail:"Available Now",   status:"green", emoji:"👩‍⚕️", bg:"#e8f5e9" },
-  { id:2, name:"Dr. Rohan Mehta",    spec:"Cardiologist",        avail:"Available in 30m", status:"yellow",emoji:"👨‍⚕️", bg:"#fff8e1" },
-  { id:3, name:"Dr. Anita Gupta",    spec:"Dermatologist",       avail:"Available Now",   status:"green", emoji:"👩‍⚕️", bg:"#e8f5e9" },
-  { id:4, name:"Dr. Suresh Verma",   spec:"Orthopedic",          avail:"Available Now",   status:"green", emoji:"👨‍⚕️", bg:"#e3f2fd" },
-  { id:5, name:"Dr. Kavita Nair",    spec:"Pediatrician",        avail:"Available in 1h",  status:"yellow",emoji:"👩‍⚕️", bg:"#fce4ec" },
-  { id:6, name:"Dr. Arun Tiwari",    spec:"ENT Specialist",      avail:"Available Now",   status:"green", emoji:"👨‍⚕️", bg:"#e8f5e9" },
-  { id:7, name:"Dr. Neha Singh",     spec:"Neurologist",         avail:"Available in 45m", status:"yellow",emoji:"👩‍⚕️", bg:"#f3e5f5" },
-  { id:8, name:"Dr. Vikram Das",     spec:"General Physician",   avail:"Available Now",   status:"green", emoji:"👨‍⚕️", bg:"#e8f5e9" },
+  { id:1, name:"Dr. Priya Sharma",  spec:"General Physician",  avail:"Available Now",    status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9" },
+  { id:2, name:"Dr. Rohan Mehta",   spec:"Cardiologist",        avail:"Available in 30m", status:"yellow", emoji:"👨‍⚕️", bg:"#fff8e1" },
+  { id:3, name:"Dr. Anita Gupta",   spec:"Dermatologist",       avail:"Available Now",    status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9" },
+  { id:4, name:"Dr. Suresh Verma",  spec:"Orthopedic",          avail:"Available Now",    status:"green",  emoji:"👨‍⚕️", bg:"#e3f2fd" },
+  { id:5, name:"Dr. Kavita Nair",   spec:"Pediatrician",        avail:"Available in 1h",  status:"yellow", emoji:"👩‍⚕️", bg:"#fce4ec" },
+  { id:6, name:"Dr. Arun Tiwari",   spec:"ENT Specialist",      avail:"Available Now",    status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9" },
+  { id:7, name:"Dr. Neha Singh",    spec:"Neurologist",         avail:"Available in 45m", status:"yellow", emoji:"👩‍⚕️", bg:"#f3e5f5" },
+  { id:8, name:"Dr. Vikram Das",    spec:"General Physician",   avail:"Available Now",    status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9" },
 ];
 
 const AM_SLOTS = ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM"];
@@ -564,14 +556,13 @@ function pickDoctor(id) {
 function selectDoctor() {
   state.problem = document.getElementById('problem').value.trim();
   if (!state.problem) { alert("Please describe your health concern."); return; }
-  if (!state.doctor) { alert("Please select a doctor."); return; }
+  if (!state.doctor)  { alert("Please select a doctor."); return; }
   renderSlotScreen();
   goToScreen(4);
 }
 
 // ── SCREEN 4 ──────────────────────────────────────────────────────────────────
 function renderSlotScreen() {
-  // Summary
   document.getElementById('apptSummary').innerHTML = `
     <div style="display:flex; gap:24px; flex-wrap:wrap">
       <div><div class="section-label">Patient</div><div style="font-weight:600">${state.patient.fname} ${state.patient.lname}</div></div>
@@ -580,9 +571,8 @@ function renderSlotScreen() {
     </div>
   `;
 
-  // Dates (next 7 days)
   const dateRow = document.getElementById('dateRow');
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const days   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   dateRow.innerHTML = '';
   for (let i=0;i<7;i++) {
@@ -601,7 +591,6 @@ function renderSlotScreen() {
     dateRow.appendChild(btn);
   }
 
-  // Slots
   renderSlots('slotsAM', AM_SLOTS);
   renderSlots('slotsPM', PM_SLOTS);
 }
@@ -624,21 +613,40 @@ function pickSlot(s) {
 
 function bookAppointment() {
   if (!state.slot) { alert("Please select a time slot."); return; }
-  // Save
+
   state.appointments.unshift({
     id: Date.now(),
-    patient: {...state.patient},
+    patient:  {...state.patient},
     hospital: {...state.hospital},
-    doctor: {...state.doctor},
-    problem: state.problem,
-    date: state.date,
-    slot: state.slot,
-    status: "Confirmed",
-    booked: new Date().toLocaleDateString('en-IN')
+    doctor:   {...state.doctor},
+    problem:  state.problem,
+    date:     state.date,
+    slot:     state.slot,
+    status:   "Confirmed",
+    booked:   new Date().toLocaleDateString('en-IN')
   });
+
+  // ── AUTOMATION: fires email + Excel to you and the doctor ──
+  sendAppointmentData({
+    bookingId      : "MED-" + Date.now().toString().slice(-6),
+    firstName      : state.patient.fname,
+    lastName       : state.patient.lname,
+    age            : state.patient.age,
+    gender         : state.patient.gender,
+    phone          : state.patient.phone,
+    email          : state.patient.email   || "",
+    bloodGroup     : state.patient.blood   || "",
+    hospital       : state.hospital.name,
+    doctor         : state.doctor.name,
+    specialization : state.doctor.spec,
+    concern        : state.problem,
+    date           : state.date,
+    timeSlot       : state.slot
+  });
+  // ──────────────────────────────────────────────────────────
+
   renderAppointments(true);
   goToScreen(5);
-  // Reset slot
   state.slot = null;
 }
 
@@ -680,6 +688,5 @@ function renderAppointments(justBooked=false) {
   }).join('');
 }
 </script>
-  <script src="mediease_automation_hook.js"></script> 
 </body>
 </html>

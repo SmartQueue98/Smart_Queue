@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MediEase – Smart Appointments</title>
+<title>Smart Queue – Smart Appointments</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -511,7 +511,7 @@
 <body>
 
 <nav>
-  <div class="logo">Medi<span>Ease</span></div>
+  <div class="logo">Smart<span>Queue</span></div>
   <div class="nav-steps">
     <div class="nav-step active" id="ns1" onclick="goToScreen(1)">1. Register</div>
     <div class="nav-step" id="ns2" onclick="goToScreen(2)">2. Hospital</div>
@@ -644,7 +644,7 @@
 </div>
 
 <!-- CHAT BUTTON -->
-<button id="medi-chat-btn" title="Chat with MediEase AI">
+<button id="medi-chat-btn" title="Chat with Smart Queue AI">
   <span class="chat-pulse"></span>
   <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
 </button>
@@ -654,7 +654,7 @@
   <div class="chat-header">
     <div class="chat-header-avatar">🩺</div>
     <div class="chat-header-info">
-      <h3>MediEase Assistant</h3>
+      <h3>Smart Queue Assistant</h3>
       <p><span class="chat-status-dot"></span> AI · Always available</p>
     </div>
     <button class="chat-close-btn" id="medi-chat-close">✕</button>
@@ -866,7 +866,7 @@ function bookAppointment(){
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"text/plain"},
     body: JSON.stringify({
-      bookingId:"MED-"+Date.now().toString().slice(-6),
+      bookingId:"SQ-"+Date.now().toString().slice(-6),
       firstName:state.patient.fname, lastName:state.patient.lname,
       age:state.patient.age, gender:state.patient.gender,
       phone:state.patient.phone, email:state.patient.email||"",
@@ -916,11 +916,9 @@ function renderAppointments(justBooked=false){
 
 // ══════════════════════════════════════════════════════════════
 //  AI CHAT WIDGET
-//  KEY FIX: uses fetch with mode:'cors' + content-type text/plain
-//  Google Apps Script accepts this without CORS errors
 // ══════════════════════════════════════════════════════════════
 (function(){
-  const SYSTEM = `You are MediEase Assistant — a warm, knowledgeable AI for the MediEase Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India.
+  const SYSTEM = `You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India.
 
 You help users with:
 - Booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot)
@@ -957,7 +955,7 @@ Be concise, warm and helpful. Respond in the same language the user writes in (H
   closeBtn.addEventListener('click',()=>{ isOpen=false; panel.classList.remove('open'); });
 
   function greet(){
-    addMsg('bot','Hi there! 👋 I\'m the MediEase AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer questions about our hospitals.\n\nWhat can I help you with today?');
+    addMsg('bot','Hi there! 👋 I\'m the Smart Queue AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer questions about our hospitals.\n\nWhat can I help you with today?');
     showQR(QUICK_INIT);
   }
 
@@ -1005,11 +1003,6 @@ Be concise, warm and helpful. Respond in the same language the user writes in (H
     showTyping();
 
     try{
-      // ── THE FIX: use text/plain content-type ──
-      // Google Apps Script allows text/plain in no-cors,
-      // but for reading the reply we need a proper fetch.
-      // Solution: send as text/plain with mode cors.
-      // Apps Script doPost reads e.postData.contents regardless of content-type.
       const res = await fetch(BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },

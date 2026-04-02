@@ -255,10 +255,7 @@
     .nav-steps { display:none; }
   }
 
-  /* ═══════════════════════════════════════════════
-     AI CHAT WIDGET — fully integrated with MediEase
-  ═══════════════════════════════════════════════ */
-
+  /* ═══ AI CHAT WIDGET ═══ */
   #medi-chat-btn {
     position:fixed; bottom:28px; right:28px; z-index:9999;
     width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
@@ -275,8 +272,6 @@
     pointer-events:none;
   }
   @keyframes chatPulse { 0%{transform:scale(1);opacity:.9} 100%{transform:scale(1.85);opacity:0} }
-
-  /* Tooltip */
   #medi-chat-btn::after {
     content:'Ask AI';
     position:absolute; right:68px; top:50%; transform:translateY(-50%);
@@ -296,14 +291,11 @@
     transform:scale(.88) translateY(28px); opacity:0; pointer-events:none;
     transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease;
   }
-  #medi-chat-panel.open {
-    transform:scale(1) translateY(0); opacity:1; pointer-events:all;
-  }
+  #medi-chat-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
 
   .chat-header {
     background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%);
-    padding:15px 18px; display:flex; align-items:center; gap:12px;
-    flex-shrink:0;
+    padding:15px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0;
   }
   .chat-header-avatar {
     width:38px; height:38px; border-radius:50%;
@@ -328,31 +320,21 @@
 
   .chat-messages {
     flex:1; overflow-y:auto; padding:14px 14px 8px; display:flex;
-    flex-direction:column; gap:10px; max-height:370px;
-    scroll-behavior:smooth;
+    flex-direction:column; gap:10px; max-height:370px; scroll-behavior:smooth;
   }
   .chat-messages::-webkit-scrollbar { width:3px; }
-  .chat-messages::-webkit-scrollbar-track { background:transparent; }
   .chat-messages::-webkit-scrollbar-thumb { background:var(--sage-light); border-radius:4px; }
 
   .cmsg { max-width:84%; animation:msgSlide .2s ease; }
   @keyframes msgSlide { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:none} }
   .cmsg.bot  { align-self:flex-start; }
   .cmsg.user { align-self:flex-end; }
-
   .cmsg .bubble {
     padding:9px 13px; border-radius:16px; font-size:.83rem;
     line-height:1.55; word-wrap:break-word; font-family:'DM Sans',sans-serif;
   }
-  .cmsg.bot  .bubble {
-    background:var(--sage-pale); color:var(--text);
-    border-radius:4px 16px 16px 16px;
-    border:1px solid var(--border);
-  }
-  .cmsg.user .bubble {
-    background:linear-gradient(135deg, var(--sage), var(--stone));
-    color:#fff; border-radius:16px 4px 16px 16px;
-  }
+  .cmsg.bot  .bubble { background:var(--sage-pale); color:var(--text); border-radius:4px 16px 16px 16px; border:1px solid var(--border); }
+  .cmsg.user .bubble { background:linear-gradient(135deg, var(--sage), var(--stone)); color:#fff; border-radius:16px 4px 16px 16px; }
   .cmsg .ctime { font-size:.66rem; color:#aaa; margin-top:3px; padding:0 3px; }
   .cmsg.user .ctime { text-align:right; }
 
@@ -370,10 +352,7 @@
   .typing-bubble span:nth-child(3) { animation-delay:.32s; }
   @keyframes typingDot { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
 
-  .chat-quick-replies {
-    display:flex; flex-wrap:wrap; gap:6px; padding:6px 14px 2px;
-    flex-shrink:0;
-  }
+  .chat-quick-replies { display:flex; flex-wrap:wrap; gap:6px; padding:6px 14px 2px; flex-shrink:0; }
   .cqr-btn {
     background:var(--sage-pale); border:1px solid var(--sage-light);
     color:var(--stone); border-radius:20px; padding:5px 11px;
@@ -390,8 +369,7 @@
     flex:1; border:1.5px solid var(--border); border-radius:10px;
     padding:9px 12px; font-size:.83rem; resize:none; outline:none;
     max-height:76px; font-family:'DM Sans',sans-serif; color:var(--text);
-    background:var(--mist); transition:border-color .2s;
-    line-height:1.4;
+    background:var(--mist); transition:border-color .2s; line-height:1.4;
   }
   #medi-chat-input:focus { border-color:var(--sage); background:var(--white); }
   #medi-chat-input::placeholder { color:var(--text-soft); }
@@ -405,11 +383,128 @@
   #medi-chat-send:disabled { opacity:.45; cursor:not-allowed; transform:none; }
   #medi-chat-send svg { width:17px; height:17px; fill:#fff; }
 
-
-
   @media(max-width:420px) {
     #medi-chat-panel { width:calc(100vw - 16px); right:8px; bottom:88px; }
     #medi-chat-btn   { right:16px; bottom:20px; }
+  }
+
+  /* ═══ VOICE WIDGET ═══ */
+  #sq-voice-btn {
+    position:fixed; bottom:100px; right:28px; z-index:9997;
+    width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
+    background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%);
+    box-shadow:0 5px 20px rgba(45,110,168,0.40);
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .2s, box-shadow .2s;
+  }
+  #sq-voice-btn:hover { transform:scale(1.1); box-shadow:0 7px 26px rgba(45,110,168,.55); }
+  #sq-voice-btn svg { width:22px; height:22px; fill:#fff; }
+  #sq-voice-btn::after {
+    content:'Voice AI';
+    position:absolute; right:62px; top:50%; transform:translateY(-50%);
+    background:#2d6ea8; color:#fff; font-family:'DM Sans',sans-serif;
+    font-size:0.73rem; font-weight:500; padding:4px 10px; border-radius:8px;
+    white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  #sq-voice-btn:hover::after { opacity:1; }
+
+  #sq-voice-panel {
+    position:fixed; bottom:166px; right:28px; z-index:9996;
+    width:340px; background:#fff; border-radius:20px;
+    box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4;
+    display:flex; flex-direction:column; overflow:hidden;
+    transform:scale(.88) translateY(28px); opacity:0; pointer-events:none;
+    transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease;
+  }
+  #sq-voice-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
+
+  .vp-header {
+    background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%);
+    padding:14px 18px; display:flex; align-items:center; gap:11px; flex-shrink:0;
+  }
+  .vp-header-avatar {
+    width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2);
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
+  }
+  .vp-header-info h3 { color:#fff; font-size:.88rem; font-weight:600; font-family:'DM Sans',sans-serif; }
+  .vp-header-info p  { color:rgba(255,255,255,.75); font-size:.7rem; margin-top:1px; display:flex; align-items:center; gap:4px; font-family:'DM Sans',sans-serif; }
+  .vp-status-dot { width:6px; height:6px; border-radius:50%; background:#90f0c0; display:inline-block; animation:vpBlink 1.8s ease infinite; }
+  @keyframes vpBlink { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .vp-close {
+    margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer;
+    width:27px; height:27px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; color:#fff; font-size:.9rem; transition:background .2s;
+  }
+  .vp-close:hover { background:rgba(255,255,255,.32); }
+
+  .vp-orb-wrap { display:flex; flex-direction:column; align-items:center; padding:22px 20px 14px; gap:10px; }
+  .vp-orb {
+    width:80px; height:80px; border-radius:50%; position:relative;
+    background:linear-gradient(135deg, #eaf3fb 0%, #d0e8f8 100%);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:transform .15s;
+    box-shadow:0 4px 18px rgba(45,110,168,.18); border:2px solid #c0d8f0;
+  }
+  .vp-orb:hover { transform:scale(1.05); }
+  .vp-orb svg { width:32px; height:32px; fill:#2d6ea8; transition:all .2s; z-index:2; position:relative; }
+  .vp-orb .ring { position:absolute; border-radius:50%; border:2px solid rgba(45,110,168,.25); animation:none; pointer-events:none; }
+  .vp-orb.listening { background:linear-gradient(135deg, #d0e8f8, #b0d4f0); border-color:#5a9fd4; }
+  .vp-orb.listening svg { fill:#1a5a9a; }
+  .vp-orb.listening .ring:nth-child(1) { width:100px; height:100px; top:-12px; left:-12px; animation:vpRing 1.4s ease-out infinite; }
+  .vp-orb.listening .ring:nth-child(2) { width:120px; height:120px; top:-22px; left:-22px; animation:vpRing 1.4s ease-out .35s infinite; }
+  .vp-orb.listening .ring:nth-child(3) { width:140px; height:140px; top:-32px; left:-32px; animation:vpRing 1.4s ease-out .7s infinite; }
+  @keyframes vpRing { 0%{transform:scale(.8);opacity:.7} 100%{transform:scale(1);opacity:0} }
+  .vp-orb.speaking { background:linear-gradient(135deg, #e8f8ee, #c8eedc); border-color:#5ab88a; }
+  .vp-orb.speaking svg { fill:#2d8a5a; }
+  .vp-bars { display:flex; align-items:center; gap:3px; height:28px; position:absolute; bottom:14px; pointer-events:none; }
+  .vp-bars span { width:3px; background:#5ab88a; border-radius:3px; animation:none; display:block; }
+  .vp-orb.speaking .vp-bars span:nth-child(1) { animation:vpBar 0.7s ease-in-out infinite; height:8px; }
+  .vp-orb.speaking .vp-bars span:nth-child(2) { animation:vpBar 0.7s ease-in-out .15s infinite; height:16px; }
+  .vp-orb.speaking .vp-bars span:nth-child(3) { animation:vpBar 0.7s ease-in-out .05s infinite; height:22px; }
+  .vp-orb.speaking .vp-bars span:nth-child(4) { animation:vpBar 0.7s ease-in-out .25s infinite; height:14px; }
+  .vp-orb.speaking .vp-bars span:nth-child(5) { animation:vpBar 0.7s ease-in-out .1s infinite; height:8px; }
+  @keyframes vpBar { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
+  .vp-orb-label { font-size:.78rem; font-weight:500; color:#2d6ea8; font-family:'DM Sans',sans-serif; letter-spacing:.2px; min-height:18px; transition:color .2s; }
+
+  .vp-transcript {
+    margin:0 16px 10px; padding:10px 13px;
+    background:#f4f8fd; border:1px solid #d0e4f4; border-radius:12px;
+    font-size:.8rem; color:#2d3d4d; font-family:'DM Sans',sans-serif;
+    min-height:52px; max-height:120px; overflow-y:auto; line-height:1.55; scroll-behavior:smooth;
+  }
+  .vp-transcript::-webkit-scrollbar { width:3px; }
+  .vp-transcript::-webkit-scrollbar-thumb { background:#b0cce0; border-radius:3px; }
+  .vp-transcript .heard { color:#5a6a7a; font-style:italic; margin-bottom:4px; font-size:.76rem; }
+  .vp-transcript .heard::before { content:'🎤 '; }
+  .vp-transcript .reply { color:#1a3a5a; }
+  .vp-transcript .reply::before { content:'🤖 '; }
+
+  .vp-chips { display:flex; flex-wrap:wrap; gap:5px; padding:0 16px 12px; }
+  .vp-chip {
+    background:#eaf3fb; border:1px solid #c0d8f0; color:#2d6ea8;
+    border-radius:20px; padding:4px 10px; font-size:.72rem; cursor:pointer;
+    font-family:'DM Sans',sans-serif; font-weight:500;
+    transition:background .15s, transform .1s; white-space:nowrap;
+  }
+  .vp-chip:hover { background:#c8e0f4; transform:translateY(-1px); }
+
+  .vp-controls { display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 16px 14px; border-top:1px solid #e8f0f8; }
+  .vp-ctrl-btn {
+    border:none; cursor:pointer; border-radius:10px; padding:8px 16px;
+    font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:500;
+    display:flex; align-items:center; gap:5px; transition:all .15s;
+  }
+  .vp-ctrl-btn.primary { background:linear-gradient(135deg,#5a9fd4,#2d6ea8); color:#fff; }
+  .vp-ctrl-btn.primary:hover { opacity:.88; transform:translateY(-1px); }
+  .vp-ctrl-btn.danger  { background:#fde8e8; color:#c0392b; }
+  .vp-ctrl-btn.danger:hover  { background:#fbd0d0; }
+  .vp-ctrl-btn.muted   { background:#f0f4f8; color:#5a7a8a; }
+  .vp-ctrl-btn.muted:hover   { background:#e0e8f0; }
+  .vp-ctrl-btn:disabled { opacity:.45; cursor:not-allowed; transform:none !important; }
+
+  @media(max-width:420px) {
+    #sq-voice-panel { width:calc(100vw - 16px); right:8px; }
+    #sq-voice-btn   { right:16px; }
   }
 </style>
 </head>
@@ -426,7 +521,7 @@
   </div>
 </nav>
 
-<!-- SCREEN 1: REGISTER -->
+<!-- SCREEN 1 -->
 <div class="screen visible" id="screen1">
   <div class="container">
     <div class="hero-card">
@@ -437,44 +532,24 @@
     <div class="card">
       <div class="section-label">Patient Registration</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>First Name *</label>
-          <input type="text" id="fname" placeholder="Arjun"/>
-        </div>
-        <div class="form-group">
-          <label>Last Name *</label>
-          <input type="text" id="lname" placeholder="Sharma"/>
-        </div>
-        <div class="form-group">
-          <label>Age *</label>
-          <input type="number" id="age" placeholder="28" min="1" max="120"/>
-        </div>
+        <div class="form-group"><label>First Name *</label><input type="text" id="fname" placeholder="Arjun"/></div>
+        <div class="form-group"><label>Last Name *</label><input type="text" id="lname" placeholder="Sharma"/></div>
+        <div class="form-group"><label>Age *</label><input type="number" id="age" placeholder="28" min="1" max="120"/></div>
         <div class="form-group">
           <label>Gender *</label>
           <select id="gender">
             <option value="">Select gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-            <option>Prefer not to say</option>
+            <option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Phone Number *</label>
-          <input type="tel" id="phone" placeholder="+91 98765 43210"/>
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="email" placeholder="arjun@email.com"/>
-        </div>
+        <div class="form-group"><label>Phone Number *</label><input type="tel" id="phone" placeholder="+91 98765 43210"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="email" placeholder="arjun@email.com"/></div>
         <div class="form-group full">
           <label>Blood Group</label>
           <select id="blood">
             <option value="">Select (optional)</option>
-            <option>A+</option><option>A-</option>
-            <option>B+</option><option>B-</option>
-            <option>O+</option><option>O-</option>
-            <option>AB+</option><option>AB-</option>
+            <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+            <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
           </select>
         </div>
       </div>
@@ -483,14 +558,13 @@
   </div>
 </div>
 
-<!-- SCREEN 2: HOSPITAL -->
+<!-- SCREEN 2 -->
 <div class="screen" id="screen2">
   <div class="container">
     <div class="screen-header">
       <div class="screen-title">Choose a Hospital</div>
       <div class="screen-subtitle">Select the hospital nearest to you or preferred by your doctor</div>
     </div>
-    <div class="progress-bar" id="prog2"></div>
     <div class="card">
       <div class="section-label">Available Hospitals</div>
       <div class="hospital-grid" id="hospitalGrid"></div>
@@ -500,7 +574,7 @@
   </div>
 </div>
 
-<!-- SCREEN 3: PROBLEM + DOCTOR -->
+<!-- SCREEN 3 -->
 <div class="screen" id="screen3">
   <div class="container">
     <div class="screen-header">
@@ -511,19 +585,14 @@
       <div class="section-label">Your Health Concern</div>
       <div class="form-group">
         <label>Describe your problem *</label>
-        <textarea id="problem" placeholder="e.g. I have had a persistent headache for 3 days, along with mild fever and fatigue..."></textarea>
+        <textarea id="problem" placeholder="e.g. I have had a persistent headache for 3 days..."></textarea>
       </div>
       <div class="form-group" style="margin-top:14px">
         <label>Specialization Needed</label>
         <select id="specFilter" onchange="filterDoctors()">
           <option value="">All Specializations</option>
-          <option>General Physician</option>
-          <option>Cardiologist</option>
-          <option>Dermatologist</option>
-          <option>Orthopedic</option>
-          <option>Pediatrician</option>
-          <option>ENT Specialist</option>
-          <option>Neurologist</option>
+          <option>General Physician</option><option>Cardiologist</option><option>Dermatologist</option>
+          <option>Orthopedic</option><option>Pediatrician</option><option>ENT Specialist</option><option>Neurologist</option>
         </select>
       </div>
     </div>
@@ -536,7 +605,7 @@
   </div>
 </div>
 
-<!-- SCREEN 4: TIME SLOT -->
+<!-- SCREEN 4 -->
 <div class="screen" id="screen4">
   <div class="container">
     <div class="screen-header">
@@ -558,10 +627,10 @@
   </div>
 </div>
 
-<!-- SCREEN 5: SUCCESS + MY APPOINTMENTS -->
+<!-- SCREEN 5 -->
 <div class="screen" id="screen5">
   <div class="container">
-    <div id="successBanner" style="display:none" class="success-card" style="margin-bottom:24px">
+    <div id="successBanner" style="display:none" class="success-card">
       <div class="success-icon">🎉</div>
       <div class="success-title">Appointment Confirmed!</div>
       <div class="success-sub">Your appointment has been booked successfully.<br>We'll send a reminder before your visit.</div>
@@ -574,18 +643,13 @@
   </div>
 </div>
 
-
-<!-- ═══════════════════════════════════════════
-     AI CHAT WIDGET
-═══════════════════════════════════════════ -->
-
-<!-- Floating button -->
+<!-- CHAT BUTTON -->
 <button id="medi-chat-btn" title="Chat with MediEase AI">
   <span class="chat-pulse"></span>
   <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
 </button>
 
-<!-- Chat panel -->
+<!-- CHAT PANEL -->
 <div id="medi-chat-panel">
   <div class="chat-header">
     <div class="chat-header-avatar">🩺</div>
@@ -595,50 +659,80 @@
     </div>
     <button class="chat-close-btn" id="medi-chat-close">✕</button>
   </div>
-
   <div class="chat-messages" id="medi-chat-messages"></div>
   <div class="chat-quick-replies" id="medi-quick-replies"></div>
-
   <div class="chat-input-row">
     <textarea id="medi-chat-input" rows="1" placeholder="Ask about hospitals, doctors, slots…"></textarea>
     <button id="medi-chat-send" title="Send">
       <svg viewBox="0 0 24 24"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
-
-
 </div>
 
+<!-- VOICE BUTTON -->
+<button id="sq-voice-btn" title="Voice AI Assistant">
+  <svg viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+</button>
+
+<!-- VOICE PANEL -->
+<div id="sq-voice-panel">
+  <div class="vp-header">
+    <div class="vp-header-avatar">🎙️</div>
+    <div class="vp-header-info">
+      <h3>Smart Queue Voice AI</h3>
+      <p><span class="vp-status-dot"></span> Tap mic to speak</p>
+    </div>
+    <button class="vp-close" id="sq-voice-close">✕</button>
+  </div>
+  <div class="vp-orb-wrap">
+    <div class="vp-orb" id="vp-orb">
+      <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+      <svg viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+      <div class="vp-bars"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+    <div class="vp-orb-label" id="vp-label">Tap to start</div>
+  </div>
+  <div class="vp-transcript" id="vp-transcript">
+    <div style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>
+  </div>
+  <div class="vp-chips">
+    <div class="vp-chip" onclick="vpAskText('What is Smart Queue?')">What is Smart Queue?</div>
+    <div class="vp-chip" onclick="vpAskText('How do I join a queue?')">How do I join?</div>
+    <div class="vp-chip" onclick="vpAskText('Is it free?')">Is it free?</div>
+    <div class="vp-chip" onclick="vpAskText('I am confused')">I'm confused</div>
+  </div>
+  <div class="vp-controls">
+    <button class="vp-ctrl-btn primary" id="vp-mic-btn" onclick="vpToggleMic()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+      Start Listening
+    </button>
+    <button class="vp-ctrl-btn muted" id="vp-stop-btn" onclick="vpStopSpeaking()" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
+      Stop
+    </button>
+    <button class="vp-ctrl-btn danger" onclick="vpClear()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      Clear
+    </button>
+  </div>
+</div>
 
 <script>
 // ══════════════════════════════════════════════════════════════
-//  AUTOMATION CONFIG
+//  ⚠️  PASTE YOUR DEPLOYED APPS SCRIPT URL HERE (both same URL)
 // ══════════════════════════════════════════════════════════════
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
-
-// ── Gemini Proxy URL (same Google Apps Script, handles AI too) ──
-const GEMINI_PROXY_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
-
-async function sendAppointmentData(appt) {
-  try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: "POST", mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(appt)
-    });
-  } catch (err) { console.error("Automation error:", err); }
-}
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
 
 // ── DATA ──────────────────────────────────────────────────────
 const HOSPITALS = [
-  { id:1, name:"AIIMS Rishikesh",       loc:"Rishikesh, Uttarakhand", badge:"Government",      lat:30.1158, lng:78.7933 },
-  { id:2, name:"Shivalik Hospital",      loc:"Haridwar, Uttarakhand",  badge:"Private",         lat:29.9457, lng:78.1642 },
-  { id:3, name:"Himalayan Institute",    loc:"Dehradun, Uttarakhand",  badge:"Multi-Specialty", lat:30.3165, lng:78.0322 },
-  { id:4, name:"Max Super Specialty",   loc:"Saharanpur, UP",         badge:"Private",         lat:29.9609, lng:77.5460 },
-  { id:5, name:"Kailash Hospital",       loc:"Roorkee, Uttarakhand",   badge:"Private",         lat:29.8543, lng:77.8880 },
-  { id:6, name:"Gangotri Medical",       loc:"Haridwar, Uttarakhand",  badge:"Clinic",          lat:29.9492, lng:78.1642 },
-  { id:7, name:"Drishti Eye Centre",     loc:"Rishikesh",              badge:"Eye Specialist",  lat:30.0869, lng:78.2676 },
-  { id:8, name:"Life Care Hospital",     loc:"Muzaffarnagar, UP",      badge:"General",         lat:29.4727, lng:77.7085 },
+  { id:1, name:"AIIMS Rishikesh",     loc:"Rishikesh, Uttarakhand", badge:"Government" },
+  { id:2, name:"Shivalik Hospital",    loc:"Haridwar, Uttarakhand",  badge:"Private" },
+  { id:3, name:"Himalayan Institute",  loc:"Dehradun, Uttarakhand",  badge:"Multi-Specialty" },
+  { id:4, name:"Max Super Specialty", loc:"Saharanpur, UP",         badge:"Private" },
+  { id:5, name:"Kailash Hospital",     loc:"Roorkee, Uttarakhand",   badge:"Private" },
+  { id:6, name:"Gangotri Medical",     loc:"Haridwar, Uttarakhand",  badge:"Clinic" },
+  { id:7, name:"Drishti Eye Centre",   loc:"Rishikesh",              badge:"Eye Specialist" },
+  { id:8, name:"Life Care Hospital",   loc:"Muzaffarnagar, UP",      badge:"General" },
 ];
 
 const DOCTORS = [
@@ -654,15 +748,11 @@ const DOCTORS = [
 
 const AM_SLOTS = ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM"];
 const PM_SLOTS = ["12:00 PM","12:30 PM","02:00 PM","02:30 PM","03:00 PM","04:00 PM","04:30 PM","05:00 PM"];
-const TAKEN = { "09:30 AM":true, "11:00 AM":true, "02:30 PM":true, "04:00 PM":true };
+const TAKEN    = { "09:30 AM":true, "11:00 AM":true, "02:30 PM":true, "04:00 PM":true };
 
-// ── STATE ─────────────────────────────────────────────────────
-let state = {
-  patient: null, hospital: null, doctor: null,
-  problem: "", date: null, slot: null, appointments: []
-};
+let state = { patient:null, hospital:null, doctor:null, problem:"", date:null, slot:null, appointments:[] };
 
-// ── SCREEN NAVIGATION ─────────────────────────────────────────
+// ── NAVIGATION ────────────────────────────────────────────────
 function goToScreen(n) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('visible'));
   document.getElementById('screen'+n).classList.add('visible');
@@ -675,34 +765,28 @@ function goToScreen(n) {
 
 // ── SCREEN 1 ──────────────────────────────────────────────────
 function registerPatient() {
-  const fname = document.getElementById('fname').value.trim();
-  const lname = document.getElementById('lname').value.trim();
-  const age   = document.getElementById('age').value.trim();
-  const gender= document.getElementById('gender').value;
-  const phone = document.getElementById('phone').value.trim();
+  const fname=document.getElementById('fname').value.trim();
+  const lname=document.getElementById('lname').value.trim();
+  const age=document.getElementById('age').value.trim();
+  const gender=document.getElementById('gender').value;
+  const phone=document.getElementById('phone').value.trim();
   if (!fname||!lname||!age||!gender||!phone) { alert("Please fill all required fields."); return; }
   state.patient = { fname, lname, age, gender, phone,
     email: document.getElementById('email').value,
     blood: document.getElementById('blood').value };
-  renderHospitals();
-  goToScreen(2);
+  renderHospitals(); goToScreen(2);
 }
 
 // ── SCREEN 2 ──────────────────────────────────────────────────
 function renderHospitals() {
-  const grid = document.getElementById('hospitalGrid');
-  grid.innerHTML = HOSPITALS.map(h => `
+  document.getElementById('hospitalGrid').innerHTML = HOSPITALS.map(h => `
     <div class="hospital-card ${state.hospital?.id===h.id?'selected':''}" onclick="pickHospital(${h.id})">
       <div class="h-name">🏥 ${h.name}</div>
       <div class="h-loc">📍 ${h.loc}</div>
       <div class="h-badge">${h.badge}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-function pickHospital(id) {
-  state.hospital = HOSPITALS.find(h=>h.id===id);
-  renderHospitals();
-}
+function pickHospital(id) { state.hospital=HOSPITALS.find(h=>h.id===id); renderHospitals(); }
 function selectHospital() {
   if (!state.hospital) { alert("Please select a hospital."); return; }
   renderDoctors(); goToScreen(3);
@@ -710,26 +794,19 @@ function selectHospital() {
 
 // ── SCREEN 3 ──────────────────────────────────────────────────
 function renderDoctors(filter="") {
-  const grid = document.getElementById('doctorGrid');
   const docs = filter ? DOCTORS.filter(d=>d.spec===filter) : DOCTORS;
-  grid.innerHTML = docs.map(d => `
+  document.getElementById('doctorGrid').innerHTML = docs.map(d => `
     <div class="doctor-card ${state.doctor?.id===d.id?'selected':''}" onclick="pickDoctor(${d.id})">
       <div class="doc-avatar" style="background:${d.bg}">${d.emoji}</div>
       <div>
         <div class="doc-name">${d.name}</div>
         <div class="doc-spec">${d.spec}</div>
-        <div class="doc-avail avail-${d.status}">
-          <span class="avail-dot"></span>${d.avail}
-        </div>
+        <div class="doc-avail avail-${d.status}"><span class="avail-dot"></span>${d.avail}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 function filterDoctors() { renderDoctors(document.getElementById('specFilter').value); }
-function pickDoctor(id) {
-  state.doctor = DOCTORS.find(d=>d.id===id);
-  renderDoctors(document.getElementById('specFilter').value);
-}
+function pickDoctor(id) { state.doctor=DOCTORS.find(d=>d.id===id); renderDoctors(document.getElementById('specFilter').value); }
 function selectDoctor() {
   state.problem = document.getElementById('problem').value.trim();
   if (!state.problem) { alert("Please describe your health concern."); return; }
@@ -745,8 +822,7 @@ function renderSlotScreen() {
       <div><div class="section-label">Hospital</div><div style="font-weight:600">${state.hospital.name}</div></div>
       <div><div class="section-label">Doctor</div><div style="font-weight:600">${state.doctor.name} — ${state.doctor.spec}</div></div>
     </div>`;
-
-  const dateRow = document.getElementById('dateRow');
+  const dateRow=document.getElementById('dateRow');
   const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   dateRow.innerHTML='';
@@ -768,8 +844,7 @@ function renderSlotScreen() {
   renderSlots('slotsPM',PM_SLOTS);
 }
 function renderSlots(gridId,slots){
-  const g=document.getElementById(gridId);
-  g.innerHTML=slots.map(s=>`
+  document.getElementById(gridId).innerHTML=slots.map(s=>`
     <div class="slot ${TAKEN[s]?'taken':''} ${state.slot===s?'selected':''}"
       onclick="${TAKEN[s]?'':` pickSlot('${s}')`}">
       ${s}${TAKEN[s]?' 🚫':''}
@@ -779,20 +854,28 @@ function pickSlot(s){ state.slot=s; renderSlots('slotsAM',AM_SLOTS); renderSlots
 
 function bookAppointment(){
   if(!state.slot){alert("Please select a time slot.");return;}
-  state.appointments.unshift({
+  const appt = {
     id:Date.now(), patient:{...state.patient}, hospital:{...state.hospital},
     doctor:{...state.doctor}, problem:state.problem, date:state.date, slot:state.slot,
     status:"Confirmed", booked:new Date().toLocaleDateString('en-IN')
-  });
-  sendAppointmentData({
-    bookingId:"MED-"+Date.now().toString().slice(-6),
-    firstName:state.patient.fname, lastName:state.patient.lname,
-    age:state.patient.age, gender:state.patient.gender,
-    phone:state.patient.phone, email:state.patient.email||"",
-    bloodGroup:state.patient.blood||"", hospital:state.hospital.name,
-    doctor:state.doctor.name, specialization:state.doctor.spec,
-    concern:state.problem, date:state.date, timeSlot:state.slot
-  });
+  };
+  state.appointments.unshift(appt);
+
+  // Send to backend — no-cors for fire-and-forget (sheet + email)
+  fetch(BACKEND_URL, {
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"text/plain"},
+    body: JSON.stringify({
+      bookingId:"MED-"+Date.now().toString().slice(-6),
+      firstName:state.patient.fname, lastName:state.patient.lname,
+      age:state.patient.age, gender:state.patient.gender,
+      phone:state.patient.phone, email:state.patient.email||"",
+      bloodGroup:state.patient.blood||"", hospital:state.hospital.name,
+      doctor:state.doctor.name, specialization:state.doctor.spec,
+      concern:state.problem, date:state.date, timeSlot:state.slot
+    })
+  }).catch(()=>{});
+
   renderAppointments(true); goToScreen(5); state.slot=null;
 }
 
@@ -801,39 +884,40 @@ function renderAppointments(justBooked=false){
   document.getElementById('successBanner').style.display=justBooked?'block':'none';
   const list=document.getElementById('apptList');
   if(!state.appointments.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">📅</div><div>No appointments yet.<br>Book your first appointment above.</div></div>`;
+    list.innerHTML=`<div class="empty"><div class="empty-icon">📅</div><div>No appointments yet.</div></div>`;
     return;
   }
   list.innerHTML=state.appointments.map(a=>{
     const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.hospital.name+', '+a.hospital.loc)}`;
-    return `
-      <div class="appt-card">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-            <span class="appt-badge badge-confirmed">${a.status}</span>
-            <span class="live-pill"><span class="live-dot"></span>Live Tracking</span>
-          </div>
-          <div class="appt-doc">${a.doctor.emoji} ${a.doctor.name}</div>
-          <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${a.hospital.loc}</div>
-          <div class="appt-meta">📅 ${a.date} · ⏰ ${a.slot}</div>
-          <div class="appt-meta" style="margin-top:4px">🩺 ${a.doctor.spec}</div>
-          <a class="map-link" href="${mapUrl}" target="_blank">🗺️ Get Directions</a>
+    return `<div class="appt-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="appt-badge badge-confirmed">${a.status}</span>
+          <span class="live-pill"><span class="live-dot"></span>Live Tracking</span>
         </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">Doctor Availability</div>
-          <div class="doc-avail avail-${a.doctor.status}" style="font-size:0.82rem;white-space:nowrap">
-            <span class="avail-dot"></span>${a.doctor.avail}
-          </div>
-          <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">Booked on</div>
-          <div style="font-size:0.82rem;font-weight:500">${a.booked}</div>
+        <div class="appt-doc">${a.doctor.emoji} ${a.doctor.name}</div>
+        <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${a.hospital.loc}</div>
+        <div class="appt-meta">📅 ${a.date} · ⏰ ${a.slot}</div>
+        <div class="appt-meta" style="margin-top:4px">🩺 ${a.doctor.spec}</div>
+        <a class="map-link" href="${mapUrl}" target="_blank">🗺️ Get Directions</a>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">Availability</div>
+        <div class="doc-avail avail-${a.doctor.status}" style="font-size:0.82rem;white-space:nowrap">
+          <span class="avail-dot"></span>${a.doctor.avail}
         </div>
-      </div>`;
+        <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">Booked on</div>
+        <div style="font-size:0.82rem;font-weight:500">${a.booked}</div>
+      </div>
+    </div>`;
   }).join('');
 }
 
 
 // ══════════════════════════════════════════════════════════════
-//  AI CHAT WIDGET LOGIC
+//  AI CHAT WIDGET
+//  KEY FIX: uses fetch with mode:'cors' + content-type text/plain
+//  Google Apps Script accepts this without CORS errors
 // ══════════════════════════════════════════════════════════════
 (function(){
   const SYSTEM = `You are MediEase Assistant — a warm, knowledgeable AI for the MediEase Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India.
@@ -845,15 +929,13 @@ You help users with:
 - General health guidance (always advise consulting a doctor for diagnosis)
 - Platform navigation and troubleshooting
 
-Hospitals on platform: AIIMS Rishikesh (Government), Shivalik Hospital (Private, Haridwar), Himalayan Institute (Multi-Specialty, Dehradun), Max Super Specialty (Saharanpur), Kailash Hospital (Roorkee), Gangotri Medical (Haridwar), Drishti Eye Centre (Rishikesh), Life Care Hospital (Muzaffarnagar).
+Hospitals: AIIMS Rishikesh (Government), Shivalik Hospital (Haridwar), Himalayan Institute (Dehradun), Max Super Specialty (Saharanpur), Kailash Hospital (Roorkee), Gangotri Medical (Haridwar), Drishti Eye Centre (Rishikesh), Life Care Hospital (Muzaffarnagar).
 
 Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician).
 
-Specializations: General Physician, Cardiologist, Dermatologist, Orthopedic, Pediatrician, ENT Specialist, Neurologist.
+Be concise, warm and helpful. Respond in the same language the user writes in (Hindi or English).`;
 
-Be concise, warm and helpful. Use simple conversational language. For serious medical questions, provide helpful general info and recommend booking an appropriate doctor. Respond in the same language the user writes in (Hindi or English).`;
-
-  const QUICK_INIT = ["How to book appointment?","Which doctor for fever?","Hospital in Dehradun","OPD timings"];
+  const QUICK_INIT   = ["How to book appointment?","Which doctor for fever?","Hospital in Dehradun","OPD timings"];
   const QUICK_FOLLOW = ["Book an appointment","Find specialist","View hospitals","Help with form"];
 
   let isOpen=false, isLoading=false;
@@ -868,15 +950,14 @@ Be concise, warm and helpful. Use simple conversational language. For serious me
   const qrEl    = document.getElementById('medi-quick-replies');
 
   btn.addEventListener('click',()=>{
-    isOpen=!isOpen;
-    panel.classList.toggle('open',isOpen);
+    isOpen=!isOpen; panel.classList.toggle('open',isOpen);
     if(isOpen && chatHistory.length===0) greet();
     if(isOpen) setTimeout(()=>inputEl.focus(),300);
   });
   closeBtn.addEventListener('click',()=>{ isOpen=false; panel.classList.remove('open'); });
 
   function greet(){
-    addMsg('bot','Hi there! 👋 I\'m the MediEase AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer any questions about our hospitals.\n\nWhat can I help you with today?');
+    addMsg('bot','Hi there! 👋 I\'m the MediEase AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer questions about our hospitals.\n\nWhat can I help you with today?');
     showQR(QUICK_INIT);
   }
 
@@ -892,10 +973,9 @@ Be concise, warm and helpful. Use simple conversational language. For serious me
 
   function addMsg(role,text){
     const wrap=document.createElement('div');
-    wrap.className=`cmsg ${role}`;
+    wrap.className='cmsg '+role;
     const bub=document.createElement('div');
     bub.className='bubble';
-    // Handle newlines nicely
     bub.innerHTML=text.replace(/\n/g,'<br>');
     const t=document.createElement('div');
     t.className='ctime';
@@ -903,14 +983,12 @@ Be concise, warm and helpful. Use simple conversational language. For serious me
     wrap.appendChild(bub); wrap.appendChild(t);
     msgsEl.appendChild(wrap);
     msgsEl.scrollTop=msgsEl.scrollHeight;
-    return wrap;
   }
 
   function showTyping(){
     const w=document.createElement('div');
     w.className='cmsg bot typing-wrap'; w.id='chat-typing';
-    const b=document.createElement('div');
-    b.className='typing-bubble';
+    const b=document.createElement('div'); b.className='typing-bubble';
     b.innerHTML='<span></span><span></span><span></span>';
     w.appendChild(b); msgsEl.appendChild(w);
     msgsEl.scrollTop=msgsEl.scrollHeight;
@@ -922,30 +1000,37 @@ Be concise, warm and helpful. Use simple conversational language. For serious me
     isLoading=true; sendEl.disabled=true;
     qrEl.innerHTML='';
     addMsg('user',text.trim());
-    chatHistory.push({role:'user',parts:[{text:text.trim()}]});
+    chatHistory.push({role:'user', parts:[{text:text.trim()}]});
     inputEl.value=''; inputEl.style.height='auto';
     showTyping();
 
     try{
-      const res=await fetch(GEMINI_PROXY_URL,{
-        method:'POST',
-        mode:'cors',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          type:'chat',
-          system:SYSTEM,
-          history:chatHistory
+      // ── THE FIX: use text/plain content-type ──
+      // Google Apps Script allows text/plain in no-cors,
+      // but for reading the reply we need a proper fetch.
+      // Solution: send as text/plain with mode cors.
+      // Apps Script doPost reads e.postData.contents regardless of content-type.
+      const res = await fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          type: 'chat',
+          system: SYSTEM,
+          history: chatHistory
         })
       });
-      const data=await res.json();
+
+      const data = await res.json();
       hideTyping();
-      const reply=data?.reply||"Sorry, I couldn't get a response right now. Please try again!";
-      addMsg('bot',reply);
-      chatHistory.push({role:'model',parts:[{text:reply}]});
+      const reply = data?.reply || "Sorry, I couldn't get a response right now. Please try again!";
+      addMsg('bot', reply);
+      chatHistory.push({role:'model', parts:[{text:reply}]});
       if(chatHistory.length===2) showQR(QUICK_FOLLOW);
+
     } catch(err){
       hideTyping();
-      addMsg('bot','⚠️ Connection error. Please check your internet and try again.');
+      addMsg('bot','⚠️ Could not connect to AI. Please check your internet and try again.');
+      console.error('Chat error:', err);
     }
     isLoading=false; sendEl.disabled=false;
   }
@@ -958,269 +1043,30 @@ Be concise, warm and helpful. Use simple conversational language. For serious me
     inputEl.style.height='auto';
     inputEl.style.height=Math.min(inputEl.scrollHeight,76)+'px';
   });
-
 })();
-</script>
 
 
-<!-- ═══════════════════════════════════════════════════════════
-     VOICE AI AGENT WIDGET
-═══════════════════════════════════════════════════════════ -->
-<style>
-  /* ── Voice button ── */
-  #sq-voice-btn {
-    position:fixed; bottom:100px; right:28px; z-index:9997;
-    width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
-    background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%);
-    box-shadow:0 5px 20px rgba(45,110,168,0.40);
-    display:flex; align-items:center; justify-content:center;
-    transition:transform .2s, box-shadow .2s;
-  }
-  #sq-voice-btn:hover { transform:scale(1.1); box-shadow:0 7px 26px rgba(45,110,168,.55); }
-  #sq-voice-btn svg { width:22px; height:22px; fill:#fff; }
-  #sq-voice-btn::after {
-    content:'Voice AI';
-    position:absolute; right:62px; top:50%; transform:translateY(-50%);
-    background:#2d6ea8; color:#fff; font-family:'DM Sans',sans-serif;
-    font-size:0.73rem; font-weight:500; padding:4px 10px; border-radius:8px;
-    white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s;
-  }
-  #sq-voice-btn:hover::after { opacity:1; }
-
-  /* ── Voice panel ── */
-  #sq-voice-panel {
-    position:fixed; bottom:166px; right:28px; z-index:9996;
-    width:340px;
-    background:#fff; border-radius:20px;
-    box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4;
-    display:flex; flex-direction:column; overflow:hidden;
-    transform:scale(.88) translateY(28px); opacity:0; pointer-events:none;
-    transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease;
-  }
-  #sq-voice-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
-
-  /* Header */
-  .vp-header {
-    background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%);
-    padding:14px 18px; display:flex; align-items:center; gap:11px; flex-shrink:0;
-  }
-  .vp-header-avatar {
-    width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2);
-    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
-  }
-  .vp-header-info h3 { color:#fff; font-size:.88rem; font-weight:600; font-family:'DM Sans',sans-serif; }
-  .vp-header-info p  { color:rgba(255,255,255,.75); font-size:.7rem; margin-top:1px; display:flex; align-items:center; gap:4px; font-family:'DM Sans',sans-serif; }
-  .vp-status-dot { width:6px; height:6px; border-radius:50%; background:#90f0c0; display:inline-block; animation:vpBlink 1.8s ease infinite; }
-  @keyframes vpBlink { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .vp-close {
-    margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer;
-    width:27px; height:27px; border-radius:50%; display:flex; align-items:center;
-    justify-content:center; color:#fff; font-size:.9rem; transition:background .2s;
-  }
-  .vp-close:hover { background:rgba(255,255,255,.32); }
-
-  /* Visualizer orb */
-  .vp-orb-wrap {
-    display:flex; flex-direction:column; align-items:center;
-    padding:22px 20px 14px; gap:10px;
-  }
-  .vp-orb {
-    width:80px; height:80px; border-radius:50%; position:relative;
-    background:linear-gradient(135deg, #eaf3fb 0%, #d0e8f8 100%);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:transform .15s;
-    box-shadow:0 4px 18px rgba(45,110,168,.18);
-    border:2px solid #c0d8f0;
-  }
-  .vp-orb:hover { transform:scale(1.05); }
-  .vp-orb svg { width:32px; height:32px; fill:#2d6ea8; transition:all .2s; z-index:2; position:relative; }
-
-  /* Ripple rings when listening */
-  .vp-orb .ring {
-    position:absolute; border-radius:50%; border:2px solid rgba(45,110,168,.25);
-    animation:none; pointer-events:none;
-  }
-  .vp-orb.listening { background:linear-gradient(135deg, #d0e8f8, #b0d4f0); border-color:#5a9fd4; }
-  .vp-orb.listening svg { fill:#1a5a9a; }
-  .vp-orb.listening .ring:nth-child(1) { width:100px; height:100px; top:-12px; left:-12px; animation:vpRing 1.4s ease-out infinite; }
-  .vp-orb.listening .ring:nth-child(2) { width:120px; height:120px; top:-22px; left:-22px; animation:vpRing 1.4s ease-out .35s infinite; }
-  .vp-orb.listening .ring:nth-child(3) { width:140px; height:140px; top:-32px; left:-32px; animation:vpRing 1.4s ease-out .7s infinite; }
-  @keyframes vpRing { 0%{transform:scale(.8);opacity:.7} 100%{transform:scale(1);opacity:0} }
-
-  /* Speaking bars */
-  .vp-orb.speaking { background:linear-gradient(135deg, #e8f8ee, #c8eedc); border-color:#5ab88a; }
-  .vp-orb.speaking svg { fill:#2d8a5a; }
-  .vp-bars {
-    display:flex; align-items:center; gap:3px; height:28px;
-    position:absolute; bottom:14px; pointer-events:none;
-  }
-  .vp-bars span {
-    width:3px; background:#5ab88a; border-radius:3px;
-    animation:none; display:block;
-  }
-  .vp-orb.speaking .vp-bars span:nth-child(1) { animation:vpBar 0.7s ease-in-out infinite; height:8px; }
-  .vp-orb.speaking .vp-bars span:nth-child(2) { animation:vpBar 0.7s ease-in-out .15s infinite; height:16px; }
-  .vp-orb.speaking .vp-bars span:nth-child(3) { animation:vpBar 0.7s ease-in-out .05s infinite; height:22px; }
-  .vp-orb.speaking .vp-bars span:nth-child(4) { animation:vpBar 0.7s ease-in-out .25s infinite; height:14px; }
-  .vp-orb.speaking .vp-bars span:nth-child(5) { animation:vpBar 0.7s ease-in-out .1s infinite; height:8px; }
-  @keyframes vpBar { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
-
-  .vp-orb-label {
-    font-size:.78rem; font-weight:500; color:#2d6ea8;
-    font-family:'DM Sans',sans-serif; letter-spacing:.2px;
-    min-height:18px; transition:color .2s;
-  }
-
-  /* Transcript box */
-  .vp-transcript {
-    margin:0 16px 10px; padding:10px 13px;
-    background:#f4f8fd; border:1px solid #d0e4f4; border-radius:12px;
-    font-size:.8rem; color:#2d3d4d; font-family:'DM Sans',sans-serif;
-    min-height:52px; max-height:120px; overflow-y:auto; line-height:1.55;
-    scroll-behavior:smooth;
-  }
-  .vp-transcript::-webkit-scrollbar { width:3px; }
-  .vp-transcript::-webkit-scrollbar-thumb { background:#b0cce0; border-radius:3px; }
-  .vp-transcript .heard { color:#5a6a7a; font-style:italic; margin-bottom:4px; font-size:.76rem; }
-  .vp-transcript .heard::before { content:'🎤 '; }
-  .vp-transcript .reply { color:#1a3a5a; }
-  .vp-transcript .reply::before { content:'🤖 '; }
-
-  /* Quick voice chips */
-  .vp-chips {
-    display:flex; flex-wrap:wrap; gap:5px; padding:0 16px 12px;
-  }
-  .vp-chip {
-    background:#eaf3fb; border:1px solid #c0d8f0; color:#2d6ea8;
-    border-radius:20px; padding:4px 10px; font-size:.72rem; cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-weight:500;
-    transition:background .15s, transform .1s; white-space:nowrap;
-  }
-  .vp-chip:hover { background:#c8e0f4; transform:translateY(-1px); }
-
-  /* Controls */
-  .vp-controls {
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    padding:10px 16px 14px; border-top:1px solid #e8f0f8;
-  }
-  .vp-ctrl-btn {
-    border:none; cursor:pointer; border-radius:10px; padding:8px 16px;
-    font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:500;
-    display:flex; align-items:center; gap:5px; transition:all .15s;
-  }
-  .vp-ctrl-btn.primary { background:linear-gradient(135deg,#5a9fd4,#2d6ea8); color:#fff; }
-  .vp-ctrl-btn.primary:hover { opacity:.88; transform:translateY(-1px); }
-  .vp-ctrl-btn.danger  { background:#fde8e8; color:#c0392b; }
-  .vp-ctrl-btn.danger:hover  { background:#fbd0d0; }
-  .vp-ctrl-btn.muted   { background:#f0f4f8; color:#5a7a8a; }
-  .vp-ctrl-btn.muted:hover   { background:#e0e8f0; }
-  .vp-ctrl-btn:disabled { opacity:.45; cursor:not-allowed; transform:none !important; }
-
-  @media(max-width:420px) {
-    #sq-voice-panel { width:calc(100vw - 16px); right:8px; }
-    #sq-voice-btn   { right:16px; }
-  }
-</style>
-
-<!-- Voice button -->
-<button id="sq-voice-btn" title="Voice AI Assistant">
-  <svg viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-</button>
-
-<!-- Voice panel -->
-<div id="sq-voice-panel">
-  <div class="vp-header">
-    <div class="vp-header-avatar">🎙️</div>
-    <div class="vp-header-info">
-      <h3>Smart Queue Voice AI</h3>
-      <p><span class="vp-status-dot"></span> Tap mic to speak</p>
-    </div>
-    <button class="vp-close" id="sq-voice-close">✕</button>
-  </div>
-
-  <div class="vp-orb-wrap">
-    <div class="vp-orb" id="vp-orb">
-      <span class="ring"></span><span class="ring"></span><span class="ring"></span>
-      <svg id="vp-orb-icon" viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-      <div class="vp-bars"><span></span><span></span><span></span><span></span><span></span></div>
-    </div>
-    <div class="vp-orb-label" id="vp-label">Tap to start</div>
-  </div>
-
-  <div class="vp-transcript" id="vp-transcript">
-    <div style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>
-  </div>
-
-  <div class="vp-chips" id="vp-chips">
-    <div class="vp-chip" onclick="vpAskText('What is Smart Queue?')">What is Smart Queue?</div>
-    <div class="vp-chip" onclick="vpAskText('How do I join a queue?')">How do I join?</div>
-    <div class="vp-chip" onclick="vpAskText('Is it free?')">Is it free?</div>
-    <div class="vp-chip" onclick="vpAskText('I am confused')">I\'m confused</div>
-  </div>
-
-  <div class="vp-controls">
-    <button class="vp-ctrl-btn primary" id="vp-mic-btn" onclick="vpToggleMic()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-      Start Listening
-    </button>
-    <button class="vp-ctrl-btn muted" id="vp-stop-btn" onclick="vpStopSpeaking()" disabled>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
-      Stop
-    </button>
-    <button class="vp-ctrl-btn danger" onclick="vpClear()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-      Clear
-    </button>
-  </div>
-</div>
-
-<script>
 // ══════════════════════════════════════════════════════════════
-//  VOICE AI AGENT
+//  VOICE AI WIDGET
 // ══════════════════════════════════════════════════════════════
 (function(){
-  const VP_SYSTEM = `You are an AI Voice Assistant for the website "Smart Queue" (smartqueue98.github.io/Smart_Queue).
+  const VP_SYSTEM = `You are an AI Voice Assistant for Smart Queue (smartqueue98.github.io/Smart_Queue).
 
-Your role is to help users understand, navigate, and use the Smart Queue system efficiently.
+Help users understand and use Smart Queue: a digital queue management system to avoid long physical lines.
 
-Tone & Personality:
-- Friendly, clear, and slightly professional
-- Speak in simple English (can mix light Hinglish if user does)
-- Be concise but helpful — keep responses SHORT (2-4 sentences max) since they will be spoken aloud
+Keep ALL responses under 3 sentences — they will be spoken aloud.
+Never use bullet points, asterisks, markdown, or special characters.
+Write in natural spoken sentences only.
+Be friendly and clear. You can mix light Hinglish if user does.
 
-Your Responsibilities:
-1. Explain what Smart Queue is: A digital queue management system that helps users avoid long physical lines. Allows booking slots, checking queue status, and reducing waiting time.
+Smart Queue lets users book slots online, check queue position, and come when it is their turn.
+It is completely free and mobile-friendly.
+If unsure, say: I recommend checking the website or trying again.`;
 
-2. Guide users step-by-step:
-   - How to join a queue
-   - How to check their position in the queue
-   - How to book a time slot
-   - How to cancel or modify a booking
-
-3. Answer FAQs:
-   - "How does this work?" — Book a slot online, get a number, come when it's your turn
-   - "Is it free?" — Yes, Smart Queue is free to use
-   - "How long will I have to wait?" — Check live queue status on the website
-   - "Can I use it on mobile?" — Yes, fully mobile-friendly
-
-4. Troubleshooting: If user is stuck, guide them calmly. Suggest refreshing page or re-entering details if needed.
-
-5. Smart Suggestions: Recommend booking early to avoid rush. Suggest checking live queue status.
-
-Restrictions:
-- Do NOT give unrelated information
-- Do NOT hallucinate features not present on the website
-- If unsure, say: "I recommend checking the website or trying again."
-- Keep ALL responses under 3 sentences — they will be read aloud
-
-IMPORTANT: Since your response will be spoken aloud via text-to-speech, never use bullet points, asterisks, markdown, or special characters. Write in natural spoken sentences only.`;
-
-  // ── State ──
   let vpOpen=false, vpListening=false, vpSpeaking=false;
-  let recognition=null, currentUtterance=null;
+  let recognition=null;
   const vpHistory=[];
 
-  // ── Elements ──
   const vpBtn    = document.getElementById('sq-voice-btn');
   const vpPanel  = document.getElementById('sq-voice-panel');
   const vpClose  = document.getElementById('sq-voice-close');
@@ -1230,66 +1076,43 @@ IMPORTANT: Since your response will be spoken aloud via text-to-speech, never us
   const vpMicBtn = document.getElementById('vp-mic-btn');
   const vpStopBtn= document.getElementById('vp-stop-btn');
 
-  // ── Toggle panel ──
-  vpBtn.addEventListener('click',()=>{
-    vpOpen=!vpOpen;
-    vpPanel.classList.toggle('open',vpOpen);
-  });
-  vpClose.addEventListener('click',()=>{
-    vpOpen=false; vpPanel.classList.remove('open');
-    vpStopAll();
-  });
+  vpBtn.addEventListener('click',()=>{ vpOpen=!vpOpen; vpPanel.classList.toggle('open',vpOpen); });
+  vpClose.addEventListener('click',()=>{ vpOpen=false; vpPanel.classList.remove('open'); vpStopAll(); });
 
-  // ── Speech Recognition setup ──
   const SpeechRecognition = window.SpeechRecognition||window.webkitSpeechRecognition;
   const hasASR = !!SpeechRecognition;
 
   function initRecognition(){
     if(!hasASR) return;
     recognition = new SpeechRecognition();
-    recognition.lang='en-IN';
-    recognition.interimResults=false;
-    recognition.maxAlternatives=1;
-    recognition.continuous=false;
-
+    recognition.lang='en-IN'; recognition.interimResults=false;
+    recognition.maxAlternatives=1; recognition.continuous=false;
     recognition.onstart=()=>{
-      vpListening=true;
-      setOrbState('listening');
-      setLabel('Listening…');
-      vpMicBtn.textContent=''; vpMicBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> Stop Mic';
+      vpListening=true; setOrbState('listening'); setLabel('Listening…');
+      vpMicBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> Stop Mic';
       vpMicBtn.classList.remove('primary'); vpMicBtn.classList.add('danger');
     };
-
-    recognition.onresult=(e)=>{
-      const transcript=e.results[0][0].transcript.trim();
-      if(transcript) vpAskText(transcript);
-    };
-
+    recognition.onresult=(e)=>{ const t=e.results[0][0].transcript.trim(); if(t) vpAskText(t); };
     recognition.onerror=(e)=>{
       resetMicBtn();
-      if(e.error==='not-allowed') addTranscript('system','Microphone access denied. Please allow mic permission.');
-      else if(e.error!=='aborted') addTranscript('system','Could not hear clearly. Please try again.');
+      if(e.error==='not-allowed') addTx('system','Microphone access denied.');
+      else if(e.error!=='aborted') addTx('system','Could not hear clearly. Try again.');
     };
-
     recognition.onend=()=>{ vpListening=false; resetMicBtn(); };
   }
 
   window.vpToggleMic = function(){
-    if(!hasASR){ addTranscript('system','Voice recognition not supported in this browser. Try Chrome.'); return; }
+    if(!hasASR){ addTx('system','Voice not supported. Try Chrome.'); return; }
     if(vpListening){ recognition.stop(); return; }
     if(vpSpeaking) vpStopSpeaking();
     if(!recognition) initRecognition();
     try{ recognition.start(); }catch(e){ initRecognition(); setTimeout(()=>recognition.start(),100); }
   };
 
-  // ── Text-to-Speech ──
   window.vpStopSpeaking = function(){
     if(window.speechSynthesis) window.speechSynthesis.cancel();
-    vpSpeaking=false;
-    setOrbState('idle');
-    setLabel('Tap to start');
-    vpStopBtn.disabled=true;
-    resetMicBtn();
+    vpSpeaking=false; setOrbState('idle'); setLabel('Tap to start');
+    vpStopBtn.disabled=true; resetMicBtn();
   };
 
   function speak(text){
@@ -1297,91 +1120,66 @@ IMPORTANT: Since your response will be spoken aloud via text-to-speech, never us
     window.speechSynthesis.cancel();
     const utt=new SpeechSynthesisUtterance(text);
     utt.lang='en-IN'; utt.rate=0.95; utt.pitch=1.05; utt.volume=1;
-
-    // Pick a natural voice if available
     const voices=window.speechSynthesis.getVoices();
     const preferred=voices.find(v=>v.lang.startsWith('en')&&v.name.toLowerCase().includes('female'))
-      || voices.find(v=>v.lang.startsWith('en-IN'))
-      || voices.find(v=>v.lang.startsWith('en'));
+      ||voices.find(v=>v.lang.startsWith('en-IN'))||voices.find(v=>v.lang.startsWith('en'));
     if(preferred) utt.voice=preferred;
-
     utt.onstart=()=>{ vpSpeaking=true; setOrbState('speaking'); setLabel('Speaking…'); vpStopBtn.disabled=false; };
     utt.onend=()=>{ vpSpeaking=false; setOrbState('idle'); setLabel('Tap to start'); vpStopBtn.disabled=true; };
     utt.onerror=()=>{ vpSpeaking=false; setOrbState('idle'); setLabel('Tap to start'); vpStopBtn.disabled=true; };
-    currentUtterance=utt;
     window.speechSynthesis.speak(utt);
   }
 
-  // ── Ask AI ──
   window.vpAskText = async function(text){
     if(!text.trim()) return;
     vpStopSpeaking();
-    addTranscript('user',text);
+    addTx('user',text);
     vpHistory.push({role:'user',parts:[{text:text}]});
-    setOrbState('thinking');
-    setLabel('Thinking…');
-    vpMicBtn.disabled=true;
+    setOrbState('thinking'); setLabel('Thinking…'); vpMicBtn.disabled=true;
 
     try{
-      const res=await fetch(GEMINI_PROXY_URL,{
+      const res = await fetch(BACKEND_URL, {
         method:'POST',
-        mode:'cors',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          type:'voice',
-          system:VP_SYSTEM,
-          history:vpHistory
-        })
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify({ type:'voice', system:VP_SYSTEM, history:vpHistory })
       });
-      const data=await res.json();
-      const reply=data?.reply||"I'm sorry, I couldn't get a response. Please try again.";
+      const data = await res.json();
+      const reply = data?.reply || "I'm sorry, I couldn't get a response. Please try again.";
       vpHistory.push({role:'model',parts:[{text:reply}]});
-      addTranscript('bot',reply);
+      addTx('bot',reply);
       speak(reply);
-    }catch(err){
-      const errMsg="Connection error. Please check your internet and try again.";
-      addTranscript('system',errMsg);
-      speak(errMsg);
+    } catch(err){
+      const msg="Connection error. Please check your internet.";
+      addTx('system',msg); speak(msg);
     }
     vpMicBtn.disabled=false;
   };
 
-  // ── Transcript ──
-  function addTranscript(role,text){
+  function addTx(role,text){
     const d=document.createElement('div');
-    d.className=role==='user'?'heard':'reply';
     if(role==='system'){ d.style.cssText='color:#c0392b;font-size:.74rem;margin-top:4px;'; d.textContent='⚠️ '+text; }
-    else d.textContent=text;
-    // Clear placeholder on first real message
-    if(vpTx.querySelector('div[style]')&&role!=='system') vpTx.innerHTML='';
-    vpTx.appendChild(d);
-    vpTx.appendChild(document.createElement('br'));
+    else { d.className=role==='user'?'heard':'reply'; d.textContent=text; }
+    if(vpTx.querySelector('div[style*="color:#8aabb8"]')) vpTx.innerHTML='';
+    vpTx.appendChild(d); vpTx.appendChild(document.createElement('br'));
     vpTx.scrollTop=vpTx.scrollHeight;
   }
 
-  // ── Orb states ──
-  function setOrbState(s){
-    vpOrb.classList.remove('listening','speaking');
-    if(s==='listening') vpOrb.classList.add('listening');
-    else if(s==='speaking') vpOrb.classList.add('speaking');
-    // thinking: just idle look with label
-  }
+  function setOrbState(s){ vpOrb.classList.remove('listening','speaking'); if(s==='listening'||s==='speaking') vpOrb.classList.add(s); }
   function setLabel(t){ vpLabel.textContent=t; }
-
   function resetMicBtn(){
     vpListening=false;
     vpMicBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> Start Listening';
     vpMicBtn.classList.remove('danger'); vpMicBtn.classList.add('primary');
     if(!vpSpeaking){ setOrbState('idle'); setLabel('Tap to start'); }
   }
-
   function vpStopAll(){ if(vpListening&&recognition) recognition.stop(); vpStopSpeaking(); }
-  window.vpClear = function(){ vpTx.innerHTML='<div style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>'; vpHistory.length=0; vpStopAll(); setLabel('Tap to start'); };
+  window.vpClear=function(){
+    vpTx.innerHTML='<div style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>';
+    vpHistory.length=0; vpStopAll(); setLabel('Tap to start');
+  };
 
-  // Preload voices
   if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
   if(hasASR) initRecognition();
-
 })();
 </script>
 </body>

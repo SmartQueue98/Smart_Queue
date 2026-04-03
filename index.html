@@ -129,7 +129,19 @@
   .hospital-card.selected { border-color:var(--sage); background:var(--sage-pale); }
   .hospital-card .h-name { font-weight:600; font-size:0.95rem; margin-bottom:4px; }
   .hospital-card .h-loc { font-size:0.8rem; color:var(--text-soft); }
-  .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; margin-top:6px; }
+  .hospital-card .h-badges { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; }
+  .hospital-card .h-price {
+    font-size:0.75rem;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:20px;
+    display:inline-block;
+    letter-spacing:0.2px;
+  }
+  .h-price.gov    { background:#e8f5e9; color:#2e7d32; border:1px solid #c8e6c9; }
+  .h-price.semigov { background:#fff8e1; color:#e65100; border:1px solid #ffe0b2; }
+  .h-price.private { background:#fce4ec; color:#880e4f; border:1px solid #f8bbd0; }
 
   .doctor-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .doctor-card {
@@ -154,6 +166,18 @@
   .doc-name { font-weight:600; font-size:0.92rem; }
   .doc-spec { font-size:0.78rem; color:var(--text-soft); }
   .doc-avail { font-size:0.75rem; margin-top:4px; }
+  .doc-fee-badge {
+    display:inline-block;
+    margin-top:6px;
+    font-size:0.72rem;
+    font-weight:700;
+    background:#fff8e1;
+    color:#b45309;
+    border:1px solid #fde68a;
+    border-radius:20px;
+    padding:2px 9px;
+    letter-spacing:0.1px;
+  }
   .avail-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; }
   .avail-green .avail-dot { background:#5cb85c; }
   .avail-yellow .avail-dot { background:#f0a500; }
@@ -719,9 +743,38 @@
 
 <script>
 // ══════════════════════════════════════════════════════════════
-//  ⚠️  PASTE YOUR DEPLOYED APPS SCRIPT URL HERE (both same URL
+//  ⚠️  PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
 // ══════════════════════════════════════════════════════════════
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
+
+// ── DOCTOR FEE MAP BY SPECIALIZATION ─────────────────────────
+// ── HOSPITAL TIER MAP ─────────────────────────────────────────
+// gov: doctor fee max ₹200 | semigov: max ₹400 | private: max ₹600
+const HOSPITAL_TIER = {
+  "Government":      "gov",
+  "Semi-Government": "semigov",
+  "Private":         "private",
+  "Multi-Specialty": "private",
+  "Clinic":          "semigov",
+  "Eye Specialist":  "semigov",
+  "General":         "semigov",
+};
+
+// ── DOCTOR FEES BY SPECIALIZATION × HOSPITAL TIER ────────────
+const DOC_FEE_TIERS = {
+  "General Physician": { gov:"₹100", semigov:"₹200", private:"₹400" },
+  "Cardiologist":      { gov:"₹200", semigov:"₹400", private:"₹600" },
+  "Dermatologist":     { gov:"₹150", semigov:"₹300", private:"₹500" },
+  "Orthopedic":        { gov:"₹180", semigov:"₹350", private:"₹550" },
+  "Pediatrician":      { gov:"₹120", semigov:"₹250", private:"₹450" },
+  "ENT Specialist":    { gov:"₹150", semigov:"₹300", private:"₹500" },
+  "Neurologist":       { gov:"₹200", semigov:"₹400", private:"₹600" },
+};
+
+function getDocFee(spec) {
+  const tier = state.hospital ? (HOSPITAL_TIER[state.hospital.badge] || "semigov") : "semigov";
+  return (DOC_FEE_TIERS[spec] || { gov:"₹150", semigov:"₹300", private:"₹500" })[tier];
+}
 
 // ── DATA ──────────────────────────────────────────────────────
 const HOSPITALS = [
@@ -783,7 +836,9 @@ function renderHospitals() {
     <div class="hospital-card ${state.hospital?.id===h.id?'selected':''}" onclick="pickHospital(${h.id})">
       <div class="h-name">🏥 ${h.name}</div>
       <div class="h-loc">📍 ${h.loc}</div>
-      <div class="h-badge">${h.badge}</div>
+      <div class="h-badges">
+        <span class="h-badge">${h.badge}</span>
+      </div>
     </div>`).join('');
 }
 function pickHospital(id) { state.hospital=HOSPITALS.find(h=>h.id===id); renderHospitals(); }
@@ -795,15 +850,19 @@ function selectHospital() {
 // ── SCREEN 3 ──────────────────────────────────────────────────
 function renderDoctors(filter="") {
   const docs = filter ? DOCTORS.filter(d=>d.spec===filter) : DOCTORS;
-  document.getElementById('doctorGrid').innerHTML = docs.map(d => `
+  document.getElementById('doctorGrid').innerHTML = docs.map(d => {
+    const fee = getDocFee(d.spec);
+    return `
     <div class="doctor-card ${state.doctor?.id===d.id?'selected':''}" onclick="pickDoctor(${d.id})">
       <div class="doc-avatar" style="background:${d.bg}">${d.emoji}</div>
-      <div>
+      <div style="flex:1">
         <div class="doc-name">${d.name}</div>
         <div class="doc-spec">${d.spec}</div>
-        <div class="doc-avail avail-${d.status}"><span class="avail-dot"></span>${d.avail}</div>
+        <div class="doc-avail avail-${d.status}" style="margin-top:4px"><span class="avail-dot"></span>${d.avail}</div>
+        <div class="doc-fee-badge">💊 Consult: ${fee}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function filterDoctors() { renderDoctors(document.getElementById('specFilter').value); }
 function pickDoctor(id) { state.doctor=DOCTORS.find(d=>d.id===id); renderDoctors(document.getElementById('specFilter').value); }
@@ -816,11 +875,13 @@ function selectDoctor() {
 
 // ── SCREEN 4 ──────────────────────────────────────────────────
 function renderSlotScreen() {
+  const docFee = getDocFee(state.doctor.spec);
   document.getElementById('apptSummary').innerHTML = `
     <div style="display:flex;gap:24px;flex-wrap:wrap">
       <div><div class="section-label">Patient</div><div style="font-weight:600">${state.patient.fname} ${state.patient.lname}</div></div>
       <div><div class="section-label">Hospital</div><div style="font-weight:600">${state.hospital.name}</div></div>
       <div><div class="section-label">Doctor</div><div style="font-weight:600">${state.doctor.name} — ${state.doctor.spec}</div></div>
+      <div><div class="section-label">Consultation Fee</div><div style="font-weight:700;font-size:1.1rem;color:#b45309">${docFee}</div></div>
     </div>`;
   const dateRow=document.getElementById('dateRow');
   const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -861,7 +922,6 @@ function bookAppointment(){
   };
   state.appointments.unshift(appt);
 
-  // Send to backend — no-cors for fire-and-forget (sheet + email)
   fetch(BACKEND_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"text/plain"},
@@ -927,7 +987,9 @@ You help users with:
 - General health guidance (always advise consulting a doctor for diagnosis)
 - Platform navigation and troubleshooting
 
-Hospitals: AIIMS Rishikesh (Government), Shivalik Hospital (Haridwar), Himalayan Institute (Dehradun), Max Super Specialty (Saharanpur), Kailash Hospital (Roorkee), Gangotri Medical (Haridwar), Drishti Eye Centre (Rishikesh), Life Care Hospital (Muzaffarnagar).
+Hospitals: AIIMS Rishikesh (Government, ₹50), Shivalik Hospital - Haridwar (Private, ₹300), Himalayan Institute - Dehradun (Multi-Specialty, ₹300), Max Super Specialty - Saharanpur (Private, ₹300), Kailash Hospital - Roorkee (Private, ₹300), Gangotri Medical - Haridwar (Clinic, ₹150), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹150), Life Care Hospital - Muzaffarnagar (General, ₹150).
+
+Consultation fees: Government hospitals ₹50, Semi-Government/Clinic/General ₹150, Private/Multi-Specialty ₹300.
 
 Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician).
 

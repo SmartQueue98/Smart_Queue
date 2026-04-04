@@ -7,56 +7,45 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --sage: #8aab8a;
-    --sage-light: #c8ddc8;
-    --sage-pale: #eef5ee;
-    --sky: #a8c8e8;
-    --sky-pale: #eaf3fb;
-    --mist: #f4f7f4;
-    --stone: #5a6a5a;
-    --petal: #e8c4b8;
-    --petal-pale: #fdf0ec;
-    --text: #2d3d2d;
-    --text-soft: #6b7e6b;
-    --white: #ffffff;
-    --border: #dde8dd;
+    --sage: #8aab8a; --sage-light: #c8ddc8; --sage-pale: #eef5ee;
+    --sky: #a8c8e8; --sky-pale: #eaf3fb; --mist: #f4f7f4;
+    --stone: #5a6a5a; --text: #2d3d2d; --text-soft: #6b7e6b;
+    --white: #ffffff; --border: #dde8dd;
     --shadow: 0 4px 24px rgba(90,106,90,0.10);
-    --shadow-lg: 0 8px 40px rgba(90,106,90,0.14);
-    --radius: 18px;
-    --radius-sm: 10px;
+    --radius: 18px; --radius-sm: 10px;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'DM Sans',sans-serif; background:var(--mist); color:var(--text); min-height:100vh; }
 
   nav {
-    background:var(--white);
-    border-bottom:1px solid var(--border);
-    padding:0 40px;
-    height:64px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:sticky;
-    top:0;
-    z-index:100;
+    background:var(--white); border-bottom:1px solid var(--border);
+    padding:0 40px; height:64px; display:flex; align-items:center;
+    justify-content:space-between; position:sticky; top:0; z-index:100;
     box-shadow:0 2px 12px rgba(90,106,90,0.06);
   }
   .logo { font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--sage); letter-spacing:-0.5px; }
   .logo span { color:var(--stone); }
+  .nav-right { display:flex; align-items:center; gap:10px; }
   .nav-steps { display:flex; gap:6px; }
   .nav-step {
-    padding:6px 14px;
-    border-radius:20px;
-    font-size:0.78rem;
-    font-weight:500;
-    color:var(--text-soft);
-    cursor:pointer;
-    transition:all 0.2s;
-    border:1.5px solid transparent;
+    padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:500;
+    color:var(--text-soft); cursor:pointer; transition:all 0.2s; border:1.5px solid transparent;
   }
   .nav-step.active { background:var(--sage-pale); color:var(--stone); border-color:var(--sage-light); }
   .nav-step.done { color:var(--sage); }
   .nav-step.done::before { content:'✓ '; }
+
+  /* Nav language toggle button */
+  #nav-lang-btn {
+    background:linear-gradient(135deg,#8aab8a,#5a6a5a);
+    color:#fff; border:none; border-radius:20px;
+    padding:7px 16px; font-family:'DM Sans',sans-serif;
+    font-size:0.78rem; font-weight:600; cursor:pointer;
+    display:inline-flex; align-items:center; gap:5px;
+    box-shadow:0 2px 8px rgba(90,106,90,0.25);
+    transition:all 0.2s; white-space:nowrap; flex-shrink:0;
+  }
+  #nav-lang-btn:hover { background:linear-gradient(135deg,#5a6a5a,#3a4a3a); transform:translateY(-1px); }
 
   .screen { display:none; min-height:calc(100vh - 64px); padding:40px 20px; animation:fadeUp 0.4s ease; }
   .screen.visible { display:block; }
@@ -67,49 +56,20 @@
   .screen-title { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--text); margin-bottom:8px; }
   .screen-subtitle { color:var(--text-soft); font-size:0.95rem; font-weight:300; }
 
-  .card {
-    background:var(--white);
-    border-radius:var(--radius);
-    padding:32px;
-    box-shadow:var(--shadow);
-    margin-bottom:20px;
-    border:1px solid var(--border);
-  }
-
+  .card { background:var(--white); border-radius:var(--radius); padding:32px; box-shadow:var(--shadow); margin-bottom:20px; border:1px solid var(--border); }
   .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .form-group { display:flex; flex-direction:column; gap:6px; }
   .form-group.full { grid-column:1/-1; }
   label { font-size:0.82rem; font-weight:500; color:var(--stone); }
   input, select, textarea {
-    padding:12px 16px;
-    border:1.5px solid var(--border);
-    border-radius:var(--radius-sm);
-    font-family:'DM Sans',sans-serif;
-    font-size:0.92rem;
-    color:var(--text);
-    background:var(--white);
-    transition:border 0.2s, box-shadow 0.2s;
-    outline:none;
+    padding:12px 16px; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+    font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--text);
+    background:var(--white); transition:border 0.2s, box-shadow 0.2s; outline:none;
   }
-  input:focus, select:focus, textarea:focus {
-    border-color:var(--sage);
-    box-shadow:0 0 0 3px rgba(138,171,138,0.15);
-  }
+  input:focus, select:focus, textarea:focus { border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,171,138,0.15); }
   textarea { resize:none; height:90px; }
 
-  .btn {
-    padding:13px 32px;
-    border-radius:12px;
-    border:none;
-    font-family:'DM Sans',sans-serif;
-    font-size:0.95rem;
-    font-weight:500;
-    cursor:pointer;
-    transition:all 0.2s;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-  }
+  .btn { padding:13px 32px; border-radius:12px; border:none; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; }
   .btn-primary { background:var(--sage); color:var(--white); }
   .btn-primary:hover { background:var(--stone); transform:translateY(-1px); box-shadow:var(--shadow); }
   .btn-outline { background:transparent; color:var(--stone); border:1.5px solid var(--border); }
@@ -117,156 +77,62 @@
   .btn-block { width:100%; justify-content:center; margin-top:24px; }
 
   .hospital-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .hospital-card {
-    border:2px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:18px;
-    cursor:pointer;
-    transition:all 0.2s;
-    background:var(--white);
-  }
+  .hospital-card { border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer; transition:all 0.2s; background:var(--white); }
   .hospital-card:hover { border-color:var(--sage-light); background:var(--sage-pale); }
   .hospital-card.selected { border-color:var(--sage); background:var(--sage-pale); }
   .hospital-card .h-name { font-weight:600; font-size:0.95rem; margin-bottom:4px; }
   .hospital-card .h-loc { font-size:0.8rem; color:var(--text-soft); }
   .hospital-card .h-badges { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
   .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; }
-  .hospital-card .h-price {
-    font-size:0.75rem;
-    font-weight:700;
-    padding:2px 9px;
-    border-radius:20px;
-    display:inline-block;
-    letter-spacing:0.2px;
-  }
-  .h-price.gov    { background:#e8f5e9; color:#2e7d32; border:1px solid #c8e6c9; }
-  .h-price.semigov { background:#fff8e1; color:#e65100; border:1px solid #ffe0b2; }
-  .h-price.private { background:#fce4ec; color:#880e4f; border:1px solid #f8bbd0; }
 
   .doctor-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .doctor-card {
-    border:2px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:18px;
-    cursor:pointer;
-    transition:all 0.2s;
-    display:flex;
-    gap:14px;
-    align-items:flex-start;
-  }
+  .doctor-card { border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer; transition:all 0.2s; display:flex; gap:14px; align-items:flex-start; }
   .doctor-card:hover { border-color:var(--sage-light); background:var(--sage-pale); }
   .doctor-card.selected { border-color:var(--sage); background:var(--sage-pale); }
-  .doc-avatar {
-    width:48px; height:48px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:1.4rem;
-    flex-shrink:0;
-  }
+  .doc-avatar { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
   .doc-name { font-weight:600; font-size:0.92rem; }
   .doc-spec { font-size:0.78rem; color:var(--text-soft); }
   .doc-avail { font-size:0.75rem; margin-top:4px; }
-  .doc-fee-badge {
-    display:inline-block;
-    margin-top:6px;
-    font-size:0.72rem;
-    font-weight:700;
-    background:#fff8e1;
-    color:#b45309;
-    border:1px solid #fde68a;
-    border-radius:20px;
-    padding:2px 9px;
-    letter-spacing:0.1px;
-  }
+  .doc-fee-badge { display:inline-block; margin-top:6px; font-size:0.72rem; font-weight:700; background:#fff8e1; color:#b45309; border:1px solid #fde68a; border-radius:20px; padding:2px 9px; }
   .avail-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; }
   .avail-green .avail-dot { background:#5cb85c; }
   .avail-yellow .avail-dot { background:#f0a500; }
 
   .slots-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-  .slot {
-    padding:10px;
-    border:1.5px solid var(--border);
-    border-radius:8px;
-    text-align:center;
-    font-size:0.84rem;
-    cursor:pointer;
-    transition:all 0.2s;
-    background:var(--white);
-  }
+  .slot { padding:10px; border:1.5px solid var(--border); border-radius:8px; text-align:center; font-size:0.84rem; cursor:pointer; transition:all 0.2s; background:var(--white); }
   .slot:hover { border-color:var(--sage); background:var(--sage-pale); }
   .slot.selected { border-color:var(--sage); background:var(--sage); color:var(--white); }
   .slot.taken { background:#f0f0f0; color:#bbb; cursor:not-allowed; text-decoration:line-through; }
 
-  .appt-card {
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:20px 24px;
-    margin-bottom:14px;
-    background:var(--white);
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:16px;
-    transition:box-shadow 0.2s;
-  }
+  .appt-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:20px 24px; margin-bottom:14px; background:var(--white); display:flex; justify-content:space-between; align-items:flex-start; gap:16px; transition:box-shadow 0.2s; }
   .appt-card:hover { box-shadow:var(--shadow); }
   .appt-badge { padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600; }
   .badge-confirmed { background:#e7f5e7; color:#3a7a3a; }
-  .badge-pending { background:#fff8e1; color:#b07800; }
   .appt-doc { font-weight:600; font-size:0.97rem; }
   .appt-meta { font-size:0.82rem; color:var(--text-soft); margin-top:3px; }
   .map-link { font-size:0.8rem; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:4px; margin-top:6px; }
   .map-link:hover { color:var(--stone); }
 
-  .live-pill {
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:0.75rem;
-    background:#e7f5e7;
-    color:#3a7a3a;
-    padding:3px 10px;
-    border-radius:20px;
-    font-weight:500;
-  }
+  .live-pill { display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; background:#e7f5e7; color:#3a7a3a; padding:3px 10px; border-radius:20px; font-weight:500; }
   .live-dot { width:7px; height:7px; border-radius:50%; background:#5cb85c; animation:pulse 1.4s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  .progress-bar { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:32px; }
-  .prog-step { display:flex; align-items:center; gap:0; }
-  .prog-dot { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); background:var(--white); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; color:var(--text-soft); transition:all 0.3s; }
-  .prog-dot.active { border-color:var(--sage); background:var(--sage); color:var(--white); }
-  .prog-dot.done { border-color:var(--sage); background:var(--sage-pale); color:var(--sage); }
-  .prog-line { width:48px; height:2px; background:var(--border); transition:background 0.3s; }
-  .prog-line.done { background:var(--sage-light); }
-  .prog-label { font-size:0.7rem; text-align:center; margin-top:4px; color:var(--text-soft); }
-
   .hero-card {
     background:linear-gradient(135deg, var(--sage-pale) 0%, var(--sky-pale) 100%);
-    border:1px solid var(--sage-light);
-    border-radius:var(--radius);
-    padding:40px;
-    text-align:center;
-    margin-bottom:32px;
+    border:1px solid var(--sage-light); border-radius:var(--radius);
+    padding:40px; text-align:center; margin-bottom:32px; position:relative;
   }
   .hero-icon { font-size:3rem; margin-bottom:12px; }
   .hero-title { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--text); margin-bottom:10px; }
   .hero-sub { color:var(--text-soft); font-size:1rem; font-weight:300; line-height:1.6; }
 
-  .success-card {
-    text-align:center;
-    padding:48px 32px;
-    background:linear-gradient(135deg, var(--sage-pale), var(--sky-pale));
-    border-radius:var(--radius);
-    border:1px solid var(--sage-light);
-  }
+  .success-card { text-align:center; padding:48px 32px; background:linear-gradient(135deg, var(--sage-pale), var(--sky-pale)); border-radius:var(--radius); border:1px solid var(--sage-light); }
   .success-icon { font-size:4rem; margin-bottom:16px; }
   .success-title { font-family:'DM Serif Display',serif; font-size:1.8rem; margin-bottom:8px; color:var(--text); }
   .success-sub { color:var(--text-soft); font-size:0.95rem; }
 
   .section-label { font-size:0.8rem; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
   .divider { height:1px; background:var(--border); margin:24px 0; }
-
   .empty { text-align:center; padding:48px 24px; color:var(--text-soft); }
   .empty-icon { font-size:3rem; margin-bottom:12px; }
 
@@ -277,6 +143,7 @@
     .screen { padding:24px 12px; }
     .card { padding:20px; }
     .nav-steps { display:none; }
+    #nav-lang-btn { font-size:0.72rem; padding:5px 11px; }
   }
 
   /* ═══ AI CHAT WIDGET ═══ */
@@ -285,190 +152,72 @@
     width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
     background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%);
     box-shadow:0 6px 24px rgba(90,106,90,0.40);
-    display:flex; align-items:center; justify-content:center;
-    transition:transform .2s, box-shadow .2s;
+    display:flex; align-items:center; justify-content:center; transition:transform .2s, box-shadow .2s;
   }
   #medi-chat-btn:hover { transform:scale(1.08); box-shadow:0 8px 32px rgba(90,106,90,0.55); }
   #medi-chat-btn svg { width:26px; height:26px; fill:#fff; }
-  #medi-chat-btn .chat-pulse {
-    position:absolute; width:58px; height:58px; border-radius:50%;
-    background:rgba(138,171,138,0.35); animation:chatPulse 2.2s ease-out infinite;
-    pointer-events:none;
-  }
+  #medi-chat-btn .chat-pulse { position:absolute; width:58px; height:58px; border-radius:50%; background:rgba(138,171,138,0.35); animation:chatPulse 2.2s ease-out infinite; pointer-events:none; }
   @keyframes chatPulse { 0%{transform:scale(1);opacity:.9} 100%{transform:scale(1.85);opacity:0} }
-  #medi-chat-btn::after {
-    content:'Ask AI';
-    position:absolute; right:68px; top:50%; transform:translateY(-50%);
-    background:var(--stone); color:#fff; font-family:'DM Sans',sans-serif;
-    font-size:0.75rem; font-weight:500; padding:4px 10px; border-radius:8px;
-    white-space:nowrap; opacity:0; pointer-events:none;
-    transition:opacity .2s; letter-spacing:.3px;
-  }
+  #medi-chat-btn::after { content:'Ask AI'; position:absolute; right:68px; top:50%; transform:translateY(-50%); background:var(--stone); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; padding:4px 10px; border-radius:8px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
   #medi-chat-btn:hover::after { opacity:1; }
 
-  #medi-chat-panel {
-    position:fixed; bottom:100px; right:28px; z-index:9998;
-    width:368px; max-height:580px;
-    background:var(--white); border-radius:20px;
-    box-shadow:0 20px 60px rgba(90,106,90,.18), 0 0 0 1px var(--border);
-    display:flex; flex-direction:column; overflow:hidden;
-    transform:scale(.88) translateY(28px); opacity:0; pointer-events:none;
-    transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease;
-  }
+  #medi-chat-panel { position:fixed; bottom:100px; right:28px; z-index:9998; width:368px; max-height:580px; background:var(--white); border-radius:20px; box-shadow:0 20px 60px rgba(90,106,90,.18), 0 0 0 1px var(--border); display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
   #medi-chat-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
-
-  .chat-header {
-    background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%);
-    padding:15px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0;
-  }
-  .chat-header-avatar {
-    width:38px; height:38px; border-radius:50%;
-    background:rgba(255,255,255,.18);
-    display:flex; align-items:center; justify-content:center;
-    font-size:1.2rem; flex-shrink:0;
-  }
+  .chat-header { background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%); padding:15px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+  .chat-header-avatar { width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
   .chat-header-info h3 { color:#fff; font-size:.9rem; font-weight:600; font-family:'DM Sans',sans-serif; }
   .chat-header-info p  { color:rgba(255,255,255,.75); font-size:.72rem; margin-top:1px; display:flex; align-items:center; gap:4px; }
-  .chat-status-dot {
-    width:7px; height:7px; border-radius:50%; background:#b7f7c8;
-    display:inline-block; animation:statusBlink 1.8s ease infinite;
-  }
+  .chat-status-dot { width:7px; height:7px; border-radius:50%; background:#b7f7c8; display:inline-block; animation:statusBlink 1.8s ease infinite; }
   @keyframes statusBlink { 0%,100%{opacity:1} 50%{opacity:.35} }
-  .chat-close-btn {
-    margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer;
-    width:28px; height:28px; border-radius:50%; display:flex; align-items:center;
-    justify-content:center; color:#fff; font-size:.95rem; transition:background .2s;
-    font-family:'DM Sans',sans-serif;
-  }
+  .chat-close-btn { margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.95rem; transition:background .2s; }
   .chat-close-btn:hover { background:rgba(255,255,255,.32); }
-
-  .chat-messages {
-    flex:1; overflow-y:auto; padding:14px 14px 8px; display:flex;
-    flex-direction:column; gap:10px; max-height:370px; scroll-behavior:smooth;
-  }
+  .chat-messages { flex:1; overflow-y:auto; padding:14px 14px 8px; display:flex; flex-direction:column; gap:10px; max-height:370px; scroll-behavior:smooth; }
   .chat-messages::-webkit-scrollbar { width:3px; }
   .chat-messages::-webkit-scrollbar-thumb { background:var(--sage-light); border-radius:4px; }
-
   .cmsg { max-width:84%; animation:msgSlide .2s ease; }
   @keyframes msgSlide { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:none} }
-  .cmsg.bot  { align-self:flex-start; }
-  .cmsg.user { align-self:flex-end; }
-  .cmsg .bubble {
-    padding:9px 13px; border-radius:16px; font-size:.83rem;
-    line-height:1.55; word-wrap:break-word; font-family:'DM Sans',sans-serif;
-  }
+  .cmsg.bot { align-self:flex-start; } .cmsg.user { align-self:flex-end; }
+  .cmsg .bubble { padding:9px 13px; border-radius:16px; font-size:.83rem; line-height:1.55; word-wrap:break-word; font-family:'DM Sans',sans-serif; }
   .cmsg.bot  .bubble { background:var(--sage-pale); color:var(--text); border-radius:4px 16px 16px 16px; border:1px solid var(--border); }
   .cmsg.user .bubble { background:linear-gradient(135deg, var(--sage), var(--stone)); color:#fff; border-radius:16px 4px 16px 16px; }
   .cmsg .ctime { font-size:.66rem; color:#aaa; margin-top:3px; padding:0 3px; }
   .cmsg.user .ctime { text-align:right; }
-
   .typing-wrap { align-self:flex-start; }
-  .typing-bubble {
-    display:flex; align-items:center; gap:5px; padding:10px 13px;
-    background:var(--sage-pale); border:1px solid var(--border);
-    border-radius:4px 16px 16px 16px; width:fit-content;
-  }
-  .typing-bubble span {
-    width:7px; height:7px; border-radius:50%; background:var(--sage);
-    animation:typingDot .9s ease infinite;
-  }
-  .typing-bubble span:nth-child(2) { animation-delay:.16s; }
-  .typing-bubble span:nth-child(3) { animation-delay:.32s; }
+  .typing-bubble { display:flex; align-items:center; gap:5px; padding:10px 13px; background:var(--sage-pale); border:1px solid var(--border); border-radius:4px 16px 16px 16px; width:fit-content; }
+  .typing-bubble span { width:7px; height:7px; border-radius:50%; background:var(--sage); animation:typingDot .9s ease infinite; }
+  .typing-bubble span:nth-child(2) { animation-delay:.16s; } .typing-bubble span:nth-child(3) { animation-delay:.32s; }
   @keyframes typingDot { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
-
   .chat-quick-replies { display:flex; flex-wrap:wrap; gap:6px; padding:6px 14px 2px; flex-shrink:0; }
-  .cqr-btn {
-    background:var(--sage-pale); border:1px solid var(--sage-light);
-    color:var(--stone); border-radius:20px; padding:5px 11px;
-    font-size:.74rem; cursor:pointer; font-family:'DM Sans',sans-serif;
-    font-weight:500; transition:background .15s, transform .1s; white-space:nowrap;
-  }
+  .cqr-btn { background:var(--sage-pale); border:1px solid var(--sage-light); color:var(--stone); border-radius:20px; padding:5px 11px; font-size:.74rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:background .15s, transform .1s; white-space:nowrap; }
   .cqr-btn:hover { background:var(--sage-light); transform:translateY(-1px); }
-
-  .chat-input-row {
-    padding:10px 12px 12px; border-top:1px solid var(--border);
-    display:flex; gap:8px; align-items:flex-end; flex-shrink:0;
-  }
-  #medi-chat-input {
-    flex:1; border:1.5px solid var(--border); border-radius:10px;
-    padding:9px 12px; font-size:.83rem; resize:none; outline:none;
-    max-height:76px; font-family:'DM Sans',sans-serif; color:var(--text);
-    background:var(--mist); transition:border-color .2s; line-height:1.4;
-  }
+  .chat-input-row { padding:10px 12px 12px; border-top:1px solid var(--border); display:flex; gap:8px; align-items:flex-end; flex-shrink:0; }
+  #medi-chat-input { flex:1; border:1.5px solid var(--border); border-radius:10px; padding:9px 12px; font-size:.83rem; resize:none; outline:none; max-height:76px; font-family:'DM Sans',sans-serif; color:var(--text); background:var(--mist); transition:border-color .2s; line-height:1.4; }
   #medi-chat-input:focus { border-color:var(--sage); background:var(--white); }
   #medi-chat-input::placeholder { color:var(--text-soft); }
-  #medi-chat-send {
-    width:36px; height:36px; border-radius:9px; border:none; cursor:pointer;
-    background:linear-gradient(135deg, var(--sage), var(--stone));
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0; transition:opacity .2s, transform .1s;
-  }
+  #medi-chat-send { width:36px; height:36px; border-radius:9px; border:none; cursor:pointer; background:linear-gradient(135deg, var(--sage), var(--stone)); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:opacity .2s, transform .1s; }
   #medi-chat-send:hover { opacity:.88; transform:scale(1.05); }
   #medi-chat-send:disabled { opacity:.45; cursor:not-allowed; transform:none; }
   #medi-chat-send svg { width:17px; height:17px; fill:#fff; }
-
-  @media(max-width:420px) {
-    #medi-chat-panel { width:calc(100vw - 16px); right:8px; bottom:88px; }
-    #medi-chat-btn   { right:16px; bottom:20px; }
-  }
+  @media(max-width:420px) { #medi-chat-panel { width:calc(100vw - 16px); right:8px; bottom:88px; } #medi-chat-btn { right:16px; bottom:20px; } }
 
   /* ═══ VOICE WIDGET ═══ */
-  #sq-voice-btn {
-    position:fixed; bottom:100px; right:28px; z-index:9997;
-    width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
-    background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%);
-    box-shadow:0 5px 20px rgba(45,110,168,0.40);
-    display:flex; align-items:center; justify-content:center;
-    transition:transform .2s, box-shadow .2s;
-  }
+  #sq-voice-btn { position:fixed; bottom:100px; right:28px; z-index:9997; width:52px; height:52px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%); box-shadow:0 5px 20px rgba(45,110,168,0.40); display:flex; align-items:center; justify-content:center; transition:transform .2s, box-shadow .2s; }
   #sq-voice-btn:hover { transform:scale(1.1); box-shadow:0 7px 26px rgba(45,110,168,.55); }
   #sq-voice-btn svg { width:22px; height:22px; fill:#fff; }
-  #sq-voice-btn::after {
-    content:'Voice AI';
-    position:absolute; right:62px; top:50%; transform:translateY(-50%);
-    background:#2d6ea8; color:#fff; font-family:'DM Sans',sans-serif;
-    font-size:0.73rem; font-weight:500; padding:4px 10px; border-radius:8px;
-    white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s;
-  }
+  #sq-voice-btn::after { content:'Voice AI'; position:absolute; right:62px; top:50%; transform:translateY(-50%); background:#2d6ea8; color:#fff; font-family:'DM Sans',sans-serif; font-size:0.73rem; font-weight:500; padding:4px 10px; border-radius:8px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
   #sq-voice-btn:hover::after { opacity:1; }
-
-  #sq-voice-panel {
-    position:fixed; bottom:166px; right:28px; z-index:9996;
-    width:340px; background:#fff; border-radius:20px;
-    box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4;
-    display:flex; flex-direction:column; overflow:hidden;
-    transform:scale(.88) translateY(28px); opacity:0; pointer-events:none;
-    transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease;
-  }
+  #sq-voice-panel { position:fixed; bottom:166px; right:28px; z-index:9996; width:340px; background:#fff; border-radius:20px; box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4; display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
   #sq-voice-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
-
-  .vp-header {
-    background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%);
-    padding:14px 18px; display:flex; align-items:center; gap:11px; flex-shrink:0;
-  }
-  .vp-header-avatar {
-    width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2);
-    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
-  }
+  .vp-header { background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%); padding:14px 18px; display:flex; align-items:center; gap:11px; flex-shrink:0; }
+  .vp-header-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
   .vp-header-info h3 { color:#fff; font-size:.88rem; font-weight:600; font-family:'DM Sans',sans-serif; }
   .vp-header-info p  { color:rgba(255,255,255,.75); font-size:.7rem; margin-top:1px; display:flex; align-items:center; gap:4px; font-family:'DM Sans',sans-serif; }
   .vp-status-dot { width:6px; height:6px; border-radius:50%; background:#90f0c0; display:inline-block; animation:vpBlink 1.8s ease infinite; }
   @keyframes vpBlink { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .vp-close {
-    margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer;
-    width:27px; height:27px; border-radius:50%; display:flex; align-items:center;
-    justify-content:center; color:#fff; font-size:.9rem; transition:background .2s;
-  }
+  .vp-close { margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer; width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.9rem; transition:background .2s; }
   .vp-close:hover { background:rgba(255,255,255,.32); }
-
   .vp-orb-wrap { display:flex; flex-direction:column; align-items:center; padding:22px 20px 14px; gap:10px; }
-  .vp-orb {
-    width:80px; height:80px; border-radius:50%; position:relative;
-    background:linear-gradient(135deg, #eaf3fb 0%, #d0e8f8 100%);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:transform .15s;
-    box-shadow:0 4px 18px rgba(45,110,168,.18); border:2px solid #c0d8f0;
-  }
+  .vp-orb { width:80px; height:80px; border-radius:50%; position:relative; background:linear-gradient(135deg, #eaf3fb 0%, #d0e8f8 100%); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .15s; box-shadow:0 4px 18px rgba(45,110,168,.18); border:2px solid #c0d8f0; }
   .vp-orb:hover { transform:scale(1.05); }
   .vp-orb svg { width:32px; height:32px; fill:#2d6ea8; transition:all .2s; z-index:2; position:relative; }
   .vp-orb .ring { position:absolute; border-radius:50%; border:2px solid rgba(45,110,168,.25); animation:none; pointer-events:none; }
@@ -488,36 +237,17 @@
   .vp-orb.speaking .vp-bars span:nth-child(4) { animation:vpBar 0.7s ease-in-out .25s infinite; height:14px; }
   .vp-orb.speaking .vp-bars span:nth-child(5) { animation:vpBar 0.7s ease-in-out .1s infinite; height:8px; }
   @keyframes vpBar { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
-  .vp-orb-label { font-size:.78rem; font-weight:500; color:#2d6ea8; font-family:'DM Sans',sans-serif; letter-spacing:.2px; min-height:18px; transition:color .2s; }
-
-  .vp-transcript {
-    margin:0 16px 10px; padding:10px 13px;
-    background:#f4f8fd; border:1px solid #d0e4f4; border-radius:12px;
-    font-size:.8rem; color:#2d3d4d; font-family:'DM Sans',sans-serif;
-    min-height:52px; max-height:120px; overflow-y:auto; line-height:1.55; scroll-behavior:smooth;
-  }
-  .vp-transcript::-webkit-scrollbar { width:3px; }
-  .vp-transcript::-webkit-scrollbar-thumb { background:#b0cce0; border-radius:3px; }
+  .vp-orb-label { font-size:.78rem; font-weight:500; color:#2d6ea8; font-family:'DM Sans',sans-serif; min-height:18px; }
+  .vp-transcript { margin:0 16px 10px; padding:10px 13px; background:#f4f8fd; border:1px solid #d0e4f4; border-radius:12px; font-size:.8rem; color:#2d3d4d; font-family:'DM Sans',sans-serif; min-height:52px; max-height:120px; overflow-y:auto; line-height:1.55; }
   .vp-transcript .heard { color:#5a6a7a; font-style:italic; margin-bottom:4px; font-size:.76rem; }
   .vp-transcript .heard::before { content:'🎤 '; }
   .vp-transcript .reply { color:#1a3a5a; }
   .vp-transcript .reply::before { content:'🤖 '; }
-
   .vp-chips { display:flex; flex-wrap:wrap; gap:5px; padding:0 16px 12px; }
-  .vp-chip {
-    background:#eaf3fb; border:1px solid #c0d8f0; color:#2d6ea8;
-    border-radius:20px; padding:4px 10px; font-size:.72rem; cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-weight:500;
-    transition:background .15s, transform .1s; white-space:nowrap;
-  }
+  .vp-chip { background:#eaf3fb; border:1px solid #c0d8f0; color:#2d6ea8; border-radius:20px; padding:4px 10px; font-size:.72rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:background .15s, transform .1s; white-space:nowrap; }
   .vp-chip:hover { background:#c8e0f4; transform:translateY(-1px); }
-
   .vp-controls { display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 16px 14px; border-top:1px solid #e8f0f8; }
-  .vp-ctrl-btn {
-    border:none; cursor:pointer; border-radius:10px; padding:8px 16px;
-    font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:500;
-    display:flex; align-items:center; gap:5px; transition:all .15s;
-  }
+  .vp-ctrl-btn { border:none; cursor:pointer; border-radius:10px; padding:8px 16px; font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:500; display:flex; align-items:center; gap:5px; transition:all .15s; }
   .vp-ctrl-btn.primary { background:linear-gradient(135deg,#5a9fd4,#2d6ea8); color:#fff; }
   .vp-ctrl-btn.primary:hover { opacity:.88; transform:translateY(-1px); }
   .vp-ctrl-btn.danger  { background:#fde8e8; color:#c0392b; }
@@ -525,161 +255,191 @@
   .vp-ctrl-btn.muted   { background:#f0f4f8; color:#5a7a8a; }
   .vp-ctrl-btn.muted:hover   { background:#e0e8f0; }
   .vp-ctrl-btn:disabled { opacity:.45; cursor:not-allowed; transform:none !important; }
-
-  @media(max-width:420px) {
-    #sq-voice-panel { width:calc(100vw - 16px); right:8px; }
-    #sq-voice-btn   { right:16px; }
-  }
+  @media(max-width:420px) { #sq-voice-panel { width:calc(100vw - 16px); right:8px; } #sq-voice-btn { right:16px; } }
 </style>
 </head>
 <body>
 
 <nav>
   <div class="logo">Smart<span>Queue</span></div>
-  <div class="nav-steps">
-    <div class="nav-step active" id="ns1" onclick="goToScreen(1)">1. Register</div>
-    <div class="nav-step" id="ns2" onclick="goToScreen(2)">2. Hospital</div>
-    <div class="nav-step" id="ns3" onclick="goToScreen(3)">3. Doctor</div>
-    <div class="nav-step" id="ns4" onclick="goToScreen(4)">4. Book Slot</div>
-    <div class="nav-step" id="ns5" onclick="goToScreen(5)">📋 My Appointments</div>
+  <div class="nav-right">
+    <div class="nav-steps">
+      <div class="nav-step active" id="ns1" onclick="goToScreen(1)" data-en="1. Register"        data-hi="१. पंजीकरण">1. Register</div>
+      <div class="nav-step"        id="ns2" onclick="goToScreen(2)" data-en="2. Hospital"         data-hi="२. अस्पताल">2. Hospital</div>
+      <div class="nav-step"        id="ns3" onclick="goToScreen(3)" data-en="3. Doctor"           data-hi="३. डॉक्टर">3. Doctor</div>
+      <div class="nav-step"        id="ns4" onclick="goToScreen(4)" data-en="4. Book Slot"        data-hi="४. स्लॉट बुक">4. Book Slot</div>
+      <div class="nav-step"        id="ns5" onclick="goToScreen(5)" data-en="📋 My Appointments" data-hi="📋 मेरे अपॉइंटमेंट">📋 My Appointments</div>
+    </div>
+    <button id="nav-lang-btn" onclick="toggleLang()">🌐 हिन्दी में देखें</button>
   </div>
 </nav>
 
-<!-- SCREEN 1 -->
+<!-- SCREEN 1: REGISTER -->
 <div class="screen visible" id="screen1">
   <div class="container">
     <div class="hero-card">
-      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
-        <button id="lang-toggle-btn" onclick="toggleLang()" style="
-          background:linear-gradient(135deg,#8aab8a,#5a6a5a);
-          color:#fff; border:none; border-radius:20px;
-          padding:7px 18px; font-family:'DM Sans',sans-serif;
-          font-size:0.82rem; font-weight:600; cursor:pointer;
-          display:flex; align-items:center; gap:6px;
-          box-shadow:0 3px 10px rgba(90,106,90,0.25);
-          transition:all 0.2s;">
-          🌐 हिन्दी में देखें
-        </button>
-      </div>
       <div class="hero-icon">🏥</div>
-      <div class="hero-title" id="hero-title">Book Your Appointment</div>
-      <div class="hero-sub" id="hero-sub">Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.</div>
+      <div class="hero-title" data-en="Book Your Appointment" data-hi="अपना अपॉइंटमेंट बुक करें">Book Your Appointment</div>
+      <div class="hero-sub" data-en="Fast, simple, and calm — get the care you need<br>from the right doctor at the right time." data-hi="तेज़, सरल और शांत — सही डॉक्टर से<br>सही समय पर देखभाल पाएं।">Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.</div>
     </div>
     <div class="card">
-      <div class="section-label" id="lbl-registration">Patient Registration</div>
+      <div class="section-label" data-en="Patient Registration" data-hi="मरीज़ का पंजीकरण">Patient Registration</div>
       <div class="form-grid">
-        <div class="form-group"><label id="lbl-fname">First Name *</label><input type="text" id="fname" placeholder="Arjun"/></div>
-        <div class="form-group"><label id="lbl-lname">Last Name *</label><input type="text" id="lname" placeholder="Sharma"/></div>
-        <div class="form-group"><label id="lbl-age">Age *</label><input type="number" id="age" placeholder="28" min="1" max="120"/></div>
         <div class="form-group">
-          <label id="lbl-gender">Gender *</label>
+          <label data-en="First Name *" data-hi="पहला नाम *">First Name *</label>
+          <input type="text" id="fname" data-en-placeholder="Arjun" data-hi-placeholder="अर्जुन" placeholder="Arjun"/>
+        </div>
+        <div class="form-group">
+          <label data-en="Last Name *" data-hi="उपनाम *">Last Name *</label>
+          <input type="text" id="lname" data-en-placeholder="Sharma" data-hi-placeholder="शर्मा" placeholder="Sharma"/>
+        </div>
+        <div class="form-group">
+          <label data-en="Age *" data-hi="आयु *">Age *</label>
+          <input type="number" id="age" placeholder="28" min="1" max="120"/>
+        </div>
+        <div class="form-group">
+          <label data-en="Gender *" data-hi="लिंग *">Gender *</label>
           <select id="gender">
-            <option value="" id="opt-gender-default">Select gender</option>
-            <option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option>
+            <option value="" data-en="Select gender"        data-hi="लिंग चुनें">Select gender</option>
+            <option value="Male"               data-en="Male"               data-hi="पुरुष">Male</option>
+            <option value="Female"             data-en="Female"             data-hi="महिला">Female</option>
+            <option value="Other"              data-en="Other"              data-hi="अन्य">Other</option>
+            <option value="Prefer not to say"  data-en="Prefer not to say"  data-hi="बताना नहीं चाहते">Prefer not to say</option>
           </select>
         </div>
-        <div class="form-group"><label id="lbl-phone">Phone Number *</label><input type="tel" id="phone" placeholder="+91 98765 43210"/></div>
-        <div class="form-group"><label id="lbl-email">Email Address</label><input type="email" id="email" placeholder="arjun@email.com"/></div>
+        <div class="form-group">
+          <label data-en="Phone Number *" data-hi="फ़ोन नंबर *">Phone Number *</label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-group">
+          <label data-en="Email Address" data-hi="ईमेल पता">Email Address</label>
+          <input type="email" id="email" data-en-placeholder="arjun@email.com" data-hi-placeholder="arjun@email.com" placeholder="arjun@email.com"/>
+        </div>
         <div class="form-group full">
-          <label id="lbl-blood">Blood Group</label>
+          <label data-en="Blood Group" data-hi="रक्त समूह">Blood Group</label>
           <select id="blood">
-            <option value="" id="opt-blood-default">Select (optional)</option>
+            <option value="" data-en="Select (optional)" data-hi="चुनें (वैकल्पिक)">Select (optional)</option>
             <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
             <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
           </select>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" id="btn-continue" onclick="registerPatient()">Continue to Select Hospital →</button>
+      <button class="btn btn-primary btn-block" id="btn-register" onclick="registerPatient()"
+        data-en="Continue to Select Hospital →" data-hi="अस्पताल चुनने के लिए आगे बढ़ें →">
+        Continue to Select Hospital →
+      </button>
     </div>
   </div>
 </div>
 
-<!-- SCREEN 2 -->
+<!-- SCREEN 2: HOSPITAL -->
 <div class="screen" id="screen2">
   <div class="container">
     <div class="screen-header">
-      <div class="screen-title">Choose a Hospital</div>
-      <div class="screen-subtitle">Select the hospital nearest to you or preferred by your doctor</div>
+      <div class="screen-title" data-en="Choose a Hospital" data-hi="अस्पताल चुनें">Choose a Hospital</div>
+      <div class="screen-subtitle" data-en="Select the hospital nearest to you or preferred by your doctor" data-hi="अपने नज़दीकी या अपने डॉक्टर के पसंदीदा अस्पताल का चयन करें">Select the hospital nearest to you or preferred by your doctor</div>
     </div>
     <div class="card">
-      <div class="section-label">Available Hospitals</div>
+      <div class="section-label" data-en="Available Hospitals" data-hi="उपलब्ध अस्पताल">Available Hospitals</div>
       <div class="hospital-grid" id="hospitalGrid"></div>
-      <button class="btn btn-primary btn-block" onclick="selectHospital()">Continue to Select Doctor →</button>
+      <button class="btn btn-primary btn-block" id="btn-select-hospital" onclick="selectHospital()"
+        data-en="Continue to Select Doctor →" data-hi="डॉक्टर चुनने के लिए आगे बढ़ें →">
+        Continue to Select Doctor →
+      </button>
     </div>
-    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(1)">← Back</button>
+    <button class="btn btn-outline" id="btn-back-1" style="margin-top:8px" onclick="goToScreen(1)"
+      data-en="← Back" data-hi="← वापस">← Back</button>
   </div>
 </div>
 
-<!-- SCREEN 3 -->
+<!-- SCREEN 3: DOCTOR -->
 <div class="screen" id="screen3">
   <div class="container">
     <div class="screen-header">
-      <div class="screen-title">Describe & Select Doctor</div>
-      <div class="screen-subtitle">Tell us about your concern, then pick the right specialist</div>
+      <div class="screen-title" data-en="Describe &amp; Select Doctor" data-hi="समस्या बताएं और डॉक्टर चुनें">Describe &amp; Select Doctor</div>
+      <div class="screen-subtitle" data-en="Tell us about your concern, then pick the right specialist" data-hi="अपनी समस्या बताएं, फिर सही विशेषज्ञ चुनें">Tell us about your concern, then pick the right specialist</div>
     </div>
     <div class="card" style="margin-bottom:16px">
-      <div class="section-label">Your Health Concern</div>
+      <div class="section-label" data-en="Your Health Concern" data-hi="आपकी स्वास्थ्य समस्या">Your Health Concern</div>
       <div class="form-group">
-        <label>Describe your problem *</label>
-        <textarea id="problem" placeholder="e.g. I have had a persistent headache for 3 days..."></textarea>
+        <label data-en="Describe your problem *" data-hi="अपनी समस्या बताएं *">Describe your problem *</label>
+        <textarea id="problem"
+          data-en-placeholder="e.g. I have had a persistent headache for 3 days..."
+          data-hi-placeholder="उदा. मुझे 3 दिनों से लगातार सिरदर्द है..."
+          placeholder="e.g. I have had a persistent headache for 3 days..."></textarea>
       </div>
       <div class="form-group" style="margin-top:14px">
-        <label>Specialization Needed</label>
+        <label data-en="Specialization Needed" data-hi="किस विशेषज्ञ की ज़रूरत है">Specialization Needed</label>
         <select id="specFilter" onchange="filterDoctors()">
-          <option value="">All Specializations</option>
-          <option>General Physician</option><option>Cardiologist</option><option>Dermatologist</option>
-          <option>Orthopedic</option><option>Pediatrician</option><option>ENT Specialist</option><option>Neurologist</option>
+          <option value=""                  data-en="All Specializations" data-hi="सभी विशेषज्ञ">All Specializations</option>
+          <option value="General Physician" data-en="General Physician"   data-hi="सामान्य चिकित्सक">General Physician</option>
+          <option value="Cardiologist"      data-en="Cardiologist"        data-hi="हृदय रोग विशेषज्ञ">Cardiologist</option>
+          <option value="Dermatologist"     data-en="Dermatologist"       data-hi="त्वचा रोग विशेषज्ञ">Dermatologist</option>
+          <option value="Orthopedic"        data-en="Orthopedic"          data-hi="हड्डी रोग विशेषज्ञ">Orthopedic</option>
+          <option value="Pediatrician"      data-en="Pediatrician"        data-hi="बाल रोग विशेषज्ञ">Pediatrician</option>
+          <option value="ENT Specialist"    data-en="ENT Specialist"      data-hi="कान-नाक-गला विशेषज्ञ">ENT Specialist</option>
+          <option value="Neurologist"       data-en="Neurologist"         data-hi="न्यूरोलॉजिस्ट">Neurologist</option>
         </select>
       </div>
     </div>
     <div class="card">
-      <div class="section-label">Available Doctors</div>
+      <div class="section-label" data-en="Available Doctors" data-hi="उपलब्ध डॉक्टर">Available Doctors</div>
       <div class="doctor-grid" id="doctorGrid"></div>
-      <button class="btn btn-primary btn-block" onclick="selectDoctor()">Continue to Book Slot →</button>
+      <button class="btn btn-primary btn-block" id="btn-select-doctor" onclick="selectDoctor()"
+        data-en="Continue to Book Slot →" data-hi="स्लॉट बुक करने के लिए आगे बढ़ें →">
+        Continue to Book Slot →
+      </button>
     </div>
-    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(2)">← Back</button>
+    <button class="btn btn-outline" id="btn-back-2" style="margin-top:8px" onclick="goToScreen(2)"
+      data-en="← Back" data-hi="← वापस">← Back</button>
   </div>
 </div>
 
-<!-- SCREEN 4 -->
+<!-- SCREEN 4: SLOTS -->
 <div class="screen" id="screen4">
   <div class="container">
     <div class="screen-header">
-      <div class="screen-title">Pick a Time Slot</div>
-      <div class="screen-subtitle">Select a date and your preferred time</div>
+      <div class="screen-title" data-en="Pick a Time Slot" data-hi="समय स्लॉट चुनें">Pick a Time Slot</div>
+      <div class="screen-subtitle" data-en="Select a date and your preferred time" data-hi="तारीख और अपना पसंदीदा समय चुनें">Select a date and your preferred time</div>
     </div>
     <div class="card" id="apptSummary" style="margin-bottom:16px; background:var(--sage-pale); border-color:var(--sage-light);"></div>
     <div class="card">
-      <div class="section-label">Select Date</div>
+      <div class="section-label" data-en="Select Date" data-hi="तारीख चुनें">Select Date</div>
       <div style="display:flex; gap:10px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px;" id="dateRow"></div>
       <div class="divider"></div>
-      <div class="section-label">Morning Slots</div>
+      <div class="section-label" data-en="Morning Slots" data-hi="सुबह के स्लॉट">Morning Slots</div>
       <div class="slots-grid" id="slotsAM"></div>
-      <div class="section-label" style="margin-top:20px">Afternoon Slots</div>
+      <div class="section-label" style="margin-top:20px" data-en="Afternoon Slots" data-hi="दोपहर के स्लॉट">Afternoon Slots</div>
       <div class="slots-grid" id="slotsPM"></div>
-      <button class="btn btn-primary btn-block" onclick="bookAppointment()">✅ Confirm Appointment</button>
+      <button class="btn btn-primary btn-block" id="btn-confirm" onclick="bookAppointment()"
+        data-en="✅ Confirm Appointment" data-hi="✅ अपॉइंटमेंट पक्का करें">
+        ✅ Confirm Appointment
+      </button>
     </div>
-    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(3)">← Back</button>
+    <button class="btn btn-outline" id="btn-back-3" style="margin-top:8px" onclick="goToScreen(3)"
+      data-en="← Back" data-hi="← वापस">← Back</button>
   </div>
 </div>
 
-<!-- SCREEN 5 -->
+<!-- SCREEN 5: MY APPOINTMENTS -->
 <div class="screen" id="screen5">
   <div class="container">
     <div id="successBanner" style="display:none" class="success-card">
       <div class="success-icon">🎉</div>
-      <div class="success-title">Appointment Confirmed!</div>
-      <div class="success-sub">Your appointment has been booked successfully.<br>We'll send a reminder before your visit.</div>
+      <div class="success-title" data-en="Appointment Confirmed!" data-hi="अपॉइंटमेंट पक्का हो गया!">Appointment Confirmed!</div>
+      <div class="success-sub" data-en="Your appointment has been booked successfully.<br>We'll send a reminder before your visit." data-hi="आपका अपॉइंटमेंट सफलतापूर्वक बुक हो गया है।<br>हम आपकी यात्रा से पहले एक अनुस्मारक भेजेंगे।">Your appointment has been booked successfully.<br>We'll send a reminder before your visit.</div>
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; margin-top:16px">
-      <div style="font-family:'DM Serif Display',serif; font-size:1.6rem">My Appointments</div>
-      <button class="btn btn-outline" onclick="goToScreen(1)" style="font-size:0.82rem">+ New Appointment</button>
+      <div style="font-family:'DM Serif Display',serif; font-size:1.6rem"
+        data-en="My Appointments" data-hi="मेरे अपॉइंटमेंट">My Appointments</div>
+      <button class="btn btn-outline" id="btn-new-appt" onclick="goToScreen(1)" style="font-size:0.82rem"
+        data-en="+ New Appointment" data-hi="+ नया अपॉइंटमेंट">+ New Appointment</button>
     </div>
     <div id="apptList"></div>
   </div>
 </div>
 
-<!-- CHAT BUTTON (no hint label) -->
+<!-- CHAT BUTTON -->
 <button id="medi-chat-btn" title="Chat with Smart Queue AI">
   <span class="chat-pulse"></span>
   <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
@@ -690,22 +450,22 @@
   <div class="chat-header">
     <div class="chat-header-avatar">🩺</div>
     <div class="chat-header-info">
-      <h3>Smart Queue Assistant</h3>
-      <p><span class="chat-status-dot"></span> AI · Always available</p>
+      <h3 id="chat-title">Smart Queue Assistant</h3>
+      <p><span class="chat-status-dot"></span> <span id="chat-status">AI · Always available</span></p>
     </div>
     <button class="chat-close-btn" id="medi-chat-close">✕</button>
   </div>
   <div class="chat-messages" id="medi-chat-messages"></div>
   <div class="chat-quick-replies" id="medi-quick-replies"></div>
   <div class="chat-input-row">
-    <textarea id="medi-chat-input" rows="1" placeholder="Ask about hospitals, doctors, slots…"></textarea>
+    <textarea id="medi-chat-input" rows="1" data-en-placeholder="Ask about hospitals, doctors, slots…" data-hi-placeholder="अस्पताल, डॉक्टर, स्लॉट के बारे में पूछें…" placeholder="Ask about hospitals, doctors, slots…"></textarea>
     <button id="medi-chat-send" title="Send">
       <svg viewBox="0 0 24 24"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
 </div>
 
-<!-- VOICE BUTTON (no hint label) -->
+<!-- VOICE BUTTON -->
 <button id="sq-voice-btn" title="Voice AI Assistant">
   <svg viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
 </button>
@@ -715,8 +475,8 @@
   <div class="vp-header">
     <div class="vp-header-avatar">🎙️</div>
     <div class="vp-header-info">
-      <h3>Smart Queue Voice AI</h3>
-      <p><span class="vp-status-dot"></span> Tap mic to speak</p>
+      <h3 id="vp-title">Smart Queue Voice AI</h3>
+      <p><span class="vp-status-dot"></span> <span id="vp-subtitle">Tap mic to speak</span></p>
     </div>
     <button class="vp-close" id="sq-voice-close">✕</button>
   </div>
@@ -729,168 +489,204 @@
     <div class="vp-orb-label" id="vp-label">Tap to start</div>
   </div>
   <div class="vp-transcript" id="vp-transcript">
-    <div style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>
+    <div id="vp-transcript-hint" style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>
   </div>
-  <div class="vp-chips">
-    <div class="vp-chip" onclick="vpAskText('What is Smart Queue?')">What is Smart Queue?</div>
-    <div class="vp-chip" onclick="vpAskText('How do I join a queue?')">How do I join?</div>
-    <div class="vp-chip" onclick="vpAskText('Is it free?')">Is it free?</div>
-    <div class="vp-chip" onclick="vpAskText('I am confused')">I'm confused</div>
+  <div class="vp-chips" id="vp-chips">
+    <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'स्मार्ट क्यू क्या है?':'What is Smart Queue?')" data-en="What is Smart Queue?" data-hi="स्मार्ट क्यू क्या है?">What is Smart Queue?</div>
+    <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'कैसे जुड़ें?':'How do I join a queue?')" data-en="How do I join?" data-hi="कैसे जुड़ें?">How do I join?</div>
+    <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'क्या यह मुफ़्त है?':'Is it free?')" data-en="Is it free?" data-hi="क्या यह मुफ़्त है?">Is it free?</div>
+    <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'मुझे समझ नहीं आ रहा':'I am confused')" data-en="I'm confused" data-hi="मुझे समझ नहीं आ रहा">I'm confused</div>
   </div>
   <div class="vp-controls">
     <button class="vp-ctrl-btn primary" id="vp-mic-btn" onclick="vpToggleMic()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-      Start Listening
+      <span id="vp-mic-label">Start Listening</span>
     </button>
     <button class="vp-ctrl-btn muted" id="vp-stop-btn" onclick="vpStopSpeaking()" disabled>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
-      Stop
+      <span id="vp-stop-label">Stop</span>
     </button>
     <button class="vp-ctrl-btn danger" onclick="vpClear()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-      Clear
+      <span id="vp-clear-label">Clear</span>
     </button>
   </div>
 </div>
 
 <script>
+// ════════════════════════════════════════════════════
+//  GLOBAL STATE & DATA
+// ════════════════════════════════════════════════════
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
 
+let currentLang = 'en';
+
 const HOSPITAL_TIER = {
-  "Government":      "gov",
-  "Semi-Government": "semigov",
-  "Private":         "private",
-  "Multi-Specialty": "private",
-  "Clinic":          "semigov",
-  "Eye Specialist":  "semigov",
-  "General":         "semigov",
+  "Government":"gov","Semi-Government":"semigov","Private":"private",
+  "Multi-Specialty":"private","Clinic":"semigov","Eye Specialist":"semigov","General":"semigov"
 };
-
 const DOC_FEE_TIERS = {
-  "General Physician": { gov:"₹100", semigov:"₹200", private:"₹400" },
-  "Cardiologist":      { gov:"₹200", semigov:"₹400", private:"₹600" },
-  "Dermatologist":     { gov:"₹150", semigov:"₹300", private:"₹500" },
-  "Orthopedic":        { gov:"₹180", semigov:"₹350", private:"₹550" },
-  "Pediatrician":      { gov:"₹120", semigov:"₹250", private:"₹450" },
-  "ENT Specialist":    { gov:"₹150", semigov:"₹300", private:"₹500" },
-  "Neurologist":       { gov:"₹200", semigov:"₹400", private:"₹600" },
+  "General Physician":{ gov:"₹100", semigov:"₹200", private:"₹400" },
+  "Cardiologist":     { gov:"₹200", semigov:"₹400", private:"₹600" },
+  "Dermatologist":    { gov:"₹150", semigov:"₹300", private:"₹500" },
+  "Orthopedic":       { gov:"₹180", semigov:"₹350", private:"₹550" },
+  "Pediatrician":     { gov:"₹120", semigov:"₹250", private:"₹450" },
+  "ENT Specialist":   { gov:"₹150", semigov:"₹300", private:"₹500" },
+  "Neurologist":      { gov:"₹200", semigov:"₹400", private:"₹600" },
 };
-
-function getDocFee(spec) {
-  const tier = state.hospital ? (HOSPITAL_TIER[state.hospital.badge] || "semigov") : "semigov";
-  return (DOC_FEE_TIERS[spec] || { gov:"₹150", semigov:"₹300", private:"₹500" })[tier];
+function getDocFee(spec){
+  const tier=state.hospital?(HOSPITAL_TIER[state.hospital.badge]||"semigov"):"semigov";
+  return(DOC_FEE_TIERS[spec]||{gov:"₹150",semigov:"₹300",private:"₹500"})[tier];
 }
 
 const HOSPITALS = [
-  { id:1, name:"AIIMS Rishikesh",     loc:"Rishikesh, Uttarakhand", badge:"Government" },
-  { id:2, name:"Shivalik Hospital",    loc:"Haridwar, Uttarakhand",  badge:"Private" },
-  { id:3, name:"Himalayan Institute",  loc:"Dehradun, Uttarakhand",  badge:"Multi-Specialty" },
-  { id:4, name:"Max Super Specialty", loc:"Saharanpur, UP",         badge:"Private" },
-  { id:5, name:"Kailash Hospital",     loc:"Roorkee, Uttarakhand",   badge:"Private" },
-  { id:6, name:"Gangotri Medical",     loc:"Haridwar, Uttarakhand",  badge:"Clinic" },
-  { id:7, name:"Drishti Eye Centre",   loc:"Rishikesh",              badge:"Eye Specialist" },
-  { id:8, name:"Life Care Hospital",   loc:"Muzaffarnagar, UP",      badge:"General" },
+  {id:1, name:"AIIMS Rishikesh",      loc_en:"Rishikesh, Uttarakhand",  loc_hi:"ऋषिकेश, उत्तराखंड",  badge:"Government"},
+  {id:2, name:"Shivalik Hospital",     loc_en:"Haridwar, Uttarakhand",   loc_hi:"हरिद्वार, उत्तराखंड", badge:"Private"},
+  {id:3, name:"Himalayan Institute",   loc_en:"Dehradun, Uttarakhand",   loc_hi:"देहरादून, उत्तराखंड", badge:"Multi-Specialty"},
+  {id:4, name:"Max Super Specialty",  loc_en:"Saharanpur, UP",           loc_hi:"सहारनपुर, उ.प्र.",    badge:"Private"},
+  {id:5, name:"Kailash Hospital",      loc_en:"Roorkee, Uttarakhand",    loc_hi:"रुड़की, उत्तराखंड",   badge:"Private"},
+  {id:6, name:"Gangotri Medical",      loc_en:"Haridwar, Uttarakhand",   loc_hi:"हरिद्वार, उत्तराखंड", badge:"Clinic"},
+  {id:7, name:"Drishti Eye Centre",    loc_en:"Rishikesh",               loc_hi:"ऋषिकेश",              badge:"Eye Specialist"},
+  {id:8, name:"Life Care Hospital",    loc_en:"Muzaffarnagar, UP",       loc_hi:"मुज़फ्फरनगर, उ.प्र.", badge:"General"},
 ];
 
+const BADGE_HI = {
+  "Government":"सरकारी","Private":"निजी","Multi-Specialty":"बहु-विशेषता",
+  "Clinic":"क्लिनिक","Eye Specialist":"नेत्र विशेषज्ञ","General":"सामान्य"
+};
+
 const DOCTORS = [
-  { id:1, name:"Dr. Priya Sharma",  spec:"General Physician",  avail:"Available Now",    status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9" },
-  { id:2, name:"Dr. Rohan Mehta",   spec:"Cardiologist",        avail:"Available in 30m", status:"yellow", emoji:"👨‍⚕️", bg:"#fff8e1" },
-  { id:3, name:"Dr. Anita Gupta",   spec:"Dermatologist",       avail:"Available Now",    status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9" },
-  { id:4, name:"Dr. Suresh Verma",  spec:"Orthopedic",          avail:"Available Now",    status:"green",  emoji:"👨‍⚕️", bg:"#e3f2fd" },
-  { id:5, name:"Dr. Kavita Nair",   spec:"Pediatrician",        avail:"Available in 1h",  status:"yellow", emoji:"👩‍⚕️", bg:"#fce4ec" },
-  { id:6, name:"Dr. Arun Tiwari",   spec:"ENT Specialist",      avail:"Available Now",    status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9" },
-  { id:7, name:"Dr. Neha Singh",    spec:"Neurologist",         avail:"Available in 45m", status:"yellow", emoji:"👩‍⚕️", bg:"#f3e5f5" },
-  { id:8, name:"Dr. Vikram Das",    spec:"General Physician",   avail:"Available Now",    status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9" },
+  {id:1, name:"Dr. Priya Sharma",  spec_en:"General Physician",  spec_hi:"सामान्य चिकित्सक",    avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9"},
+  {id:2, name:"Dr. Rohan Mehta",   spec_en:"Cardiologist",        spec_hi:"हृदय रोग विशेषज्ञ",   avail_en:"Available in 30m", avail_hi:"30 मिनट में उपलब्ध", status:"yellow", emoji:"👨‍⚕️", bg:"#fff8e1"},
+  {id:3, name:"Dr. Anita Gupta",   spec_en:"Dermatologist",       spec_hi:"त्वचा रोग विशेषज्ञ",  avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9"},
+  {id:4, name:"Dr. Suresh Verma",  spec_en:"Orthopedic",          spec_hi:"हड्डी रोग विशेषज्ञ",  avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👨‍⚕️", bg:"#e3f2fd"},
+  {id:5, name:"Dr. Kavita Nair",   spec_en:"Pediatrician",        spec_hi:"बाल रोग विशेषज्ञ",    avail_en:"Available in 1h",  avail_hi:"1 घंटे में उपलब्ध",  status:"yellow", emoji:"👩‍⚕️", bg:"#fce4ec"},
+  {id:6, name:"Dr. Arun Tiwari",   spec_en:"ENT Specialist",      spec_hi:"कान-नाक-गला विशेषज्ञ",avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9"},
+  {id:7, name:"Dr. Neha Singh",    spec_en:"Neurologist",         spec_hi:"न्यूरोलॉजिस्ट",        avail_en:"Available in 45m", avail_hi:"45 मिनट में उपलब्ध",status:"yellow", emoji:"👩‍⚕️", bg:"#f3e5f5"},
+  {id:8, name:"Dr. Vikram Das",    spec_en:"General Physician",   spec_hi:"सामान्य चिकित्सक",    avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9"},
 ];
 
 const AM_SLOTS = ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM"];
 const PM_SLOTS = ["12:00 PM","12:30 PM","02:00 PM","02:30 PM","03:00 PM","04:00 PM","04:30 PM","05:00 PM"];
-const TAKEN    = { "09:30 AM":true, "11:00 AM":true, "02:30 PM":true, "04:00 PM":true };
+const TAKEN    = {"09:30 AM":true,"11:00 AM":true,"02:30 PM":true,"04:00 PM":true};
 
-let state = { patient:null, hospital:null, doctor:null, problem:"", date:null, slot:null, appointments:[] };
+let state = {patient:null, hospital:null, doctor:null, problem:"", date:null, slot:null, appointments:[]};
 
-function goToScreen(n) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('visible'));
+// ════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════
+function goToScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
   document.getElementById('screen'+n).classList.add('visible');
-  document.querySelectorAll('.nav-step').forEach((el,i) => {
-    el.classList.toggle('active', i+1===n);
-    el.classList.toggle('done', i+1<n);
+  document.querySelectorAll('.nav-step').forEach((el,i)=>{
+    el.classList.toggle('active',i+1===n);
+    el.classList.toggle('done',i+1<n);
   });
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function registerPatient() {
+// ════════════════════════════════════════════════════
+//  SCREEN 1 – REGISTER
+// ════════════════════════════════════════════════════
+function registerPatient(){
   const fname=document.getElementById('fname').value.trim();
   const lname=document.getElementById('lname').value.trim();
   const age=document.getElementById('age').value.trim();
   const gender=document.getElementById('gender').value;
   const phone=document.getElementById('phone').value.trim();
-  if (!fname||!lname||!age||!gender||!phone) { alert("Please fill all required fields."); return; }
-  state.patient = { fname, lname, age, gender, phone,
-    email: document.getElementById('email').value,
-    blood: document.getElementById('blood').value };
-  renderHospitals(); goToScreen(2);
+  const errMsg = currentLang==='hi'
+    ? "कृपया सभी आवश्यक फ़ील्ड भरें।"
+    : "Please fill all required fields.";
+  if(!fname||!lname||!age||!gender||!phone){alert(errMsg);return;}
+  state.patient={fname,lname,age,gender,phone,
+    email:document.getElementById('email').value,
+    blood:document.getElementById('blood').value};
+  renderHospitals();goToScreen(2);
 }
 
-function renderHospitals() {
-  document.getElementById('hospitalGrid').innerHTML = HOSPITALS.map(h => `
+// ════════════════════════════════════════════════════
+//  SCREEN 2 – HOSPITALS
+// ════════════════════════════════════════════════════
+function renderHospitals(){
+  const l=currentLang;
+  document.getElementById('hospitalGrid').innerHTML=HOSPITALS.map(h=>`
     <div class="hospital-card ${state.hospital?.id===h.id?'selected':''}" onclick="pickHospital(${h.id})">
       <div class="h-name">🏥 ${h.name}</div>
-      <div class="h-loc">📍 ${h.loc}</div>
+      <div class="h-loc">📍 ${l==='hi'?h.loc_hi:h.loc_en}</div>
       <div class="h-badges">
-        <span class="h-badge">${h.badge}</span>
+        <span class="h-badge">${l==='hi'?(BADGE_HI[h.badge]||h.badge):h.badge}</span>
       </div>
     </div>`).join('');
 }
-function pickHospital(id) { state.hospital=HOSPITALS.find(h=>h.id===id); renderHospitals(); }
-function selectHospital() {
-  if (!state.hospital) { alert("Please select a hospital."); return; }
-  renderDoctors(); goToScreen(3);
+function pickHospital(id){state.hospital=HOSPITALS.find(h=>h.id===id);renderHospitals();}
+function selectHospital(){
+  const errMsg=currentLang==='hi'?"कृपया एक अस्पताल चुनें।":"Please select a hospital.";
+  if(!state.hospital){alert(errMsg);return;}
+  renderDoctors();goToScreen(3);
 }
 
-function renderDoctors(filter="") {
-  const docs = filter ? DOCTORS.filter(d=>d.spec===filter) : DOCTORS;
-  document.getElementById('doctorGrid').innerHTML = docs.map(d => {
-    const fee = getDocFee(d.spec);
+// ════════════════════════════════════════════════════
+//  SCREEN 3 – DOCTORS
+// ════════════════════════════════════════════════════
+function renderDoctors(filter=""){
+  const l=currentLang;
+  const docs=filter?DOCTORS.filter(d=>d.spec_en===filter):DOCTORS;
+  document.getElementById('doctorGrid').innerHTML=docs.map(d=>{
+    const fee=getDocFee(d.spec_en);
+    const spec=l==='hi'?d.spec_hi:d.spec_en;
+    const avail=l==='hi'?d.avail_hi:d.avail_en;
+    const consultLabel=l==='hi'?'परामर्श':'Consult';
     return `
     <div class="doctor-card ${state.doctor?.id===d.id?'selected':''}" onclick="pickDoctor(${d.id})">
       <div class="doc-avatar" style="background:${d.bg}">${d.emoji}</div>
       <div style="flex:1">
         <div class="doc-name">${d.name}</div>
-        <div class="doc-spec">${d.spec}</div>
-        <div class="doc-avail avail-${d.status}" style="margin-top:4px"><span class="avail-dot"></span>${d.avail}</div>
-        <div class="doc-fee-badge">💊 Consult: ${fee}</div>
+        <div class="doc-spec">${spec}</div>
+        <div class="doc-avail avail-${d.status}" style="margin-top:4px"><span class="avail-dot"></span>${avail}</div>
+        <div class="doc-fee-badge">💊 ${consultLabel}: ${fee}</div>
       </div>
     </div>`;
   }).join('');
 }
-function filterDoctors() { renderDoctors(document.getElementById('specFilter').value); }
-function pickDoctor(id) { state.doctor=DOCTORS.find(d=>d.id===id); renderDoctors(document.getElementById('specFilter').value); }
-function selectDoctor() {
-  state.problem = document.getElementById('problem').value.trim();
-  if (!state.problem) { alert("Please describe your health concern."); return; }
-  if (!state.doctor)  { alert("Please select a doctor."); return; }
-  renderSlotScreen(); goToScreen(4);
+function filterDoctors(){renderDoctors(document.getElementById('specFilter').value);}
+function pickDoctor(id){state.doctor=DOCTORS.find(d=>d.id===id);renderDoctors(document.getElementById('specFilter').value);}
+function selectDoctor(){
+  state.problem=document.getElementById('problem').value.trim();
+  const errProblem=currentLang==='hi'?"कृपया अपनी स्वास्थ्य समस्या बताएं।":"Please describe your health concern.";
+  const errDoc=currentLang==='hi'?"कृपया एक डॉक्टर चुनें।":"Please select a doctor.";
+  if(!state.problem){alert(errProblem);return;}
+  if(!state.doctor){alert(errDoc);return;}
+  renderSlotScreen();goToScreen(4);
 }
-
-function renderSlotScreen() {
-  const docFee = getDocFee(state.doctor.spec);
-  document.getElementById('apptSummary').innerHTML = `
+function renderSlotScreen(){
+  const l=currentLang;
+  const docFee=getDocFee(state.doctor.spec_en);
+  const labels = l==='hi'
+    ? {patient:"मरीज़",hospital:"अस्पताल",doctor:"डॉक्टर",fee:"परामर्श शुल्क"}
+    : {patient:"Patient",hospital:"Hospital",doctor:"Doctor",fee:"Consultation Fee"};
+  const docSpec=l==='hi'?state.doctor.spec_hi:state.doctor.spec_en;
+  const hosLoc=l==='hi'?state.hospital.loc_hi:state.hospital.loc_en;
+  document.getElementById('apptSummary').innerHTML=`
     <div style="display:flex;gap:24px;flex-wrap:wrap">
-      <div><div class="section-label">Patient</div><div style="font-weight:600">${state.patient.fname} ${state.patient.lname}</div></div>
-      <div><div class="section-label">Hospital</div><div style="font-weight:600">${state.hospital.name}</div></div>
-      <div><div class="section-label">Doctor</div><div style="font-weight:600">${state.doctor.name} — ${state.doctor.spec}</div></div>
-      <div><div class="section-label">Consultation Fee</div><div style="font-weight:700;font-size:1.1rem;color:#b45309">${docFee}</div></div>
+      <div><div class="section-label">${labels.patient}</div><div style="font-weight:600">${state.patient.fname} ${state.patient.lname}</div></div>
+      <div><div class="section-label">${labels.hospital}</div><div style="font-weight:600">${state.hospital.name}</div></div>
+      <div><div class="section-label">${labels.doctor}</div><div style="font-weight:600">${state.doctor.name} — ${docSpec}</div></div>
+      <div><div class="section-label">${labels.fee}</div><div style="font-weight:700;font-size:1.1rem;color:#b45309">${docFee}</div></div>
     </div>`;
+
   const dateRow=document.getElementById('dateRow');
-  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const days_hi=['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'];
+  const months_en=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months_hi=['जन','फ़र','मार','अप्र','मई','जून','जुल','अग','सित','अक्ट','नव','दिस'];
   dateRow.innerHTML='';
   for(let i=0;i<7;i++){
-    const d=new Date(); d.setDate(d.getDate()+i);
+    const d=new Date();d.setDate(d.getDate()+i);
     const iso=d.toISOString().split('T')[0];
+    const dayName=l==='hi'?days_hi[d.getDay()]:days_en[d.getDay()];
+    const monName=l==='hi'?months_hi[d.getMonth()]:months_en[d.getMonth()];
     const btn=document.createElement('div');
-    btn.innerHTML=`${days[d.getDay()]}<br><strong>${d.getDate()} ${months[d.getMonth()]}</strong>`;
+    btn.innerHTML=`${dayName}<br><strong>${d.getDate()} ${monName}</strong>`;
     btn.style.cssText=`min-width:68px;padding:10px 8px;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.82rem;background:var(--white);transition:all 0.2s;flex-shrink:0`;
     btn.onclick=()=>{
       state.date=iso;
@@ -904,390 +700,351 @@ function renderSlotScreen() {
   renderSlots('slotsPM',PM_SLOTS);
 }
 function renderSlots(gridId,slots){
+  const takenLabel=currentLang==='hi'?' 🚫':' 🚫';
   document.getElementById(gridId).innerHTML=slots.map(s=>`
     <div class="slot ${TAKEN[s]?'taken':''} ${state.slot===s?'selected':''}"
       onclick="${TAKEN[s]?'':` pickSlot('${s}')`}">
-      ${s}${TAKEN[s]?' 🚫':''}
+      ${s}${TAKEN[s]?takenLabel:''}
     </div>`).join('');
 }
-function pickSlot(s){ state.slot=s; renderSlots('slotsAM',AM_SLOTS); renderSlots('slotsPM',PM_SLOTS); }
+function pickSlot(s){state.slot=s;renderSlots('slotsAM',AM_SLOTS);renderSlots('slotsPM',PM_SLOTS);}
 
+// ════════════════════════════════════════════════════
+//  BOOK APPOINTMENT
+// ════════════════════════════════════════════════════
 function bookAppointment(){
-  if(!state.slot){alert("Please select a time slot.");return;}
-  const appt = {
+  const errMsg=currentLang==='hi'?"कृपया एक समय स्लॉट चुनें।":"Please select a time slot.";
+  if(!state.slot){alert(errMsg);return;}
+  const appt={
     id:Date.now(), patient:{...state.patient}, hospital:{...state.hospital},
     doctor:{...state.doctor}, problem:state.problem, date:state.date, slot:state.slot,
-    status:"Confirmed", booked:new Date().toLocaleDateString('en-IN')
+    status_en:"Confirmed", status_hi:"पुष्टि हुई",
+    booked:new Date().toLocaleDateString('en-IN')
   };
   state.appointments.unshift(appt);
-
-  fetch(BACKEND_URL, {
-    method:"POST", mode:"no-cors",
-    headers:{"Content-Type":"text/plain"},
-    body: JSON.stringify({
+  fetch(BACKEND_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},
+    body:JSON.stringify({
       bookingId:"SQ-"+Date.now().toString().slice(-6),
       firstName:state.patient.fname, lastName:state.patient.lname,
       age:state.patient.age, gender:state.patient.gender,
       phone:state.patient.phone, email:state.patient.email||"",
       bloodGroup:state.patient.blood||"", hospital:state.hospital.name,
-      doctor:state.doctor.name, specialization:state.doctor.spec,
+      doctor:state.doctor.name, specialization:state.doctor.spec_en,
       concern:state.problem, date:state.date, timeSlot:state.slot
     })
   }).catch(()=>{});
-
-  renderAppointments(true); goToScreen(5); state.slot=null;
+  renderAppointments(true);goToScreen(5);state.slot=null;
 }
 
+// ════════════════════════════════════════════════════
+//  SCREEN 5 – MY APPOINTMENTS
+// ════════════════════════════════════════════════════
 function renderAppointments(justBooked=false){
   document.getElementById('successBanner').style.display=justBooked?'block':'none';
   const list=document.getElementById('apptList');
+  const l=currentLang;
   if(!state.appointments.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">📅</div><div>No appointments yet.</div></div>`;
+    const msg=l==='hi'?"अभी तक कोई अपॉइंटमेंट नहीं।":"No appointments yet.";
+    list.innerHTML=`<div class="empty"><div class="empty-icon">📅</div><div>${msg}</div></div>`;
     return;
   }
   list.innerHTML=state.appointments.map(a=>{
-    const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.hospital.name+', '+a.hospital.loc)}`;
+    const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.hospital.name+', '+(l==='hi'?a.hospital.loc_hi:a.hospital.loc_en))}`;
+    const status=l==='hi'?a.status_hi:a.status_en;
+    const spec=l==='hi'?a.doctor.spec_hi:a.doctor.spec_en;
+    const hosLoc=l==='hi'?a.hospital.loc_hi:a.hospital.loc_en;
+    const liveTxt=l==='hi'?"लाइव ट्रैकिंग":"Live Tracking";
+    const dirTxt=l==='hi'?"🗺️ दिशा-निर्देश पाएं":"🗺️ Get Directions";
+    const availTxt=l==='hi'?"उपलब्धता":"Availability";
+    const bookedTxt=l==='hi'?"बुकिंग तिथि":"Booked on";
+    const availStr=l==='hi'?a.doctor.avail_hi:a.doctor.avail_en;
     return `<div class="appt-card">
       <div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span class="appt-badge badge-confirmed">${a.status}</span>
-          <span class="live-pill"><span class="live-dot"></span>Live Tracking</span>
+          <span class="appt-badge badge-confirmed">${status}</span>
+          <span class="live-pill"><span class="live-dot"></span>${liveTxt}</span>
         </div>
         <div class="appt-doc">${a.doctor.emoji} ${a.doctor.name}</div>
-        <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${a.hospital.loc}</div>
+        <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${hosLoc}</div>
         <div class="appt-meta">📅 ${a.date} · ⏰ ${a.slot}</div>
-        <div class="appt-meta" style="margin-top:4px">🩺 ${a.doctor.spec}</div>
-        <a class="map-link" href="${mapUrl}" target="_blank">🗺️ Get Directions</a>
+        <div class="appt-meta" style="margin-top:4px">🩺 ${spec}</div>
+        <a class="map-link" href="${mapUrl}" target="_blank">${dirTxt}</a>
       </div>
       <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">Availability</div>
+        <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">${availTxt}</div>
         <div class="doc-avail avail-${a.doctor.status}" style="font-size:0.82rem;white-space:nowrap">
-          <span class="avail-dot"></span>${a.doctor.avail}
+          <span class="avail-dot"></span>${availStr}
         </div>
-        <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">Booked on</div>
+        <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">${bookedTxt}</div>
         <div style="font-size:0.82rem;font-weight:500">${a.booked}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ══════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
+//  LANGUAGE TOGGLE
+// ════════════════════════════════════════════════════
+function toggleLang(){
+  currentLang = currentLang==='en'?'hi':'en';
+  const l = currentLang;
+  const btn = document.getElementById('nav-lang-btn');
+  btn.textContent = l==='hi' ? '🌐 View in English' : '🌐 हिन्दी में देखें';
+
+  // --- Static elements with data-en / data-hi ---
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const val = l==='hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+    if(!val) return;
+    // nav-step: just update text
+    if(el.classList.contains('nav-step')){el.textContent=val;return;}
+    // buttons, labels, divs, spans with innerHTML content
+    if(['BUTTON','LABEL','DIV','SPAN','H1','H2','H3'].includes(el.tagName)){
+      el.innerHTML=val; return;
+    }
+    if(el.tagName==='OPTION'){el.textContent=val; return;}
+  });
+
+  // --- Placeholders ---
+  document.querySelectorAll('[data-en-placeholder]').forEach(el=>{
+    el.placeholder = l==='hi'
+      ? (el.getAttribute('data-hi-placeholder')||'')
+      : (el.getAttribute('data-en-placeholder')||'');
+  });
+
+  // --- Chat widget strings ---
+  document.getElementById('chat-title').textContent   = l==='hi'?"स्मार्ट क्यू सहायक":"Smart Queue Assistant";
+  document.getElementById('chat-status').textContent  = l==='hi'?"AI · हमेशा उपलब्ध":"AI · Always available";
+
+  // --- Voice widget strings ---
+  document.getElementById('vp-title').textContent     = l==='hi'?"स्मार्ट क्यू वॉयस AI":"Smart Queue Voice AI";
+  document.getElementById('vp-subtitle').textContent  = l==='hi'?"बोलने के लिए माइक दबाएं":"Tap mic to speak";
+  document.getElementById('vp-label').textContent     = l==='hi'?"शुरू करने के लिए दबाएं":"Tap to start";
+  document.getElementById('vp-mic-label').textContent = l==='hi'?"सुनना शुरू करें":"Start Listening";
+  document.getElementById('vp-stop-label').textContent= l==='hi'?"रोकें":"Stop";
+  document.getElementById('vp-clear-label').textContent=l==='hi'?"साफ़ करें":"Clear";
+  const hint = document.getElementById('vp-transcript-hint');
+  if(hint) hint.textContent = l==='hi'
+    ? "माइक दबाएं और स्मार्ट क्यू के बारे में कुछ भी पूछें…"
+    : "Tap the mic and ask anything about Smart Queue…";
+
+  // --- Re-render dynamic screens if already populated ---
+  renderHospitals();
+  filterDoctors();
+  if(state.appointments.length) renderAppointments(false);
+  // Re-render slot screen summary if doctor selected
+  if(state.doctor) renderSlotScreen();
+}
+
+// ════════════════════════════════════════════════════
 //  AI CHAT WIDGET
-// ══════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 (function(){
-  const SYSTEM = `You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India.
-
-You help users with:
-- Booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot)
-- Finding the right specialist based on symptoms
-- Hospital info and directions
-- General health guidance (always advise consulting a doctor for diagnosis)
-- Platform navigation and troubleshooting
-
-Hospitals: AIIMS Rishikesh (Government, ₹50), Shivalik Hospital - Haridwar (Private, ₹300), Himalayan Institute - Dehradun (Multi-Specialty, ₹300), Max Super Specialty - Saharanpur (Private, ₹300), Kailash Hospital - Roorkee (Private, ₹300), Gangotri Medical - Haridwar (Clinic, ₹150), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹150), Life Care Hospital - Muzaffarnagar (General, ₹150).
-
-Consultation fees: Government hospitals ₹50, Semi-Government/Clinic/General ₹150, Private/Multi-Specialty ₹300.
-
+  const SYSTEM=`You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India.
+You help users with: booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot), finding the right specialist based on symptoms, hospital info and directions, general health guidance (always advise consulting a doctor for diagnosis), platform navigation and troubleshooting.
+Hospitals: AIIMS Rishikesh (Government, ₹100), Shivalik Hospital - Haridwar (Private, ₹400), Himalayan Institute - Dehradun (Multi-Specialty, ₹400), Max Super Specialty - Saharanpur (Private, ₹400), Kailash Hospital - Roorkee (Private, ₹400), Gangotri Medical - Haridwar (Clinic, ₹200), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹200), Life Care Hospital - Muzaffarnagar (General, ₹200).
 Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician).
-
 Be concise, warm and helpful. Respond in the same language the user writes in (Hindi or English).`;
 
-  const QUICK_INIT   = ["How to book appointment?","Which doctor for fever?","Hospital in Dehradun","OPD timings"];
-  const QUICK_FOLLOW = ["Book an appointment","Find specialist","View hospitals","Help with form"];
+  const QR_EN_INIT   = ["How to book appointment?","Which doctor for fever?","Hospital in Dehradun","OPD timings"];
+  const QR_HI_INIT   = ["अपॉइंटमेंट कैसे बुक करें?","बुखार के लिए कौन डॉक्टर?","देहरादून में अस्पताल","OPD समय"];
+  const QR_EN_FOLLOW = ["Book an appointment","Find specialist","View hospitals","Help with form"];
+  const QR_HI_FOLLOW = ["अपॉइंटमेंट बुक करें","विशेषज्ञ खोजें","अस्पताल देखें","फ़ॉर्म में मदद"];
 
-  let isOpen=false, isLoading=false;
+  let isOpen=false,isLoading=false;
   const chatHistory=[];
-
-  const btn     = document.getElementById('medi-chat-btn');
-  const panel   = document.getElementById('medi-chat-panel');
-  const closeBtn= document.getElementById('medi-chat-close');
-  const msgsEl  = document.getElementById('medi-chat-messages');
-  const inputEl = document.getElementById('medi-chat-input');
-  const sendEl  = document.getElementById('medi-chat-send');
-  const qrEl    = document.getElementById('medi-quick-replies');
+  const btn=document.getElementById('medi-chat-btn');
+  const panel=document.getElementById('medi-chat-panel');
+  const closeBtn=document.getElementById('medi-chat-close');
+  const msgsEl=document.getElementById('medi-chat-messages');
+  const inputEl=document.getElementById('medi-chat-input');
+  const sendEl=document.getElementById('medi-chat-send');
+  const qrEl=document.getElementById('medi-quick-replies');
 
   btn.addEventListener('click',()=>{
-    isOpen=!isOpen; panel.classList.toggle('open',isOpen);
-    if(isOpen && chatHistory.length===0) greet();
+    isOpen=!isOpen;panel.classList.toggle('open',isOpen);
+    if(isOpen&&chatHistory.length===0) greet();
     if(isOpen) setTimeout(()=>inputEl.focus(),300);
   });
-  closeBtn.addEventListener('click',()=>{ isOpen=false; panel.classList.remove('open'); });
+  closeBtn.addEventListener('click',()=>{isOpen=false;panel.classList.remove('open');});
 
   function greet(){
-    addMsg('bot','Hi there! 👋 I\'m the Smart Queue AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer questions about our hospitals.\n\nWhat can I help you with today?');
-    showQR(QUICK_INIT);
+    const msg = currentLang==='hi'
+      ? "नमस्ते! 👋 मैं स्मार्ट क्यू AI सहायक हूँ।\n\nमैं आपको सही डॉक्टर ढूंढने, अपॉइंटमेंट बुक करने या हमारे अस्पतालों के बारे में जानकारी देने में मदद कर सकता हूँ।\n\nआज मैं आपकी कैसे सहायता कर सकता हूँ?"
+      : "Hi there! 👋 I'm the Smart Queue AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer questions about our hospitals.\n\nWhat can I help you with today?";
+    addMsg('bot',msg);
+    showQR(currentLang==='hi'?QR_HI_INIT:QR_EN_INIT);
   }
 
   function showQR(replies){
     qrEl.innerHTML='';
     replies.forEach(r=>{
       const b=document.createElement('button');
-      b.className='cqr-btn'; b.textContent=r;
-      b.addEventListener('click',()=>{ qrEl.innerHTML=''; send(r); });
+      b.className='cqr-btn';b.textContent=r;
+      b.addEventListener('click',()=>{qrEl.innerHTML='';send(r);});
       qrEl.appendChild(b);
     });
   }
-
   function addMsg(role,text){
-    const wrap=document.createElement('div');
-    wrap.className='cmsg '+role;
-    const bub=document.createElement('div');
-    bub.className='bubble';
+    const wrap=document.createElement('div');wrap.className='cmsg '+role;
+    const bub=document.createElement('div');bub.className='bubble';
     bub.innerHTML=text.replace(/\n/g,'<br>');
-    const t=document.createElement('div');
-    t.className='ctime';
+    const t=document.createElement('div');t.className='ctime';
     t.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    wrap.appendChild(bub); wrap.appendChild(t);
-    msgsEl.appendChild(wrap);
+    wrap.appendChild(bub);wrap.appendChild(t);msgsEl.appendChild(wrap);
     msgsEl.scrollTop=msgsEl.scrollHeight;
   }
-
   function showTyping(){
-    const w=document.createElement('div');
-    w.className='cmsg bot typing-wrap'; w.id='chat-typing';
-    const b=document.createElement('div'); b.className='typing-bubble';
+    const w=document.createElement('div');w.className='cmsg bot typing-wrap';w.id='chat-typing';
+    const b=document.createElement('div');b.className='typing-bubble';
     b.innerHTML='<span></span><span></span><span></span>';
-    w.appendChild(b); msgsEl.appendChild(w);
-    msgsEl.scrollTop=msgsEl.scrollHeight;
+    w.appendChild(b);msgsEl.appendChild(w);msgsEl.scrollTop=msgsEl.scrollHeight;
   }
-  function hideTyping(){ const el=document.getElementById('chat-typing'); if(el)el.remove(); }
+  function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.remove();}
 
   async function send(text){
-    if(!text.trim()||isLoading) return;
-    isLoading=true; sendEl.disabled=true;
-    qrEl.innerHTML='';
+    if(!text.trim()||isLoading)return;
+    isLoading=true;sendEl.disabled=true;qrEl.innerHTML='';
     addMsg('user',text.trim());
-    chatHistory.push({role:'user', parts:[{text:text.trim()}]});
-    inputEl.value=''; inputEl.style.height='auto';
+    chatHistory.push({role:'user',parts:[{text:text.trim()}]});
+    inputEl.value='';inputEl.style.height='auto';
     showTyping();
-
     try{
-      const res = await fetch(BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          type: 'chat',
-          system: SYSTEM,
-          history: chatHistory
-        })
-      });
-
-      const data = await res.json();
+      const res=await fetch(BACKEND_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({type:'chat',system:SYSTEM,history:chatHistory})});
+      const data=await res.json();hideTyping();
+      const reply=data?.reply||(currentLang==='hi'?"क्षमा करें, अभी उत्तर नहीं मिला। पुनः प्रयास करें।":"Sorry, I couldn't get a response right now. Please try again!");
+      addMsg('bot',reply);chatHistory.push({role:'model',parts:[{text:reply}]});
+      if(chatHistory.length===2) showQR(currentLang==='hi'?QR_HI_FOLLOW:QR_EN_FOLLOW);
+    }catch(err){
       hideTyping();
-      const reply = data?.reply || "Sorry, I couldn't get a response right now. Please try again!";
-      addMsg('bot', reply);
-      chatHistory.push({role:'model', parts:[{text:reply}]});
-      if(chatHistory.length===2) showQR(QUICK_FOLLOW);
-
-    } catch(err){
-      hideTyping();
-      addMsg('bot','⚠️ Could not connect to AI. Please check your internet and try again.');
-      console.error('Chat error:', err);
+      addMsg('bot',currentLang==='hi'?"⚠️ AI से कनेक्ट नहीं हो पाया। इंटरनेट जांचें और पुनः प्रयास करें।":"⚠️ Could not connect to AI. Please check your internet and try again.");
     }
-    isLoading=false; sendEl.disabled=false;
+    isLoading=false;sendEl.disabled=false;
   }
-
   sendEl.addEventListener('click',()=>send(inputEl.value));
-  inputEl.addEventListener('keydown',e=>{
-    if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(inputEl.value); }
-  });
-  inputEl.addEventListener('input',()=>{
-    inputEl.style.height='auto';
-    inputEl.style.height=Math.min(inputEl.scrollHeight,76)+'px';
-  });
+  inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send(inputEl.value);}});
+  inputEl.addEventListener('input',()=>{inputEl.style.height='auto';inputEl.style.height=Math.min(inputEl.scrollHeight,76)+'px';});
 })();
 
-
-// ══════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 //  VOICE AI WIDGET
-// ══════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 (function(){
-  const VP_SYSTEM = `You are an AI Voice Assistant for Smart Queue (smartqueue98.github.io/Smart_Queue).
+  const VP_SYSTEM=`You are an AI Voice Assistant for Smart Queue. Help users understand and use Smart Queue: a digital queue management system to avoid long physical lines. Keep ALL responses under 3 sentences — they will be spoken aloud. Never use bullet points, asterisks, markdown, or special characters. Write in natural spoken sentences only. Be friendly and clear. You can mix light Hinglish if user does. Smart Queue lets users book slots online, check queue position, and come when it is their turn. It is completely free and mobile-friendly.`;
 
-Help users understand and use Smart Queue: a digital queue management system to avoid long physical lines.
-
-Keep ALL responses under 3 sentences — they will be spoken aloud.
-Never use bullet points, asterisks, markdown, or special characters.
-Write in natural spoken sentences only.
-Be friendly and clear. You can mix light Hinglish if user does.
-
-Smart Queue lets users book slots online, check queue position, and come when it is their turn.
-It is completely free and mobile-friendly.
-If unsure, say: I recommend checking the website or trying again.`;
-
-  let vpOpen=false, vpListening=false, vpSpeaking=false;
-  let recognition=null;
+  let vpOpen=false,vpListening=false,vpSpeaking=false,recognition=null;
   const vpHistory=[];
+  const vpBtn=document.getElementById('sq-voice-btn');
+  const vpPanel=document.getElementById('sq-voice-panel');
+  const vpClose=document.getElementById('sq-voice-close');
+  const vpOrb=document.getElementById('vp-orb');
+  const vpLabel=document.getElementById('vp-label');
+  const vpTx=document.getElementById('vp-transcript');
+  const vpMicBtn=document.getElementById('vp-mic-btn');
+  const vpStopBtn=document.getElementById('vp-stop-btn');
 
-  const vpBtn    = document.getElementById('sq-voice-btn');
-  const vpPanel  = document.getElementById('sq-voice-panel');
-  const vpClose  = document.getElementById('sq-voice-close');
-  const vpOrb    = document.getElementById('vp-orb');
-  const vpLabel  = document.getElementById('vp-label');
-  const vpTx     = document.getElementById('vp-transcript');
-  const vpMicBtn = document.getElementById('vp-mic-btn');
-  const vpStopBtn= document.getElementById('vp-stop-btn');
+  vpBtn.addEventListener('click',()=>{vpOpen=!vpOpen;vpPanel.classList.toggle('open',vpOpen);});
+  vpClose.addEventListener('click',()=>{vpOpen=false;vpPanel.classList.remove('open');vpStopAll();});
 
-  vpBtn.addEventListener('click',()=>{ vpOpen=!vpOpen; vpPanel.classList.toggle('open',vpOpen); });
-  vpClose.addEventListener('click',()=>{ vpOpen=false; vpPanel.classList.remove('open'); vpStopAll(); });
-
-  const SpeechRecognition = window.SpeechRecognition||window.webkitSpeechRecognition;
-  const hasASR = !!SpeechRecognition;
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const hasASR=!!SpeechRecognition;
 
   function initRecognition(){
-    if(!hasASR) return;
-    recognition = new SpeechRecognition();
-    recognition.lang='en-IN'; recognition.interimResults=false;
-    recognition.maxAlternatives=1; recognition.continuous=false;
+    if(!hasASR)return;
+    recognition=new SpeechRecognition();
+    recognition.lang=currentLang==='hi'?'hi-IN':'en-IN';
+    recognition.interimResults=false;recognition.maxAlternatives=1;recognition.continuous=false;
     recognition.onstart=()=>{
-      vpListening=true; setOrbState('listening'); setLabel('Listening…');
-      vpMicBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> Stop Mic';
-      vpMicBtn.classList.remove('primary'); vpMicBtn.classList.add('danger');
+      vpListening=true;setOrbState('listening');
+      setLabel(currentLang==='hi'?'सुन रहा हूँ…':'Listening…');
+      document.getElementById('vp-mic-label').textContent=currentLang==='hi'?'माइक बंद करें':'Stop Mic';
+      vpMicBtn.classList.remove('primary');vpMicBtn.classList.add('danger');
     };
-    recognition.onresult=(e)=>{ const t=e.results[0][0].transcript.trim(); if(t) vpAskText(t); };
+    recognition.onresult=(e)=>{const t=e.results[0][0].transcript.trim();if(t)vpAskText(t);};
     recognition.onerror=(e)=>{
       resetMicBtn();
-      if(e.error==='not-allowed') addTx('system','Microphone access denied.');
-      else if(e.error!=='aborted') addTx('system','Could not hear clearly. Try again.');
+      if(e.error==='not-allowed') addTx('system',currentLang==='hi'?'माइक एक्सेस अस्वीकृत।':'Microphone access denied.');
+      else if(e.error!=='aborted') addTx('system',currentLang==='hi'?'स्पष्ट रूप से नहीं सुना। पुनः प्रयास करें।':'Could not hear clearly. Try again.');
     };
-    recognition.onend=()=>{ vpListening=false; resetMicBtn(); };
+    recognition.onend=()=>{vpListening=false;resetMicBtn();};
   }
 
-  window.vpToggleMic = function(){
-    if(!hasASR){ addTx('system','Voice not supported. Try Chrome.'); return; }
-    if(vpListening){ recognition.stop(); return; }
-    if(vpSpeaking) vpStopSpeaking();
-    if(!recognition) initRecognition();
-    try{ recognition.start(); }catch(e){ initRecognition(); setTimeout(()=>recognition.start(),100); }
+  window.vpToggleMic=function(){
+    if(!hasASR){addTx('system',currentLang==='hi'?'वॉयस समर्थित नहीं। Chrome आज़माएं।':'Voice not supported. Try Chrome.');return;}
+    if(vpListening){recognition.stop();return;}
+    if(vpSpeaking)vpStopSpeaking();
+    if(!recognition)initRecognition();
+    else{recognition.lang=currentLang==='hi'?'hi-IN':'en-IN';}
+    try{recognition.start();}catch(e){initRecognition();setTimeout(()=>recognition.start(),100);}
   };
 
-  window.vpStopSpeaking = function(){
-    if(window.speechSynthesis) window.speechSynthesis.cancel();
-    vpSpeaking=false; setOrbState('idle'); setLabel('Tap to start');
-    vpStopBtn.disabled=true; resetMicBtn();
+  window.vpStopSpeaking=function(){
+    if(window.speechSynthesis)window.speechSynthesis.cancel();
+    vpSpeaking=false;setOrbState('idle');
+    setLabel(currentLang==='hi'?'शुरू करने के लिए दबाएं':'Tap to start');
+    vpStopBtn.disabled=true;resetMicBtn();
   };
 
   function speak(text){
-    if(!window.speechSynthesis){ setLabel('Ready'); return; }
+    if(!window.speechSynthesis){setLabel(currentLang==='hi'?'तैयार':'Ready');return;}
     window.speechSynthesis.cancel();
     const utt=new SpeechSynthesisUtterance(text);
-    utt.lang='en-IN'; utt.rate=0.95; utt.pitch=1.05; utt.volume=1;
+    utt.lang=currentLang==='hi'?'hi-IN':'en-IN';utt.rate=0.95;utt.pitch=1.05;utt.volume=1;
     const voices=window.speechSynthesis.getVoices();
-    const preferred=voices.find(v=>v.lang.startsWith('en')&&v.name.toLowerCase().includes('female'))
-      ||voices.find(v=>v.lang.startsWith('en-IN'))||voices.find(v=>v.lang.startsWith('en'));
-    if(preferred) utt.voice=preferred;
-    utt.onstart=()=>{ vpSpeaking=true; setOrbState('speaking'); setLabel('Speaking…'); vpStopBtn.disabled=false; };
-    utt.onend=()=>{ vpSpeaking=false; setOrbState('idle'); setLabel('Tap to start'); vpStopBtn.disabled=true; };
-    utt.onerror=()=>{ vpSpeaking=false; setOrbState('idle'); setLabel('Tap to start'); vpStopBtn.disabled=true; };
+    const preferred=voices.find(v=>v.lang.startsWith(currentLang==='hi'?'hi':'en')&&v.name.toLowerCase().includes('female'))
+      ||voices.find(v=>v.lang.startsWith(currentLang==='hi'?'hi-IN':'en-IN'))
+      ||voices.find(v=>v.lang.startsWith(currentLang==='hi'?'hi':'en'));
+    if(preferred)utt.voice=preferred;
+    utt.onstart=()=>{vpSpeaking=true;setOrbState('speaking');setLabel(currentLang==='hi'?'बोल रहा हूँ…':'Speaking…');vpStopBtn.disabled=false;};
+    utt.onend=()=>{vpSpeaking=false;setOrbState('idle');setLabel(currentLang==='hi'?'शुरू करने के लिए दबाएं':'Tap to start');vpStopBtn.disabled=true;};
+    utt.onerror=()=>{vpSpeaking=false;setOrbState('idle');vpStopBtn.disabled=true;};
     window.speechSynthesis.speak(utt);
   }
 
-  window.vpAskText = async function(text){
-    if(!text.trim()) return;
-    vpStopSpeaking();
-    addTx('user',text);
+  window.vpAskText=async function(text){
+    if(!text.trim())return;
+    vpStopSpeaking();addTx('user',text);
     vpHistory.push({role:'user',parts:[{text:text}]});
-    setOrbState('thinking'); setLabel('Thinking…'); vpMicBtn.disabled=true;
-
+    setOrbState('thinking');setLabel(currentLang==='hi'?'सोच रहा हूँ…':'Thinking…');vpMicBtn.disabled=true;
     try{
-      const res = await fetch(BACKEND_URL, {
-        method:'POST',
-        headers:{'Content-Type':'text/plain;charset=utf-8'},
-        body: JSON.stringify({ type:'voice', system:VP_SYSTEM, history:vpHistory })
-      });
-      const data = await res.json();
-      const reply = data?.reply || "I'm sorry, I couldn't get a response. Please try again.";
+      const res=await fetch(BACKEND_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({type:'voice',system:VP_SYSTEM,history:vpHistory})});
+      const data=await res.json();
+      const reply=data?.reply||(currentLang==='hi'?"माफ़ करें, उत्तर नहीं मिला। पुनः प्रयास करें।":"I'm sorry, I couldn't get a response. Please try again.");
       vpHistory.push({role:'model',parts:[{text:reply}]});
-      addTx('bot',reply);
-      speak(reply);
-    } catch(err){
-      const msg="Connection error. Please check your internet.";
-      addTx('system',msg); speak(msg);
+      addTx('bot',reply);speak(reply);
+    }catch(err){
+      const msg=currentLang==='hi'?"कनेक्शन त्रुटि। इंटरनेट जांचें।":"Connection error. Please check your internet.";
+      addTx('system',msg);speak(msg);
     }
     vpMicBtn.disabled=false;
   };
 
   function addTx(role,text){
     const d=document.createElement('div');
-    if(role==='system'){ d.style.cssText='color:#c0392b;font-size:.74rem;margin-top:4px;'; d.textContent='⚠️ '+text; }
-    else { d.className=role==='user'?'heard':'reply'; d.textContent=text; }
-    if(vpTx.querySelector('div[style*="color:#8aabb8"]')) vpTx.innerHTML='';
-    vpTx.appendChild(d); vpTx.appendChild(document.createElement('br'));
+    if(role==='system'){d.style.cssText='color:#c0392b;font-size:.74rem;margin-top:4px;';d.textContent='⚠️ '+text;}
+    else{d.className=role==='user'?'heard':'reply';d.textContent=text;}
+    const hint=document.getElementById('vp-transcript-hint');if(hint)hint.remove();
+    vpTx.appendChild(d);vpTx.appendChild(document.createElement('br'));
     vpTx.scrollTop=vpTx.scrollHeight;
   }
-
-  function setOrbState(s){ vpOrb.classList.remove('listening','speaking'); if(s==='listening'||s==='speaking') vpOrb.classList.add(s); }
-  function setLabel(t){ vpLabel.textContent=t; }
+  function setOrbState(s){vpOrb.classList.remove('listening','speaking');if(s==='listening'||s==='speaking')vpOrb.classList.add(s);}
+  function setLabel(t){vpLabel.textContent=t;}
   function resetMicBtn(){
     vpListening=false;
-    vpMicBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> Start Listening';
-    vpMicBtn.classList.remove('danger'); vpMicBtn.classList.add('primary');
-    if(!vpSpeaking){ setOrbState('idle'); setLabel('Tap to start'); }
+    document.getElementById('vp-mic-label').textContent=currentLang==='hi'?'सुनना शुरू करें':'Start Listening';
+    vpMicBtn.classList.remove('danger');vpMicBtn.classList.add('primary');
+    if(!vpSpeaking){setOrbState('idle');setLabel(currentLang==='hi'?'शुरू करने के लिए दबाएं':'Tap to start');}
   }
-  function vpStopAll(){ if(vpListening&&recognition) recognition.stop(); vpStopSpeaking(); }
+  function vpStopAll(){if(vpListening&&recognition)recognition.stop();vpStopSpeaking();}
   window.vpClear=function(){
-    vpTx.innerHTML='<div style="color:#8aabb8;font-size:.76rem;font-style:italic;">Tap the mic and ask anything about Smart Queue…</div>';
-    vpHistory.length=0; vpStopAll(); setLabel('Tap to start');
+    vpTx.innerHTML=`<div id="vp-transcript-hint" style="color:#8aabb8;font-size:.76rem;font-style:italic;">${currentLang==='hi'?'माइक दबाएं और स्मार्ट क्यू के बारे में कुछ भी पूछें…':'Tap the mic and ask anything about Smart Queue…'}</div>`;
+    vpHistory.length=0;vpStopAll();setLabel(currentLang==='hi'?'शुरू करने के लिए दबाएं':'Tap to start');
   };
 
-  if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
-  if(hasASR) initRecognition();
+  if(window.speechSynthesis)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+  if(hasASR)initRecognition();
 })();
-
-// ══════════════════════════════════════════════════════════════
-//  HINDI / ENGLISH LANGUAGE TOGGLE
-// ══════════════════════════════════════════════════════════════
-let currentLang = 'en';
-
-const TRANSLATIONS = {
-  en: {
-    'hero-title':        'Book Your Appointment',
-    'hero-sub':          'Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.',
-    'lbl-registration':  'PATIENT REGISTRATION',
-    'lbl-fname':         'First Name *',
-    'lbl-lname':         'Last Name *',
-    'lbl-age':           'Age *',
-    'lbl-gender':        'Gender *',
-    'opt-gender-default':'Select gender',
-    'lbl-phone':         'Phone Number *',
-    'lbl-email':         'Email Address',
-    'lbl-blood':         'Blood Group',
-    'opt-blood-default': 'Select (optional)',
-    'btn-continue':      'Continue to Select Hospital →',
-    'lang-toggle-btn':   '🌐 हिन्दी में देखें',
-  },
-  hi: {
-    'hero-title':        'अपना अपॉइंटमेंट बुक करें',
-    'hero-sub':          'तेज़, सरल और शांत — सही डॉक्टर से<br>सही समय पर देखभाल पाएं।',
-    'lbl-registration':  'मरीज़ का पंजीकरण',
-    'lbl-fname':         'पहला नाम *',
-    'lbl-lname':         'उपनाम *',
-    'lbl-age':           'आयु *',
-    'lbl-gender':        'लिंग *',
-    'opt-gender-default':'लिंग चुनें',
-    'lbl-phone':         'फ़ोन नंबर *',
-    'lbl-email':         'ईमेल पता',
-    'lbl-blood':         'रक्त समूह',
-    'opt-blood-default': 'चुनें (वैकल्पिक)',
-    'btn-continue':      'अस्पताल चुनने के लिए आगे बढ़ें →',
-    'lang-toggle-btn':   '🌐 View in English',
-  }
-};
-
-function toggleLang() {
-  currentLang = currentLang === 'en' ? 'hi' : 'en';
-  const t = TRANSLATIONS[currentLang];
-  Object.keys(t).forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (el.tagName === 'BUTTON' || el.tagName === 'LABEL' ||
-        el.tagName === 'DIV'    || el.tagName === 'H1') {
-      el.innerHTML = t[id];
-    } else if (el.tagName === 'OPTION') {
-      el.textContent = t[id];
-    }
-  });
-}
 </script>
 </body>
 </html>

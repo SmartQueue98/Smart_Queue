@@ -529,6 +529,12 @@
   @media(max-width:420px) {
     #sq-voice-panel { width:calc(100vw - 16px); right:8px; }
     #sq-voice-btn   { right:16px; }
+    #chat-btn-wrap  { right:16px; bottom:20px; }
+    #voice-btn-wrap { right:16px; }
+  }
+  @keyframes hintBlink {
+    0%,100%{opacity:1;transform:translateY(0)}
+    50%{opacity:0.6;transform:translateY(-3px)}
   }
 </style>
 </head>
@@ -549,35 +555,47 @@
 <div class="screen visible" id="screen1">
   <div class="container">
     <div class="hero-card">
-      <div class="hero-icon">🌿</div>
-      <div class="hero-title">Book Your Appointment</div>
-      <div class="hero-sub">Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.</div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+        <button id="lang-toggle-btn" onclick="toggleLang()" style="
+          background:linear-gradient(135deg,#8aab8a,#5a6a5a);
+          color:#fff; border:none; border-radius:20px;
+          padding:7px 18px; font-family:'DM Sans',sans-serif;
+          font-size:0.82rem; font-weight:600; cursor:pointer;
+          display:flex; align-items:center; gap:6px;
+          box-shadow:0 3px 10px rgba(90,106,90,0.25);
+          transition:all 0.2s;">
+          🌐 हिन्दी में देखें
+        </button>
+      </div>
+      <div class="hero-icon">🏥</div>
+      <div class="hero-title" id="hero-title">Book Your Appointment</div>
+      <div class="hero-sub" id="hero-sub">Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.</div>
     </div>
     <div class="card">
-      <div class="section-label">Patient Registration</div>
+      <div class="section-label" id="lbl-registration">Patient Registration</div>
       <div class="form-grid">
-        <div class="form-group"><label>First Name *</label><input type="text" id="fname" placeholder="Arjun"/></div>
-        <div class="form-group"><label>Last Name *</label><input type="text" id="lname" placeholder="Sharma"/></div>
-        <div class="form-group"><label>Age *</label><input type="number" id="age" placeholder="28" min="1" max="120"/></div>
+        <div class="form-group"><label id="lbl-fname">First Name *</label><input type="text" id="fname" placeholder="Arjun"/></div>
+        <div class="form-group"><label id="lbl-lname">Last Name *</label><input type="text" id="lname" placeholder="Sharma"/></div>
+        <div class="form-group"><label id="lbl-age">Age *</label><input type="number" id="age" placeholder="28" min="1" max="120"/></div>
         <div class="form-group">
-          <label>Gender *</label>
+          <label id="lbl-gender">Gender *</label>
           <select id="gender">
-            <option value="">Select gender</option>
+            <option value="" id="opt-gender-default">Select gender</option>
             <option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option>
           </select>
         </div>
-        <div class="form-group"><label>Phone Number *</label><input type="tel" id="phone" placeholder="+91 98765 43210"/></div>
-        <div class="form-group"><label>Email Address</label><input type="email" id="email" placeholder="arjun@email.com"/></div>
+        <div class="form-group"><label id="lbl-phone">Phone Number *</label><input type="tel" id="phone" placeholder="+91 98765 43210"/></div>
+        <div class="form-group"><label id="lbl-email">Email Address</label><input type="email" id="email" placeholder="arjun@email.com"/></div>
         <div class="form-group full">
-          <label>Blood Group</label>
+          <label id="lbl-blood">Blood Group</label>
           <select id="blood">
-            <option value="">Select (optional)</option>
+            <option value="" id="opt-blood-default">Select (optional)</option>
             <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
             <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
           </select>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" onclick="registerPatient()">Continue to Select Hospital →</button>
+      <button class="btn btn-primary btn-block" id="btn-continue" onclick="registerPatient()">Continue to Select Hospital →</button>
     </div>
   </div>
 </div>
@@ -668,10 +686,18 @@
 </div>
 
 <!-- CHAT BUTTON -->
-<button id="medi-chat-btn" title="Chat with Smart Queue AI">
-  <span class="chat-pulse"></span>
-  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-</button>
+<div id="chat-btn-wrap" style="position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;align-items:center;gap:6px;">
+  <div id="chat-hint-label" style="
+    background:#2d3d2d;color:#fff;font-family:'DM Sans',sans-serif;
+    font-size:0.7rem;font-weight:500;padding:4px 10px;border-radius:8px;
+    white-space:nowrap;letter-spacing:0.3px;pointer-events:none;
+    box-shadow:0 2px 8px rgba(0,0,0,0.18);animation:hintBlink 2.5s ease-in-out 3;
+  ">👆 Press here for guidance</div>
+  <button id="medi-chat-btn" title="Chat with Smart Queue AI" style="position:static;bottom:unset;right:unset;z-index:unset;">
+    <span class="chat-pulse"></span>
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  </button>
+</div>
 
 <!-- CHAT PANEL -->
 <div id="medi-chat-panel">
@@ -694,9 +720,17 @@
 </div>
 
 <!-- VOICE BUTTON -->
-<button id="sq-voice-btn" title="Voice AI Assistant">
-  <svg viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-</button>
+<div id="voice-btn-wrap" style="position:fixed;bottom:100px;right:28px;z-index:9997;display:flex;flex-direction:column;align-items:center;gap:6px;">
+  <div id="voice-hint-label" style="
+    background:#2d6ea8;color:#fff;font-family:'DM Sans',sans-serif;
+    font-size:0.7rem;font-weight:500;padding:4px 10px;border-radius:8px;
+    white-space:nowrap;letter-spacing:0.3px;pointer-events:none;
+    box-shadow:0 2px 8px rgba(45,110,168,0.25);animation:hintBlink 2.5s ease-in-out 3 0.5s;
+  ">🎙️ Press here for voice guidance</div>
+  <button id="sq-voice-btn" title="Voice AI Assistant" style="position:static;bottom:unset;right:unset;z-index:unset;">
+    <svg viewBox="0 0 24 24"><path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V6zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+  </button>
+</div>
 
 <!-- VOICE PANEL -->
 <div id="sq-voice-panel">
@@ -742,14 +776,8 @@
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════════
-//  ⚠️  PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
-// ══════════════════════════════════════════════════════════════
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
 
-// ── DOCTOR FEE MAP BY SPECIALIZATION ─────────────────────────
-// ── HOSPITAL TIER MAP ─────────────────────────────────────────
-// gov: doctor fee max ₹200 | semigov: max ₹400 | private: max ₹600
 const HOSPITAL_TIER = {
   "Government":      "gov",
   "Semi-Government": "semigov",
@@ -760,7 +788,6 @@ const HOSPITAL_TIER = {
   "General":         "semigov",
 };
 
-// ── DOCTOR FEES BY SPECIALIZATION × HOSPITAL TIER ────────────
 const DOC_FEE_TIERS = {
   "General Physician": { gov:"₹100", semigov:"₹200", private:"₹400" },
   "Cardiologist":      { gov:"₹200", semigov:"₹400", private:"₹600" },
@@ -776,7 +803,6 @@ function getDocFee(spec) {
   return (DOC_FEE_TIERS[spec] || { gov:"₹150", semigov:"₹300", private:"₹500" })[tier];
 }
 
-// ── DATA ──────────────────────────────────────────────────────
 const HOSPITALS = [
   { id:1, name:"AIIMS Rishikesh",     loc:"Rishikesh, Uttarakhand", badge:"Government" },
   { id:2, name:"Shivalik Hospital",    loc:"Haridwar, Uttarakhand",  badge:"Private" },
@@ -805,7 +831,6 @@ const TAKEN    = { "09:30 AM":true, "11:00 AM":true, "02:30 PM":true, "04:00 PM"
 
 let state = { patient:null, hospital:null, doctor:null, problem:"", date:null, slot:null, appointments:[] };
 
-// ── NAVIGATION ────────────────────────────────────────────────
 function goToScreen(n) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('visible'));
   document.getElementById('screen'+n).classList.add('visible');
@@ -816,7 +841,6 @@ function goToScreen(n) {
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-// ── SCREEN 1 ──────────────────────────────────────────────────
 function registerPatient() {
   const fname=document.getElementById('fname').value.trim();
   const lname=document.getElementById('lname').value.trim();
@@ -830,7 +854,6 @@ function registerPatient() {
   renderHospitals(); goToScreen(2);
 }
 
-// ── SCREEN 2 ──────────────────────────────────────────────────
 function renderHospitals() {
   document.getElementById('hospitalGrid').innerHTML = HOSPITALS.map(h => `
     <div class="hospital-card ${state.hospital?.id===h.id?'selected':''}" onclick="pickHospital(${h.id})">
@@ -847,7 +870,6 @@ function selectHospital() {
   renderDoctors(); goToScreen(3);
 }
 
-// ── SCREEN 3 ──────────────────────────────────────────────────
 function renderDoctors(filter="") {
   const docs = filter ? DOCTORS.filter(d=>d.spec===filter) : DOCTORS;
   document.getElementById('doctorGrid').innerHTML = docs.map(d => {
@@ -873,7 +895,6 @@ function selectDoctor() {
   renderSlotScreen(); goToScreen(4);
 }
 
-// ── SCREEN 4 ──────────────────────────────────────────────────
 function renderSlotScreen() {
   const docFee = getDocFee(state.doctor.spec);
   document.getElementById('apptSummary').innerHTML = `
@@ -939,7 +960,6 @@ function bookAppointment(){
   renderAppointments(true); goToScreen(5); state.slot=null;
 }
 
-// ── SCREEN 5 ──────────────────────────────────────────────────
 function renderAppointments(justBooked=false){
   document.getElementById('successBanner').style.display=justBooked?'block':'none';
   const list=document.getElementById('apptList');
@@ -972,7 +992,6 @@ function renderAppointments(justBooked=false){
     </div>`;
   }).join('');
 }
-
 
 // ══════════════════════════════════════════════════════════════
 //  AI CHAT WIDGET
@@ -1236,6 +1255,61 @@ If unsure, say: I recommend checking the website or trying again.`;
   if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
   if(hasASR) initRecognition();
 })();
+
+// ══════════════════════════════════════════════════════════════
+//  HINDI / ENGLISH LANGUAGE TOGGLE
+// ══════════════════════════════════════════════════════════════
+let currentLang = 'en';
+
+const TRANSLATIONS = {
+  en: {
+    'hero-title':        'Book Your Appointment',
+    'hero-sub':          'Fast, simple, and calm — get the care you need<br>from the right doctor at the right time.',
+    'lbl-registration':  'PATIENT REGISTRATION',
+    'lbl-fname':         'First Name *',
+    'lbl-lname':         'Last Name *',
+    'lbl-age':           'Age *',
+    'lbl-gender':        'Gender *',
+    'opt-gender-default':'Select gender',
+    'lbl-phone':         'Phone Number *',
+    'lbl-email':         'Email Address',
+    'lbl-blood':         'Blood Group',
+    'opt-blood-default': 'Select (optional)',
+    'btn-continue':      'Continue to Select Hospital →',
+    'lang-toggle-btn':   '🌐 हिन्दी में देखें',
+  },
+  hi: {
+    'hero-title':        'अपना अपॉइंटमेंट बुक करें',
+    'hero-sub':          'तेज़, सरल और शांत — सही डॉक्टर से<br>सही समय पर देखभाल पाएं।',
+    'lbl-registration':  'मरीज़ का पंजीकरण',
+    'lbl-fname':         'पहला नाम *',
+    'lbl-lname':         'उपनाम *',
+    'lbl-age':           'आयु *',
+    'lbl-gender':        'लिंग *',
+    'opt-gender-default':'लिंग चुनें',
+    'lbl-phone':         'फ़ोन नंबर *',
+    'lbl-email':         'ईमेल पता',
+    'lbl-blood':         'रक्त समूह',
+    'opt-blood-default': 'चुनें (वैकल्पिक)',
+    'btn-continue':      'अस्पताल चुनने के लिए आगे बढ़ें →',
+    'lang-toggle-btn':   '🌐 View in English',
+  }
+};
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'hi' : 'en';
+  const t = TRANSLATIONS[currentLang];
+  Object.keys(t).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.tagName === 'BUTTON' || el.tagName === 'LABEL' ||
+        el.tagName === 'DIV'    || el.tagName === 'H1') {
+      el.innerHTML = t[id];
+    } else if (el.tagName === 'OPTION') {
+      el.textContent = t[id];
+    }
+  });
+}
 </script>
 </body>
 </html>

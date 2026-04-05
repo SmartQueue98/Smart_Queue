@@ -15,13 +15,125 @@
     --radius: 18px; --radius-sm: 10px;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'DM Sans',sans-serif; background:var(--mist); color:var(--text); min-height:100vh; }
 
+  /* ══════════════════════════════════════
+     BACKGROUND SYSTEM
+  ══════════════════════════════════════ */
+  body {
+    font-family:'DM Sans',sans-serif;
+    color:var(--text);
+    min-height:100vh;
+    background: #f0f5f0;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Fixed layered background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 10%, rgba(138,171,138,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 85% 20%, rgba(168,200,232,0.16) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 50% 80%, rgba(138,171,138,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 90% 85%, rgba(200,221,200,0.20) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 60% at 5% 70%, rgba(168,200,232,0.10) 0%, transparent 50%),
+      linear-gradient(160deg, #f8fbf8 0%, #eef5f0 35%, #f0f6fa 65%, #f5f8f5 100%);
+  }
+
+  /* SVG botanical / organic shapes */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 900 900'%3E%3Cdefs%3E%3CradialGradient id='g1' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%238aab8a' stop-opacity='0.08'/%3E%3Cstop offset='100%25' stop-color='%238aab8a' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='120' cy='120' r='90' fill='url(%23g1)'/%3E%3Ccircle cx='780' cy='100' r='70' fill='url(%23g1)'/%3E%3Ccircle cx='850' cy='780' r='110' fill='url(%23g1)'/%3E%3Ccircle cx='80' cy='820' r='80' fill='url(%23g1)'/%3E%3Ccircle cx='450' cy='450' r='180' fill='url(%23g1)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%238aab8a' stroke-opacity='0.07'%3E%3Ccircle cx='300' cy='300' r='200' stroke-width='1.5'/%3E%3Ccircle cx='300' cy='300' r='150' stroke-width='1'/%3E%3Ccircle cx='300' cy='300' r='100' stroke-width='0.8'/%3E%3Ccircle cx='300' cy='300' r='250' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-position: top left, center center;
+    background-size: 900px 900px, 600px 600px;
+    background-repeat: no-repeat, repeat;
+    pointer-events: none;
+  }
+
+  /* Floating organic blobs */
+  .bg-blob {
+    position: fixed;
+    border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+    pointer-events: none;
+    z-index: -1;
+    animation: blobFloat 18s ease-in-out infinite;
+  }
+  .bg-blob-1 {
+    width: 520px; height: 420px;
+    top: -120px; right: -100px;
+    background: radial-gradient(ellipse, rgba(168,200,232,0.13) 0%, rgba(168,200,232,0.04) 60%, transparent 100%);
+    animation-delay: 0s; animation-duration: 20s;
+    border-radius: 65% 35% 50% 50% / 40% 60% 40% 60%;
+  }
+  .bg-blob-2 {
+    width: 440px; height: 360px;
+    bottom: -80px; left: -80px;
+    background: radial-gradient(ellipse, rgba(138,171,138,0.14) 0%, rgba(138,171,138,0.04) 60%, transparent 100%);
+    animation-delay: -8s; animation-duration: 22s;
+    border-radius: 40% 60% 45% 55% / 55% 45% 60% 40%;
+  }
+  .bg-blob-3 {
+    width: 300px; height: 280px;
+    top: 40%; left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(200,221,200,0.10) 0%, transparent 70%);
+    animation-delay: -4s; animation-duration: 25s;
+    border-radius: 50% 50% 55% 45% / 50% 50% 50% 50%;
+  }
+  .bg-blob-4 {
+    width: 360px; height: 300px;
+    top: 20%; right: 5%;
+    background: radial-gradient(ellipse, rgba(138,171,138,0.09) 0%, transparent 70%);
+    animation-delay: -12s; animation-duration: 19s;
+    border-radius: 45% 55% 60% 40% / 55% 45% 50% 50%;
+  }
+
+  @keyframes blobFloat {
+    0%,100% { transform: translateY(0) scale(1) rotate(0deg); }
+    33%      { transform: translateY(-18px) scale(1.03) rotate(1.5deg); }
+    66%      { transform: translateY(10px) scale(0.97) rotate(-1deg); }
+  }
+
+  /* Subtle dot grid texture */
+  .bg-dots {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(circle, rgba(90,106,90,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  /* Leaf / cross decorative elements */
+  .bg-cross {
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.065;
+  }
+  .bg-cross svg { display: block; }
+
+  /* ══════════════════════════════════════
+     NAV & REST OF EXISTING STYLES
+  ══════════════════════════════════════ */
   nav {
-    background:var(--white); border-bottom:1px solid var(--border);
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(221,232,221,0.7);
     padding:0 40px; height:64px; display:flex; align-items:center;
     justify-content:space-between; position:sticky; top:0; z-index:100;
-    box-shadow:0 2px 12px rgba(90,106,90,0.06);
+    box-shadow: 0 2px 20px rgba(90,106,90,0.08);
   }
   .logo { font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--sage); letter-spacing:-0.5px; }
   .logo span { color:var(--stone); }
@@ -35,7 +147,6 @@
   .nav-step.done { color:var(--sage); }
   .nav-step.done::before { content:'✓ '; }
 
-  /* Nav language toggle button */
   #nav-lang-btn {
     background:linear-gradient(135deg,#8aab8a,#5a6a5a);
     color:#fff; border:none; border-radius:20px;
@@ -56,7 +167,15 @@
   .screen-title { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--text); margin-bottom:8px; }
   .screen-subtitle { color:var(--text-soft); font-size:0.95rem; font-weight:300; }
 
-  .card { background:var(--white); border-radius:var(--radius); padding:32px; box-shadow:var(--shadow); margin-bottom:20px; border:1px solid var(--border); }
+  /* Cards with glass morphism tint */
+  .card {
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius:var(--radius); padding:32px;
+    box-shadow: var(--shadow), 0 1px 0 rgba(255,255,255,0.9) inset;
+    margin-bottom:20px; border:1px solid rgba(221,232,221,0.7);
+  }
   .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .form-group { display:flex; flex-direction:column; gap:6px; }
   .form-group.full { grid-column:1/-1; }
@@ -64,7 +183,7 @@
   input, select, textarea {
     padding:12px 16px; border:1.5px solid var(--border); border-radius:var(--radius-sm);
     font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--text);
-    background:var(--white); transition:border 0.2s, box-shadow 0.2s; outline:none;
+    background: rgba(255,255,255,0.85); transition:border 0.2s, box-shadow 0.2s; outline:none;
   }
   input:focus, select:focus, textarea:focus { border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,171,138,0.15); }
   textarea { resize:none; height:90px; }
@@ -72,23 +191,30 @@
   .btn { padding:13px 32px; border-radius:12px; border:none; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; }
   .btn-primary { background:var(--sage); color:var(--white); }
   .btn-primary:hover { background:var(--stone); transform:translateY(-1px); box-shadow:var(--shadow); }
-  .btn-outline { background:transparent; color:var(--stone); border:1.5px solid var(--border); }
+  .btn-outline { background:rgba(255,255,255,0.7); color:var(--stone); border:1.5px solid var(--border); backdrop-filter:blur(6px); }
   .btn-outline:hover { border-color:var(--sage); background:var(--sage-pale); }
   .btn-block { width:100%; justify-content:center; margin-top:24px; }
 
   .hospital-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .hospital-card { border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer; transition:all 0.2s; background:var(--white); }
-  .hospital-card:hover { border-color:var(--sage-light); background:var(--sage-pale); }
-  .hospital-card.selected { border-color:var(--sage); background:var(--sage-pale); }
+  .hospital-card {
+    border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer;
+    transition:all 0.2s; background:rgba(255,255,255,0.75); backdrop-filter:blur(8px);
+  }
+  .hospital-card:hover { border-color:var(--sage-light); background:rgba(238,245,238,0.9); }
+  .hospital-card.selected { border-color:var(--sage); background:rgba(238,245,238,0.95); }
   .hospital-card .h-name { font-weight:600; font-size:0.95rem; margin-bottom:4px; }
   .hospital-card .h-loc { font-size:0.8rem; color:var(--text-soft); }
   .hospital-card .h-badges { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
   .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; }
 
   .doctor-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .doctor-card { border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer; transition:all 0.2s; display:flex; gap:14px; align-items:flex-start; }
-  .doctor-card:hover { border-color:var(--sage-light); background:var(--sage-pale); }
-  .doctor-card.selected { border-color:var(--sage); background:var(--sage-pale); }
+  .doctor-card {
+    border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer;
+    transition:all 0.2s; display:flex; gap:14px; align-items:flex-start;
+    background:rgba(255,255,255,0.75); backdrop-filter:blur(8px);
+  }
+  .doctor-card:hover { border-color:var(--sage-light); background:rgba(238,245,238,0.9); }
+  .doctor-card.selected { border-color:var(--sage); background:rgba(238,245,238,0.95); }
   .doc-avatar { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
   .doc-name { font-weight:600; font-size:0.92rem; }
   .doc-spec { font-size:0.78rem; color:var(--text-soft); }
@@ -99,12 +225,16 @@
   .avail-yellow .avail-dot { background:#f0a500; }
 
   .slots-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-  .slot { padding:10px; border:1.5px solid var(--border); border-radius:8px; text-align:center; font-size:0.84rem; cursor:pointer; transition:all 0.2s; background:var(--white); }
+  .slot { padding:10px; border:1.5px solid var(--border); border-radius:8px; text-align:center; font-size:0.84rem; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.8); }
   .slot:hover { border-color:var(--sage); background:var(--sage-pale); }
   .slot.selected { border-color:var(--sage); background:var(--sage); color:var(--white); }
-  .slot.taken { background:#f0f0f0; color:#bbb; cursor:not-allowed; text-decoration:line-through; }
+  .slot.taken { background:rgba(240,240,240,0.7); color:#bbb; cursor:not-allowed; text-decoration:line-through; }
 
-  .appt-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:20px 24px; margin-bottom:14px; background:var(--white); display:flex; justify-content:space-between; align-items:flex-start; gap:16px; transition:box-shadow 0.2s; }
+  .appt-card {
+    border:1px solid var(--border); border-radius:var(--radius-sm); padding:20px 24px; margin-bottom:14px;
+    background:rgba(255,255,255,0.88); backdrop-filter:blur(10px);
+    display:flex; justify-content:space-between; align-items:flex-start; gap:16px; transition:box-shadow 0.2s;
+  }
   .appt-card:hover { box-shadow:var(--shadow); }
   .appt-badge { padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600; }
   .badge-confirmed { background:#e7f5e7; color:#3a7a3a; }
@@ -117,16 +247,52 @@
   .live-dot { width:7px; height:7px; border-radius:50%; background:#5cb85c; animation:pulse 1.4s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+  /* Enhanced hero card */
   .hero-card {
-    background:linear-gradient(135deg, var(--sage-pale) 0%, var(--sky-pale) 100%);
-    border:1px solid var(--sage-light); border-radius:var(--radius);
+    background: linear-gradient(135deg,
+      rgba(238,245,238,0.95) 0%,
+      rgba(234,243,251,0.90) 50%,
+      rgba(238,245,238,0.92) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(200,221,200,0.6);
+    border-radius:var(--radius);
     padding:40px; text-align:center; margin-bottom:32px; position:relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(138,171,138,0.12), 0 1px 0 rgba(255,255,255,0.8) inset;
   }
-  .hero-icon { font-size:3rem; margin-bottom:12px; }
-  .hero-title { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--text); margin-bottom:10px; }
-  .hero-sub { color:var(--text-soft); font-size:1rem; font-weight:300; line-height:1.6; }
 
-  .success-card { text-align:center; padding:48px 32px; background:linear-gradient(135deg, var(--sage-pale), var(--sky-pale)); border-radius:var(--radius); border:1px solid var(--sage-light); }
+  /* Decorative leaves inside hero */
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(138,171,138,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(168,200,232,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-icon { font-size:3rem; margin-bottom:12px; position: relative; z-index:1; }
+  .hero-title { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--text); margin-bottom:10px; position:relative; z-index:1; }
+  .hero-sub { color:var(--text-soft); font-size:1rem; font-weight:300; line-height:1.6; position:relative; z-index:1; }
+
+  .success-card {
+    text-align:center; padding:48px 32px;
+    background: linear-gradient(135deg, rgba(238,245,238,0.95), rgba(234,243,251,0.92));
+    backdrop-filter: blur(16px);
+    border-radius:var(--radius); border:1px solid rgba(200,221,200,0.6);
+    box-shadow: 0 8px 32px rgba(138,171,138,0.10);
+  }
   .success-icon { font-size:4rem; margin-bottom:16px; }
   .success-title { font-family:'DM Serif Display',serif; font-size:1.8rem; margin-bottom:8px; color:var(--text); }
   .success-sub { color:var(--text-soft); font-size:0.95rem; }
@@ -144,9 +310,12 @@
     .card { padding:20px; }
     .nav-steps { display:none; }
     #nav-lang-btn { font-size:0.72rem; padding:5px 11px; }
+    .bg-blob-1, .bg-blob-3, .bg-blob-4 { display:none; }
   }
 
-  /* ═══ AI CHAT WIDGET ═══ */
+  /* ══════════════════════════════════════
+     CHAT WIDGET
+  ══════════════════════════════════════ */
   #medi-chat-btn {
     position:fixed; bottom:28px; right:28px; z-index:9999;
     width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
@@ -161,7 +330,7 @@
   #medi-chat-btn::after { content:'Ask AI'; position:absolute; right:68px; top:50%; transform:translateY(-50%); background:var(--stone); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; padding:4px 10px; border-radius:8px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
   #medi-chat-btn:hover::after { opacity:1; }
 
-  #medi-chat-panel { position:fixed; bottom:100px; right:28px; z-index:9998; width:368px; max-height:580px; background:var(--white); border-radius:20px; box-shadow:0 20px 60px rgba(90,106,90,.18), 0 0 0 1px var(--border); display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
+  #medi-chat-panel { position:fixed; bottom:100px; right:28px; z-index:9998; width:368px; max-height:580px; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-radius:20px; box-shadow:0 20px 60px rgba(90,106,90,.18), 0 0 0 1px var(--border); display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
   #medi-chat-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
   .chat-header { background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%); padding:15px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
   .chat-header-avatar { width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
@@ -200,13 +369,15 @@
   #medi-chat-send svg { width:17px; height:17px; fill:#fff; }
   @media(max-width:420px) { #medi-chat-panel { width:calc(100vw - 16px); right:8px; bottom:88px; } #medi-chat-btn { right:16px; bottom:20px; } }
 
-  /* ═══ VOICE WIDGET ═══ */
+  /* ══════════════════════════════════════
+     VOICE WIDGET
+  ══════════════════════════════════════ */
   #sq-voice-btn { position:fixed; bottom:100px; right:28px; z-index:9997; width:52px; height:52px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%); box-shadow:0 5px 20px rgba(45,110,168,0.40); display:flex; align-items:center; justify-content:center; transition:transform .2s, box-shadow .2s; }
   #sq-voice-btn:hover { transform:scale(1.1); box-shadow:0 7px 26px rgba(45,110,168,.55); }
   #sq-voice-btn svg { width:22px; height:22px; fill:#fff; }
   #sq-voice-btn::after { content:'Voice AI'; position:absolute; right:62px; top:50%; transform:translateY(-50%); background:#2d6ea8; color:#fff; font-family:'DM Sans',sans-serif; font-size:0.73rem; font-weight:500; padding:4px 10px; border-radius:8px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
   #sq-voice-btn:hover::after { opacity:1; }
-  #sq-voice-panel { position:fixed; bottom:166px; right:28px; z-index:9996; width:340px; background:#fff; border-radius:20px; box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4; display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
+  #sq-voice-panel { position:fixed; bottom:166px; right:28px; z-index:9996; width:340px; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-radius:20px; box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4; display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
   #sq-voice-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
   .vp-header { background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%); padding:14px 18px; display:flex; align-items:center; gap:11px; flex-shrink:0; }
   .vp-header-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
@@ -259,6 +430,36 @@
 </style>
 </head>
 <body>
+  <div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+<div class="bg-blob bg-blob-3"></div>
+<div class="bg-blob bg-blob-4"></div>
+<div class="bg-dots"></div>
+
+<!-- Decorative cross/plus marks (wellness motif) -->
+<div class="bg-cross" style="top:8%;left:3%">
+  <svg width="40" height="40" viewBox="0 0 40 40"><rect x="17" y="5" width="6" height="30" rx="3" fill="#8aab8a"/><rect x="5" y="17" width="30" height="6" rx="3" fill="#8aab8a"/></svg>
+</div>
+<div class="bg-cross" style="top:22%;right:3%">
+  <svg width="30" height="30" viewBox="0 0 30 30"><rect x="13" y="3" width="4" height="24" rx="2" fill="#a8c8e8"/><rect x="3" y="13" width="24" height="4" rx="2" fill="#a8c8e8"/></svg>
+</div>
+<div class="bg-cross" style="bottom:18%;left:2%">
+  <svg width="24" height="24" viewBox="0 0 24 24"><rect x="10" y="2" width="4" height="20" rx="2" fill="#8aab8a"/><rect x="2" y="10" width="20" height="4" rx="2" fill="#8aab8a"/></svg>
+</div>
+<div class="bg-cross" style="bottom:30%;right:2%">
+  <svg width="34" height="34" viewBox="0 0 34 34"><rect x="14.5" y="4" width="5" height="26" rx="2.5" fill="#c8ddc8"/><rect x="4" y="14.5" width="26" height="5" rx="2.5" fill="#c8ddc8"/></svg>
+</div>
+<div class="bg-cross" style="top:55%;left:1.5%">
+  <svg width="20" height="20" viewBox="0 0 20 20"><rect x="8.5" y="2" width="3" height="16" rx="1.5" fill="#a8c8e8"/><rect x="2" y="8.5" width="16" height="3" rx="1.5" fill="#a8c8e8"/></svg>
+</div>
+
+<!-- Decorative leaf SVGs (subtle organic) -->
+<div class="bg-cross" style="top:3%;right:15%;opacity:0.05">
+  <svg width="120" height="120" viewBox="0 0 120 120"><ellipse cx="60" cy="60" rx="40" ry="55" fill="#8aab8a" transform="rotate(20 60 60)"/><ellipse cx="60" cy="60" rx="40" ry="55" fill="#a8c8e8" transform="rotate(80 60 60)" opacity="0.5"/></svg>
+</div>
+<div class="bg-cross" style="bottom:5%;left:12%;opacity:0.05">
+  <svg width="100" height="100" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="32" ry="46" fill="#8aab8a" transform="rotate(-15 50 50)"/></svg>
+</div>
 
 <nav>
   <div class="logo">Smart<span>Queue</span></div>
@@ -402,7 +603,7 @@
       <div class="screen-title" data-en="Pick a Time Slot" data-hi="समय स्लॉट चुनें">Pick a Time Slot</div>
       <div class="screen-subtitle" data-en="Select a date and your preferred time" data-hi="तारीख और अपना पसंदीदा समय चुनें">Select a date and your preferred time</div>
     </div>
-    <div class="card" id="apptSummary" style="margin-bottom:16px; background:var(--sage-pale); border-color:var(--sage-light);"></div>
+    <div class="card" id="apptSummary" style="margin-bottom:16px; background:rgba(238,245,238,0.92); border-color:var(--sage-light);"></div>
     <div class="card">
       <div class="section-label" data-en="Select Date" data-hi="तारीख चुनें">Select Date</div>
       <div style="display:flex; gap:10px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px;" id="dateRow"></div>
@@ -514,9 +715,6 @@
 </div>
 
 <script>
-// ════════════════════════════════════════════════════
-//  GLOBAL STATE & DATA
-// ════════════════════════════════════════════════════
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
 
 let currentLang = 'en';
@@ -572,9 +770,6 @@ const TAKEN    = {"09:30 AM":true,"11:00 AM":true,"02:30 PM":true,"04:00 PM":tru
 
 let state = {patient:null, hospital:null, doctor:null, problem:"", date:null, slot:null, appointments:[]};
 
-// ════════════════════════════════════════════════════
-//  NAVIGATION
-// ════════════════════════════════════════════════════
 function goToScreen(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
   document.getElementById('screen'+n).classList.add('visible');
@@ -585,18 +780,13 @@ function goToScreen(n){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-// ════════════════════════════════════════════════════
-//  SCREEN 1 – REGISTER
-// ════════════════════════════════════════════════════
 function registerPatient(){
   const fname=document.getElementById('fname').value.trim();
   const lname=document.getElementById('lname').value.trim();
   const age=document.getElementById('age').value.trim();
   const gender=document.getElementById('gender').value;
   const phone=document.getElementById('phone').value.trim();
-  const errMsg = currentLang==='hi'
-    ? "कृपया सभी आवश्यक फ़ील्ड भरें।"
-    : "Please fill all required fields.";
+  const errMsg = currentLang==='hi' ? "कृपया सभी आवश्यक फ़ील्ड भरें।" : "Please fill all required fields.";
   if(!fname||!lname||!age||!gender||!phone){alert(errMsg);return;}
   state.patient={fname,lname,age,gender,phone,
     email:document.getElementById('email').value,
@@ -604,9 +794,6 @@ function registerPatient(){
   renderHospitals();goToScreen(2);
 }
 
-// ════════════════════════════════════════════════════
-//  SCREEN 2 – HOSPITALS
-// ════════════════════════════════════════════════════
 function renderHospitals(){
   const l=currentLang;
   document.getElementById('hospitalGrid').innerHTML=HOSPITALS.map(h=>`
@@ -625,9 +812,6 @@ function selectHospital(){
   renderDoctors();goToScreen(3);
 }
 
-// ════════════════════════════════════════════════════
-//  SCREEN 3 – DOCTORS
-// ════════════════════════════════════════════════════
 function renderDoctors(filter=""){
   const l=currentLang;
   const docs=filter?DOCTORS.filter(d=>d.spec_en===filter):DOCTORS;
@@ -658,6 +842,7 @@ function selectDoctor(){
   if(!state.doctor){alert(errDoc);return;}
   renderSlotScreen();goToScreen(4);
 }
+
 function renderSlotScreen(){
   const l=currentLang;
   const docFee=getDocFee(state.doctor.spec_en);
@@ -665,7 +850,6 @@ function renderSlotScreen(){
     ? {patient:"मरीज़",hospital:"अस्पताल",doctor:"डॉक्टर",fee:"परामर्श शुल्क"}
     : {patient:"Patient",hospital:"Hospital",doctor:"Doctor",fee:"Consultation Fee"};
   const docSpec=l==='hi'?state.doctor.spec_hi:state.doctor.spec_en;
-  const hosLoc=l==='hi'?state.hospital.loc_hi:state.hospital.loc_en;
   document.getElementById('apptSummary').innerHTML=`
     <div style="display:flex;gap:24px;flex-wrap:wrap">
       <div><div class="section-label">${labels.patient}</div><div style="font-weight:600">${state.patient.fname} ${state.patient.lname}</div></div>
@@ -683,14 +867,14 @@ function renderSlotScreen(){
   for(let i=0;i<7;i++){
     const d=new Date();d.setDate(d.getDate()+i);
     const iso=d.toISOString().split('T')[0];
-    const dayName=l==='hi'?days_hi[d.getDay()]:days_en[d.getDay()];
-    const monName=l==='hi'?months_hi[d.getMonth()]:months_en[d.getMonth()];
+    const dayName=currentLang==='hi'?days_hi[d.getDay()]:days_en[d.getDay()];
+    const monName=currentLang==='hi'?months_hi[d.getMonth()]:months_en[d.getMonth()];
     const btn=document.createElement('div');
     btn.innerHTML=`${dayName}<br><strong>${d.getDate()} ${monName}</strong>`;
-    btn.style.cssText=`min-width:68px;padding:10px 8px;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.82rem;background:var(--white);transition:all 0.2s;flex-shrink:0`;
+    btn.style.cssText=`min-width:68px;padding:10px 8px;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.82rem;background:rgba(255,255,255,0.8);transition:all 0.2s;flex-shrink:0`;
     btn.onclick=()=>{
       state.date=iso;
-      dateRow.querySelectorAll('div').forEach(x=>{x.style.borderColor='var(--border)';x.style.background='var(--white)';x.style.color='var(--text)';});
+      dateRow.querySelectorAll('div').forEach(x=>{x.style.borderColor='var(--border)';x.style.background='rgba(255,255,255,0.8)';x.style.color='var(--text)';});
       btn.style.borderColor='var(--sage)';btn.style.background='var(--sage)';btn.style.color='#fff';
     };
     if(i===0){btn.style.borderColor='var(--sage)';btn.style.background='var(--sage)';btn.style.color='#fff';state.date=iso;}
@@ -700,18 +884,14 @@ function renderSlotScreen(){
   renderSlots('slotsPM',PM_SLOTS);
 }
 function renderSlots(gridId,slots){
-  const takenLabel=currentLang==='hi'?' 🚫':' 🚫';
   document.getElementById(gridId).innerHTML=slots.map(s=>`
     <div class="slot ${TAKEN[s]?'taken':''} ${state.slot===s?'selected':''}"
       onclick="${TAKEN[s]?'':` pickSlot('${s}')`}">
-      ${s}${TAKEN[s]?takenLabel:''}
+      ${s}${TAKEN[s]?' 🚫':''}
     </div>`).join('');
 }
 function pickSlot(s){state.slot=s;renderSlots('slotsAM',AM_SLOTS);renderSlots('slotsPM',PM_SLOTS);}
 
-// ════════════════════════════════════════════════════
-//  BOOK APPOINTMENT
-// ════════════════════════════════════════════════════
 function bookAppointment(){
   const errMsg=currentLang==='hi'?"कृपया एक समय स्लॉट चुनें।":"Please select a time slot.";
   if(!state.slot){alert(errMsg);return;}
@@ -736,9 +916,6 @@ function bookAppointment(){
   renderAppointments(true);goToScreen(5);state.slot=null;
 }
 
-// ════════════════════════════════════════════════════
-//  SCREEN 5 – MY APPOINTMENTS
-// ════════════════════════════════════════════════════
 function renderAppointments(justBooked=false){
   document.getElementById('successBanner').style.display=justBooked?'block':'none';
   const list=document.getElementById('apptList');
@@ -782,40 +959,28 @@ function renderAppointments(justBooked=false){
   }).join('');
 }
 
-// ════════════════════════════════════════════════════
-//  LANGUAGE TOGGLE
-// ════════════════════════════════════════════════════
 function toggleLang(){
   currentLang = currentLang==='en'?'hi':'en';
   const l = currentLang;
   const btn = document.getElementById('nav-lang-btn');
   btn.textContent = l==='hi' ? '🌐 View in English' : '🌐 हिन्दी में देखें';
 
-  // --- Static elements with data-en / data-hi ---
   document.querySelectorAll('[data-en]').forEach(el=>{
     const val = l==='hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
     if(!val) return;
-    // nav-step: just update text
     if(el.classList.contains('nav-step')){el.textContent=val;return;}
-    // buttons, labels, divs, spans with innerHTML content
-    if(['BUTTON','LABEL','DIV','SPAN','H1','H2','H3'].includes(el.tagName)){
-      el.innerHTML=val; return;
-    }
-    if(el.tagName==='OPTION'){el.textContent=val; return;}
+    if(['BUTTON','LABEL','DIV','SPAN','H1','H2','H3'].includes(el.tagName)){el.innerHTML=val;return;}
+    if(el.tagName==='OPTION'){el.textContent=val;return;}
   });
 
-  // --- Placeholders ---
   document.querySelectorAll('[data-en-placeholder]').forEach(el=>{
     el.placeholder = l==='hi'
       ? (el.getAttribute('data-hi-placeholder')||'')
       : (el.getAttribute('data-en-placeholder')||'');
   });
 
-  // --- Chat widget strings ---
   document.getElementById('chat-title').textContent   = l==='hi'?"स्मार्ट क्यू सहायक":"Smart Queue Assistant";
   document.getElementById('chat-status').textContent  = l==='hi'?"AI · हमेशा उपलब्ध":"AI · Always available";
-
-  // --- Voice widget strings ---
   document.getElementById('vp-title').textContent     = l==='hi'?"स्मार्ट क्यू वॉयस AI":"Smart Queue Voice AI";
   document.getElementById('vp-subtitle').textContent  = l==='hi'?"बोलने के लिए माइक दबाएं":"Tap mic to speak";
   document.getElementById('vp-label').textContent     = l==='hi'?"शुरू करने के लिए दबाएं":"Tap to start";
@@ -827,23 +992,15 @@ function toggleLang(){
     ? "माइक दबाएं और स्मार्ट क्यू के बारे में कुछ भी पूछें…"
     : "Tap the mic and ask anything about Smart Queue…";
 
-  // --- Re-render dynamic screens if already populated ---
   renderHospitals();
   filterDoctors();
   if(state.appointments.length) renderAppointments(false);
-  // Re-render slot screen summary if doctor selected
   if(state.doctor) renderSlotScreen();
 }
 
-// ════════════════════════════════════════════════════
-//  AI CHAT WIDGET
-// ════════════════════════════════════════════════════
+// ══════════════ CHAT WIDGET ══════════════
 (function(){
-  const SYSTEM=`You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India.
-You help users with: booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot), finding the right specialist based on symptoms, hospital info and directions, general health guidance (always advise consulting a doctor for diagnosis), platform navigation and troubleshooting.
-Hospitals: AIIMS Rishikesh (Government, ₹100), Shivalik Hospital - Haridwar (Private, ₹400), Himalayan Institute - Dehradun (Multi-Specialty, ₹400), Max Super Specialty - Saharanpur (Private, ₹400), Kailash Hospital - Roorkee (Private, ₹400), Gangotri Medical - Haridwar (Clinic, ₹200), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹200), Life Care Hospital - Muzaffarnagar (General, ₹200).
-Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician).
-Be concise, warm and helpful. Respond in the same language the user writes in (Hindi or English).`;
+  const SYSTEM=`You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India. You help users with: booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot), finding the right specialist based on symptoms, hospital info and directions, general health guidance (always advise consulting a doctor for diagnosis), platform navigation and troubleshooting. Hospitals: AIIMS Rishikesh (Government, ₹100), Shivalik Hospital - Haridwar (Private, ₹400), Himalayan Institute - Dehradun (Multi-Specialty, ₹400), Max Super Specialty - Saharanpur (Private, ₹400), Kailash Hospital - Roorkee (Private, ₹400), Gangotri Medical - Haridwar (Clinic, ₹200), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹200), Life Care Hospital - Muzaffarnagar (General, ₹200). Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician). Be concise, warm and helpful. Respond in the same language the user writes in (Hindi or English).`;
 
   const QR_EN_INIT   = ["How to book appointment?","Which doctor for fever?","Hospital in Dehradun","OPD timings"];
   const QR_HI_INIT   = ["अपॉइंटमेंट कैसे बुक करें?","बुखार के लिए कौन डॉक्टर?","देहरादून में अस्पताल","OPD समय"];
@@ -926,9 +1083,7 @@ Be concise, warm and helpful. Respond in the same language the user writes in (H
   inputEl.addEventListener('input',()=>{inputEl.style.height='auto';inputEl.style.height=Math.min(inputEl.scrollHeight,76)+'px';});
 })();
 
-// ════════════════════════════════════════════════════
-//  VOICE AI WIDGET
-// ════════════════════════════════════════════════════
+// ══════════════ VOICE WIDGET ══════════════
 (function(){
   const VP_SYSTEM=`You are an AI Voice Assistant for Smart Queue. Help users understand and use Smart Queue: a digital queue management system to avoid long physical lines. Keep ALL responses under 3 sentences — they will be spoken aloud. Never use bullet points, asterisks, markdown, or special characters. Write in natural spoken sentences only. Be friendly and clear. You can mix light Hinglish if user does. Smart Queue lets users book slots online, check queue position, and come when it is their turn. It is completely free and mobile-friendly.`;
 

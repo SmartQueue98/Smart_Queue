@@ -13,12 +13,10 @@
     --white: #ffffff; --border: #dde8dd;
     --shadow: 0 4px 24px rgba(90,106,90,0.10);
     --radius: 18px; --radius-sm: 10px;
+    --danger: #e74c3c; --danger-pale: #fdecea; --danger-light: #f5b7b1;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
 
-  /* ══════════════════════════════════════
-     BACKGROUND SYSTEM
-  ══════════════════════════════════════ */
   body {
     font-family:'DM Sans',sans-serif;
     color:var(--text);
@@ -28,7 +26,6 @@
     overflow-x: hidden;
   }
 
-  /* Fixed layered background */
   body::before {
     content: '';
     position: fixed;
@@ -43,7 +40,6 @@
       linear-gradient(160deg, #f8fbf8 0%, #eef5f0 35%, #f0f6fa 65%, #f5f8f5 100%);
   }
 
-  /* SVG botanical / organic shapes */
   body::after {
     content: '';
     position: fixed;
@@ -58,7 +54,6 @@
     pointer-events: none;
   }
 
-  /* Floating organic blobs */
   .bg-blob {
     position: fixed;
     border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
@@ -66,377 +61,287 @@
     z-index: -1;
     animation: blobFloat 18s ease-in-out infinite;
   }
-  .bg-blob-1 {
-    width: 520px; height: 420px;
-    top: -120px; right: -100px;
-    background: radial-gradient(ellipse, rgba(168,200,232,0.13) 0%, rgba(168,200,232,0.04) 60%, transparent 100%);
-    animation-delay: 0s; animation-duration: 20s;
-    border-radius: 65% 35% 50% 50% / 40% 60% 40% 60%;
-  }
-  .bg-blob-2 {
-    width: 440px; height: 360px;
-    bottom: -80px; left: -80px;
-    background: radial-gradient(ellipse, rgba(138,171,138,0.14) 0%, rgba(138,171,138,0.04) 60%, transparent 100%);
-    animation-delay: -8s; animation-duration: 22s;
-    border-radius: 40% 60% 45% 55% / 55% 45% 60% 40%;
-  }
-  .bg-blob-3 {
-    width: 300px; height: 280px;
-    top: 40%; left: 50%;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse, rgba(200,221,200,0.10) 0%, transparent 70%);
-    animation-delay: -4s; animation-duration: 25s;
-    border-radius: 50% 50% 55% 45% / 50% 50% 50% 50%;
-  }
-  .bg-blob-4 {
-    width: 360px; height: 300px;
-    top: 20%; right: 5%;
-    background: radial-gradient(ellipse, rgba(138,171,138,0.09) 0%, transparent 70%);
-    animation-delay: -12s; animation-duration: 19s;
-    border-radius: 45% 55% 60% 40% / 55% 45% 50% 50%;
-  }
+  .bg-blob-1 { width:520px;height:420px;top:-120px;right:-100px;background:radial-gradient(ellipse,rgba(168,200,232,0.13) 0%,rgba(168,200,232,0.04) 60%,transparent 100%);animation-delay:0s;animation-duration:20s;border-radius:65% 35% 50% 50% / 40% 60% 40% 60%; }
+  .bg-blob-2 { width:440px;height:360px;bottom:-80px;left:-80px;background:radial-gradient(ellipse,rgba(138,171,138,0.14) 0%,rgba(138,171,138,0.04) 60%,transparent 100%);animation-delay:-8s;animation-duration:22s;border-radius:40% 60% 45% 55% / 55% 45% 60% 40%; }
+  .bg-blob-3 { width:300px;height:280px;top:40%;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(200,221,200,0.10) 0%,transparent 70%);animation-delay:-4s;animation-duration:25s;border-radius:50%; }
+  .bg-blob-4 { width:360px;height:300px;top:20%;right:5%;background:radial-gradient(ellipse,rgba(138,171,138,0.09) 0%,transparent 70%);animation-delay:-12s;animation-duration:19s;border-radius:45% 55% 60% 40% / 55% 45% 50% 50%; }
+  @keyframes blobFloat { 0%,100%{transform:translateY(0) scale(1) rotate(0deg)} 33%{transform:translateY(-18px) scale(1.03) rotate(1.5deg)} 66%{transform:translateY(10px) scale(0.97) rotate(-1deg)} }
 
-  @keyframes blobFloat {
-    0%,100% { transform: translateY(0) scale(1) rotate(0deg); }
-    33%      { transform: translateY(-18px) scale(1.03) rotate(1.5deg); }
-    66%      { transform: translateY(10px) scale(0.97) rotate(-1deg); }
-  }
+  .bg-dots { position:fixed;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(90,106,90,0.08) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%); }
 
-  /* Subtle dot grid texture */
-  .bg-dots {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-image: radial-gradient(circle, rgba(90,106,90,0.08) 1px, transparent 1px);
-    background-size: 28px 28px;
-    pointer-events: none;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-  }
+  .bg-cross { position:fixed;pointer-events:none;z-index:-1;opacity:0.065; }
+  .bg-cross svg { display:block; }
 
-  /* Leaf / cross decorative elements */
-  .bg-cross {
-    position: fixed;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.065;
-  }
-  .bg-cross svg { display: block; }
-
-  /* ══════════════════════════════════════
-     NAV & REST OF EXISTING STYLES
-  ══════════════════════════════════════ */
   nav {
-    background: rgba(255,255,255,0.82);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(221,232,221,0.7);
-    padding:0 40px; height:64px; display:flex; align-items:center;
-    justify-content:space-between; position:sticky; top:0; z-index:100;
-    box-shadow: 0 2px 20px rgba(90,106,90,0.08);
+    background:rgba(255,255,255,0.82);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(221,232,221,0.7);
+    padding:0 40px;height:64px;display:flex;align-items:center;
+    justify-content:space-between;position:sticky;top:0;z-index:100;
+    box-shadow:0 2px 20px rgba(90,106,90,0.08);
   }
-  .logo { font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--sage); letter-spacing:-0.5px; }
+  .logo { font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--sage);letter-spacing:-0.5px; }
   .logo span { color:var(--stone); }
-  .nav-right { display:flex; align-items:center; gap:10px; }
-  .nav-steps { display:flex; gap:6px; }
-  .nav-step {
-    padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:500;
-    color:var(--text-soft); cursor:pointer; transition:all 0.2s; border:1.5px solid transparent;
-  }
-  .nav-step.active { background:var(--sage-pale); color:var(--stone); border-color:var(--sage-light); }
+  .nav-right { display:flex;align-items:center;gap:10px; }
+  .nav-steps { display:flex;gap:6px; }
+  .nav-step { padding:6px 14px;border-radius:20px;font-size:0.78rem;font-weight:500;color:var(--text-soft);cursor:pointer;transition:all 0.2s;border:1.5px solid transparent; }
+  .nav-step.active { background:var(--sage-pale);color:var(--stone);border-color:var(--sage-light); }
   .nav-step.done { color:var(--sage); }
   .nav-step.done::before { content:'✓ '; }
 
-  #nav-lang-btn {
-    background:linear-gradient(135deg,#8aab8a,#5a6a5a);
-    color:#fff; border:none; border-radius:20px;
-    padding:7px 16px; font-family:'DM Sans',sans-serif;
-    font-size:0.78rem; font-weight:600; cursor:pointer;
-    display:inline-flex; align-items:center; gap:5px;
-    box-shadow:0 2px 8px rgba(90,106,90,0.25);
-    transition:all 0.2s; white-space:nowrap; flex-shrink:0;
-  }
-  #nav-lang-btn:hover { background:linear-gradient(135deg,#5a6a5a,#3a4a3a); transform:translateY(-1px); }
+  #nav-lang-btn { background:linear-gradient(135deg,#8aab8a,#5a6a5a);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(90,106,90,0.25);transition:all 0.2s;white-space:nowrap;flex-shrink:0; }
+  #nav-lang-btn:hover { background:linear-gradient(135deg,#5a6a5a,#3a4a3a);transform:translateY(-1px); }
 
-  .screen { display:none; min-height:calc(100vh - 64px); padding:40px 20px; animation:fadeUp 0.4s ease; }
+  .screen { display:none;min-height:calc(100vh - 64px);padding:40px 20px;animation:fadeUp 0.4s ease; }
   .screen.visible { display:block; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 
-  .container { max-width:780px; margin:0 auto; }
-  .screen-header { text-align:center; margin-bottom:36px; }
-  .screen-title { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--text); margin-bottom:8px; }
-  .screen-subtitle { color:var(--text-soft); font-size:0.95rem; font-weight:300; }
+  .container { max-width:780px;margin:0 auto; }
+  .screen-header { text-align:center;margin-bottom:36px; }
+  .screen-title { font-family:'DM Serif Display',serif;font-size:2rem;color:var(--text);margin-bottom:8px; }
+  .screen-subtitle { color:var(--text-soft);font-size:0.95rem;font-weight:300; }
 
-  /* Cards with glass morphism tint */
-  .card {
-    background: rgba(255,255,255,0.88);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius:var(--radius); padding:32px;
-    box-shadow: var(--shadow), 0 1px 0 rgba(255,255,255,0.9) inset;
-    margin-bottom:20px; border:1px solid rgba(221,232,221,0.7);
-  }
-  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-  .form-group { display:flex; flex-direction:column; gap:6px; }
+  .card { background:rgba(255,255,255,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow),0 1px 0 rgba(255,255,255,0.9) inset;margin-bottom:20px;border:1px solid rgba(221,232,221,0.7); }
+  .form-grid { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
+  .form-group { display:flex;flex-direction:column;gap:6px; }
   .form-group.full { grid-column:1/-1; }
-  label { font-size:0.82rem; font-weight:500; color:var(--stone); }
-  input, select, textarea {
-    padding:12px 16px; border:1.5px solid var(--border); border-radius:var(--radius-sm);
-    font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--text);
-    background: rgba(255,255,255,0.85); transition:border 0.2s, box-shadow 0.2s; outline:none;
-  }
-  input:focus, select:focus, textarea:focus { border-color:var(--sage); box-shadow:0 0 0 3px rgba(138,171,138,0.15); }
-  textarea { resize:none; height:90px; }
+  label { font-size:0.82rem;font-weight:500;color:var(--stone); }
+  input, select, textarea { padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.92rem;color:var(--text);background:rgba(255,255,255,0.85);transition:border 0.2s,box-shadow 0.2s;outline:none; }
+  input:focus, select:focus, textarea:focus { border-color:var(--sage);box-shadow:0 0 0 3px rgba(138,171,138,0.15); }
+  textarea { resize:none;height:90px; }
 
-  .btn { padding:13px 32px; border-radius:12px; border:none; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; }
-  .btn-primary { background:var(--sage); color:var(--white); }
-  .btn-primary:hover { background:var(--stone); transform:translateY(-1px); box-shadow:var(--shadow); }
-  .btn-outline { background:rgba(255,255,255,0.7); color:var(--stone); border:1.5px solid var(--border); backdrop-filter:blur(6px); }
-  .btn-outline:hover { border-color:var(--sage); background:var(--sage-pale); }
-  .btn-block { width:100%; justify-content:center; margin-top:24px; }
+  .btn { padding:13px 32px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px; }
+  .btn-primary { background:var(--sage);color:var(--white); }
+  .btn-primary:hover { background:var(--stone);transform:translateY(-1px);box-shadow:var(--shadow); }
+  .btn-outline { background:rgba(255,255,255,0.7);color:var(--stone);border:1.5px solid var(--border);backdrop-filter:blur(6px); }
+  .btn-outline:hover { border-color:var(--sage);background:var(--sage-pale); }
+  .btn-danger { background:var(--danger);color:#fff; }
+  .btn-danger:hover { background:#c0392b;transform:translateY(-1px);box-shadow:0 4px 14px rgba(231,76,60,0.3); }
+  .btn-block { width:100%;justify-content:center;margin-top:24px; }
 
-  .hospital-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .hospital-card {
-    border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer;
-    transition:all 0.2s; background:rgba(255,255,255,0.75); backdrop-filter:blur(8px);
-  }
-  .hospital-card:hover { border-color:var(--sage-light); background:rgba(238,245,238,0.9); }
-  .hospital-card.selected { border-color:var(--sage); background:rgba(238,245,238,0.95); }
-  .hospital-card .h-name { font-weight:600; font-size:0.95rem; margin-bottom:4px; }
-  .hospital-card .h-loc { font-size:0.8rem; color:var(--text-soft); }
-  .hospital-card .h-badges { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
-  .hospital-card .h-badge { font-size:0.72rem; background:var(--sky-pale); color:#3a7aad; padding:2px 8px; border-radius:20px; display:inline-block; }
+  .hospital-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+  .hospital-card { border:2px solid var(--border);border-radius:var(--radius-sm);padding:18px;cursor:pointer;transition:all 0.2s;background:rgba(255,255,255,0.75);backdrop-filter:blur(8px); }
+  .hospital-card:hover { border-color:var(--sage-light);background:rgba(238,245,238,0.9); }
+  .hospital-card.selected { border-color:var(--sage);background:rgba(238,245,238,0.95); }
+  .hospital-card .h-name { font-weight:600;font-size:0.95rem;margin-bottom:4px; }
+  .hospital-card .h-loc { font-size:0.8rem;color:var(--text-soft); }
+  .hospital-card .h-badges { display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px; }
+  .hospital-card .h-badge { font-size:0.72rem;background:var(--sky-pale);color:#3a7aad;padding:2px 8px;border-radius:20px;display:inline-block; }
 
-  .doctor-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .doctor-card {
-    border:2px solid var(--border); border-radius:var(--radius-sm); padding:18px; cursor:pointer;
-    transition:all 0.2s; display:flex; gap:14px; align-items:flex-start;
-    background:rgba(255,255,255,0.75); backdrop-filter:blur(8px);
-  }
-  .doctor-card:hover { border-color:var(--sage-light); background:rgba(238,245,238,0.9); }
-  .doctor-card.selected { border-color:var(--sage); background:rgba(238,245,238,0.95); }
-  .doc-avatar { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
-  .doc-name { font-weight:600; font-size:0.92rem; }
-  .doc-spec { font-size:0.78rem; color:var(--text-soft); }
-  .doc-avail { font-size:0.75rem; margin-top:4px; }
-  .doc-fee-badge { display:inline-block; margin-top:6px; font-size:0.72rem; font-weight:700; background:#fff8e1; color:#b45309; border:1px solid #fde68a; border-radius:20px; padding:2px 9px; }
-  .avail-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; }
+  .doctor-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+  .doctor-card { border:2px solid var(--border);border-radius:var(--radius-sm);padding:18px;cursor:pointer;transition:all 0.2s;display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,0.75);backdrop-filter:blur(8px); }
+  .doctor-card:hover { border-color:var(--sage-light);background:rgba(238,245,238,0.9); }
+  .doctor-card.selected { border-color:var(--sage);background:rgba(238,245,238,0.95); }
+  .doc-avatar { width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0; }
+  .doc-name { font-weight:600;font-size:0.92rem; }
+  .doc-spec { font-size:0.78rem;color:var(--text-soft); }
+  .doc-avail { font-size:0.75rem;margin-top:4px; }
+  .doc-fee-badge { display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;background:#fff8e1;color:#b45309;border:1px solid #fde68a;border-radius:20px;padding:2px 9px; }
+  .avail-dot { display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px; }
   .avail-green .avail-dot { background:#5cb85c; }
   .avail-yellow .avail-dot { background:#f0a500; }
 
-  .slots-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-  .slot { padding:10px; border:1.5px solid var(--border); border-radius:8px; text-align:center; font-size:0.84rem; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.8); }
-  .slot:hover { border-color:var(--sage); background:var(--sage-pale); }
-  .slot.selected { border-color:var(--sage); background:var(--sage); color:var(--white); }
-  .slot.taken { background:rgba(240,240,240,0.7); color:#bbb; cursor:not-allowed; text-decoration:line-through; }
+  .slots-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:10px; }
+  .slot { padding:10px;border:1.5px solid var(--border);border-radius:8px;text-align:center;font-size:0.84rem;cursor:pointer;transition:all 0.2s;background:rgba(255,255,255,0.8); }
+  .slot:hover { border-color:var(--sage);background:var(--sage-pale); }
+  .slot.selected { border-color:var(--sage);background:var(--sage);color:var(--white); }
+  .slot.taken { background:rgba(240,240,240,0.7);color:#bbb;cursor:not-allowed;text-decoration:line-through; }
 
+  /* ── APPOINTMENT CARD (updated with cancel) ── */
   .appt-card {
-    border:1px solid var(--border); border-radius:var(--radius-sm); padding:20px 24px; margin-bottom:14px;
-    background:rgba(255,255,255,0.88); backdrop-filter:blur(10px);
-    display:flex; justify-content:space-between; align-items:flex-start; gap:16px; transition:box-shadow 0.2s;
+    border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px 24px;margin-bottom:14px;
+    background:rgba(255,255,255,0.88);backdrop-filter:blur(10px);
+    transition:box-shadow 0.2s,opacity 0.3s;
   }
   .appt-card:hover { box-shadow:var(--shadow); }
-  .appt-badge { padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600; }
-  .badge-confirmed { background:#e7f5e7; color:#3a7a3a; }
-  .appt-doc { font-weight:600; font-size:0.97rem; }
-  .appt-meta { font-size:0.82rem; color:var(--text-soft); margin-top:3px; }
-  .map-link { font-size:0.8rem; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:4px; margin-top:6px; }
+  .appt-card.cancelled { opacity:0.55;background:rgba(240,240,240,0.6);border-color:#ddd; }
+  .appt-card-top { display:flex;justify-content:space-between;align-items:flex-start;gap:16px; }
+  .appt-badge { padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600; }
+  .badge-confirmed { background:#e7f5e7;color:#3a7a3a; }
+  .badge-cancelled { background:#fdecea;color:#c0392b; }
+  .appt-doc { font-weight:600;font-size:0.97rem; }
+  .appt-meta { font-size:0.82rem;color:var(--text-soft);margin-top:3px; }
+  .map-link { font-size:0.8rem;color:var(--sage);text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:6px; }
   .map-link:hover { color:var(--stone); }
 
-  .live-pill { display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; background:#e7f5e7; color:#3a7a3a; padding:3px 10px; border-radius:20px; font-weight:500; }
-  .live-dot { width:7px; height:7px; border-radius:50%; background:#5cb85c; animation:pulse 1.4s infinite; }
+  /* Cancel button inside card */
+  .cancel-zone { margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px; }
+  .cancel-timer { font-size:0.78rem;color:var(--text-soft);display:flex;align-items:center;gap:5px; }
+  .cancel-timer .timer-badge { background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:20px;padding:2px 9px;font-size:0.72rem;font-weight:600; }
+  .cancel-timer .expired-badge { background:var(--danger-pale);color:var(--danger);border:1px solid var(--danger-light);border-radius:20px;padding:2px 9px;font-size:0.72rem;font-weight:600; }
+  .btn-cancel { padding:7px 18px;border-radius:8px;border:1.5px solid var(--danger-light);background:var(--danger-pale);color:var(--danger);font-family:'DM Sans',sans-serif;font-size:0.80rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px; }
+  .btn-cancel:hover { background:var(--danger);color:#fff;border-color:var(--danger);transform:translateY(-1px);box-shadow:0 3px 10px rgba(231,76,60,0.25); }
+  .btn-cancel:disabled { opacity:0.4;cursor:not-allowed;transform:none; }
+
+  /* Cancel confirm modal */
+  .modal-overlay { position:fixed;inset:0;background:rgba(45,61,45,0.45);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s; }
+  .modal-overlay.open { opacity:1;pointer-events:all; }
+  .modal-box { background:#fff;border-radius:20px;padding:36px 32px;max-width:420px;width:100%;box-shadow:0 24px 64px rgba(45,61,45,0.18);transform:scale(0.9) translateY(20px);transition:transform 0.28s cubic-bezier(.34,1.56,.64,1);text-align:center; }
+  .modal-overlay.open .modal-box { transform:scale(1) translateY(0); }
+  .modal-icon { font-size:2.8rem;margin-bottom:14px; }
+  .modal-title { font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);margin-bottom:8px; }
+  .modal-sub { color:var(--text-soft);font-size:0.88rem;line-height:1.6;margin-bottom:20px; }
+  .modal-appt-info { background:var(--sage-pale);border:1px solid var(--sage-light);border-radius:10px;padding:12px 16px;margin-bottom:22px;text-align:left;font-size:0.84rem; }
+  .modal-appt-info div { margin-bottom:4px; }
+  .modal-appt-info div:last-child { margin-bottom:0; }
+  .modal-buttons { display:flex;gap:12px; }
+  .modal-buttons .btn { flex:1;justify-content:center;padding:11px 20px;font-size:0.88rem; }
+
+  /* Toast notification */
+  .toast { position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:#2d3d2d;color:#fff;padding:12px 22px;border-radius:12px;font-size:0.85rem;font-weight:500;z-index:99999;opacity:0;transition:all 0.35s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 8px 24px rgba(45,61,45,0.3); }
+  .toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+  .toast.danger { background:var(--danger); }
+  .toast.success { background:#2e7d32; }
+
+  .live-pill { display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;background:#e7f5e7;color:#3a7a3a;padding:3px 10px;border-radius:20px;font-weight:500; }
+  .live-dot { width:7px;height:7px;border-radius:50%;background:#5cb85c;animation:pulse 1.4s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  /* Enhanced hero card */
-  .hero-card {
-    background: linear-gradient(135deg,
-      rgba(238,245,238,0.95) 0%,
-      rgba(234,243,251,0.90) 50%,
-      rgba(238,245,238,0.92) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(200,221,200,0.6);
-    border-radius:var(--radius);
-    padding:40px; text-align:center; margin-bottom:32px; position:relative;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(138,171,138,0.12), 0 1px 0 rgba(255,255,255,0.8) inset;
-  }
+  .hero-card { background:linear-gradient(135deg,rgba(238,245,238,0.95) 0%,rgba(234,243,251,0.90) 50%,rgba(238,245,238,0.92) 100%);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(200,221,200,0.6);border-radius:var(--radius);padding:40px;text-align:center;margin-bottom:32px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(138,171,138,0.12),0 1px 0 rgba(255,255,255,0.8) inset; }
+  .hero-card::before { content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,rgba(138,171,138,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none; }
+  .hero-card::after { content:'';position:absolute;bottom:-20px;left:-20px;width:120px;height:120px;background:radial-gradient(circle,rgba(168,200,232,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none; }
+  .hero-icon { font-size:3rem;margin-bottom:12px;position:relative;z-index:1; }
+  .hero-title { font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--text);margin-bottom:10px;position:relative;z-index:1; }
+  .hero-sub { color:var(--text-soft);font-size:1rem;font-weight:300;line-height:1.6;position:relative;z-index:1; }
 
-  /* Decorative leaves inside hero */
-  .hero-card::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(138,171,138,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .hero-card::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: -20px;
-    width: 120px; height: 120px;
-    background: radial-gradient(circle, rgba(168,200,232,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
+  .success-card { text-align:center;padding:48px 32px;background:linear-gradient(135deg,rgba(238,245,238,0.95),rgba(234,243,251,0.92));backdrop-filter:blur(16px);border-radius:var(--radius);border:1px solid rgba(200,221,200,0.6);box-shadow:0 8px 32px rgba(138,171,138,0.10); }
+  .success-icon { font-size:4rem;margin-bottom:16px; }
+  .success-title { font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:8px;color:var(--text); }
+  .success-sub { color:var(--text-soft);font-size:0.95rem; }
 
-  .hero-icon { font-size:3rem; margin-bottom:12px; position: relative; z-index:1; }
-  .hero-title { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--text); margin-bottom:10px; position:relative; z-index:1; }
-  .hero-sub { color:var(--text-soft); font-size:1rem; font-weight:300; line-height:1.6; position:relative; z-index:1; }
-
-  .success-card {
-    text-align:center; padding:48px 32px;
-    background: linear-gradient(135deg, rgba(238,245,238,0.95), rgba(234,243,251,0.92));
-    backdrop-filter: blur(16px);
-    border-radius:var(--radius); border:1px solid rgba(200,221,200,0.6);
-    box-shadow: 0 8px 32px rgba(138,171,138,0.10);
-  }
-  .success-icon { font-size:4rem; margin-bottom:16px; }
-  .success-title { font-family:'DM Serif Display',serif; font-size:1.8rem; margin-bottom:8px; color:var(--text); }
-  .success-sub { color:var(--text-soft); font-size:0.95rem; }
-
-  .section-label { font-size:0.8rem; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
-  .divider { height:1px; background:var(--border); margin:24px 0; }
-  .empty { text-align:center; padding:48px 24px; color:var(--text-soft); }
-  .empty-icon { font-size:3rem; margin-bottom:12px; }
+  .section-label { font-size:0.8rem;font-weight:600;color:var(--text-soft);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px; }
+  .divider { height:1px;background:var(--border);margin:24px 0; }
+  .empty { text-align:center;padding:48px 24px;color:var(--text-soft); }
+  .empty-icon { font-size:3rem;margin-bottom:12px; }
 
   @media(max-width:600px) {
-    .form-grid, .hospital-grid, .doctor-grid { grid-template-columns:1fr; }
+    .form-grid,.hospital-grid,.doctor-grid { grid-template-columns:1fr; }
     .slots-grid { grid-template-columns:repeat(3,1fr); }
     nav { padding:0 16px; }
     .screen { padding:24px 12px; }
     .card { padding:20px; }
     .nav-steps { display:none; }
-    #nav-lang-btn { font-size:0.72rem; padding:5px 11px; }
-    .bg-blob-1, .bg-blob-3, .bg-blob-4 { display:none; }
+    #nav-lang-btn { font-size:0.72rem;padding:5px 11px; }
+    .bg-blob-1,.bg-blob-3,.bg-blob-4 { display:none; }
+    .modal-buttons { flex-direction:column; }
+    .cancel-zone { flex-direction:column;align-items:flex-start; }
   }
 
-  /* ══════════════════════════════════════
-     CHAT WIDGET
-  ══════════════════════════════════════ */
-  #medi-chat-btn {
-    position:fixed; bottom:28px; right:28px; z-index:9999;
-    width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
-    background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%);
-    box-shadow:0 6px 24px rgba(90,106,90,0.40);
-    display:flex; align-items:center; justify-content:center; transition:transform .2s, box-shadow .2s;
-  }
-  #medi-chat-btn:hover { transform:scale(1.08); box-shadow:0 8px 32px rgba(90,106,90,0.55); }
-  #medi-chat-btn svg { width:26px; height:26px; fill:#fff; }
-  #medi-chat-btn .chat-pulse { position:absolute; width:58px; height:58px; border-radius:50%; background:rgba(138,171,138,0.35); animation:chatPulse 2.2s ease-out infinite; pointer-events:none; }
+  /* CHAT WIDGET */
+  #medi-chat-btn { position:fixed;bottom:28px;right:28px;z-index:9999;width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--sage) 0%,var(--stone) 100%);box-shadow:0 6px 24px rgba(90,106,90,0.40);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s; }
+  #medi-chat-btn:hover { transform:scale(1.08);box-shadow:0 8px 32px rgba(90,106,90,0.55); }
+  #medi-chat-btn svg { width:26px;height:26px;fill:#fff; }
+  #medi-chat-btn .chat-pulse { position:absolute;width:58px;height:58px;border-radius:50%;background:rgba(138,171,138,0.35);animation:chatPulse 2.2s ease-out infinite;pointer-events:none; }
   @keyframes chatPulse { 0%{transform:scale(1);opacity:.9} 100%{transform:scale(1.85);opacity:0} }
-  #medi-chat-btn::after { content:'Ask AI'; position:absolute; right:68px; top:50%; transform:translateY(-50%); background:var(--stone); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; padding:4px 10px; border-radius:8px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
+  #medi-chat-btn::after { content:'Ask AI';position:absolute;right:68px;top:50%;transform:translateY(-50%);background:var(--stone);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s; }
   #medi-chat-btn:hover::after { opacity:1; }
 
-  #medi-chat-panel { position:fixed; bottom:100px; right:28px; z-index:9998; width:368px; max-height:580px; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-radius:20px; box-shadow:0 20px 60px rgba(90,106,90,.18), 0 0 0 1px var(--border); display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
-  #medi-chat-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
-  .chat-header { background:linear-gradient(135deg, var(--sage) 0%, var(--stone) 100%); padding:15px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
-  .chat-header-avatar { width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
-  .chat-header-info h3 { color:#fff; font-size:.9rem; font-weight:600; font-family:'DM Sans',sans-serif; }
-  .chat-header-info p  { color:rgba(255,255,255,.75); font-size:.72rem; margin-top:1px; display:flex; align-items:center; gap:4px; }
-  .chat-status-dot { width:7px; height:7px; border-radius:50%; background:#b7f7c8; display:inline-block; animation:statusBlink 1.8s ease infinite; }
+  #medi-chat-panel { position:fixed;bottom:100px;right:28px;z-index:9998;width:368px;max-height:580px;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-radius:20px;box-shadow:0 20px 60px rgba(90,106,90,.18),0 0 0 1px var(--border);display:flex;flex-direction:column;overflow:hidden;transform:scale(.88) translateY(28px);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .2s ease; }
+  #medi-chat-panel.open { transform:scale(1) translateY(0);opacity:1;pointer-events:all; }
+  .chat-header { background:linear-gradient(135deg,var(--sage) 0%,var(--stone) 100%);padding:15px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0; }
+  .chat-header-avatar { width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0; }
+  .chat-header-info h3 { color:#fff;font-size:.9rem;font-weight:600;font-family:'DM Sans',sans-serif; }
+  .chat-header-info p { color:rgba(255,255,255,.75);font-size:.72rem;margin-top:1px;display:flex;align-items:center;gap:4px; }
+  .chat-status-dot { width:7px;height:7px;border-radius:50%;background:#b7f7c8;display:inline-block;animation:statusBlink 1.8s ease infinite; }
   @keyframes statusBlink { 0%,100%{opacity:1} 50%{opacity:.35} }
-  .chat-close-btn { margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.95rem; transition:background .2s; }
+  .chat-close-btn { margin-left:auto;background:rgba(255,255,255,.18);border:none;cursor:pointer;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;transition:background .2s; }
   .chat-close-btn:hover { background:rgba(255,255,255,.32); }
-  .chat-messages { flex:1; overflow-y:auto; padding:14px 14px 8px; display:flex; flex-direction:column; gap:10px; max-height:370px; scroll-behavior:smooth; }
+  .chat-messages { flex:1;overflow-y:auto;padding:14px 14px 8px;display:flex;flex-direction:column;gap:10px;max-height:370px;scroll-behavior:smooth; }
   .chat-messages::-webkit-scrollbar { width:3px; }
-  .chat-messages::-webkit-scrollbar-thumb { background:var(--sage-light); border-radius:4px; }
-  .cmsg { max-width:84%; animation:msgSlide .2s ease; }
+  .chat-messages::-webkit-scrollbar-thumb { background:var(--sage-light);border-radius:4px; }
+  .cmsg { max-width:84%;animation:msgSlide .2s ease; }
   @keyframes msgSlide { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:none} }
   .cmsg.bot { align-self:flex-start; } .cmsg.user { align-self:flex-end; }
-  .cmsg .bubble { padding:9px 13px; border-radius:16px; font-size:.83rem; line-height:1.55; word-wrap:break-word; font-family:'DM Sans',sans-serif; }
-  .cmsg.bot  .bubble { background:var(--sage-pale); color:var(--text); border-radius:4px 16px 16px 16px; border:1px solid var(--border); }
-  .cmsg.user .bubble { background:linear-gradient(135deg, var(--sage), var(--stone)); color:#fff; border-radius:16px 4px 16px 16px; }
-  .cmsg .ctime { font-size:.66rem; color:#aaa; margin-top:3px; padding:0 3px; }
+  .cmsg .bubble { padding:9px 13px;border-radius:16px;font-size:.83rem;line-height:1.55;word-wrap:break-word;font-family:'DM Sans',sans-serif; }
+  .cmsg.bot .bubble { background:var(--sage-pale);color:var(--text);border-radius:4px 16px 16px 16px;border:1px solid var(--border); }
+  .cmsg.user .bubble { background:linear-gradient(135deg,var(--sage),var(--stone));color:#fff;border-radius:16px 4px 16px 16px; }
+  .cmsg .ctime { font-size:.66rem;color:#aaa;margin-top:3px;padding:0 3px; }
   .cmsg.user .ctime { text-align:right; }
   .typing-wrap { align-self:flex-start; }
-  .typing-bubble { display:flex; align-items:center; gap:5px; padding:10px 13px; background:var(--sage-pale); border:1px solid var(--border); border-radius:4px 16px 16px 16px; width:fit-content; }
-  .typing-bubble span { width:7px; height:7px; border-radius:50%; background:var(--sage); animation:typingDot .9s ease infinite; }
+  .typing-bubble { display:flex;align-items:center;gap:5px;padding:10px 13px;background:var(--sage-pale);border:1px solid var(--border);border-radius:4px 16px 16px 16px;width:fit-content; }
+  .typing-bubble span { width:7px;height:7px;border-radius:50%;background:var(--sage);animation:typingDot .9s ease infinite; }
   .typing-bubble span:nth-child(2) { animation-delay:.16s; } .typing-bubble span:nth-child(3) { animation-delay:.32s; }
   @keyframes typingDot { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
-  .chat-quick-replies { display:flex; flex-wrap:wrap; gap:6px; padding:6px 14px 2px; flex-shrink:0; }
-  .cqr-btn { background:var(--sage-pale); border:1px solid var(--sage-light); color:var(--stone); border-radius:20px; padding:5px 11px; font-size:.74rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:background .15s, transform .1s; white-space:nowrap; }
-  .cqr-btn:hover { background:var(--sage-light); transform:translateY(-1px); }
-  .chat-input-row { padding:10px 12px 12px; border-top:1px solid var(--border); display:flex; gap:8px; align-items:flex-end; flex-shrink:0; }
-  #medi-chat-input { flex:1; border:1.5px solid var(--border); border-radius:10px; padding:9px 12px; font-size:.83rem; resize:none; outline:none; max-height:76px; font-family:'DM Sans',sans-serif; color:var(--text); background:var(--mist); transition:border-color .2s; line-height:1.4; }
-  #medi-chat-input:focus { border-color:var(--sage); background:var(--white); }
+  .chat-quick-replies { display:flex;flex-wrap:wrap;gap:6px;padding:6px 14px 2px;flex-shrink:0; }
+  .cqr-btn { background:var(--sage-pale);border:1px solid var(--sage-light);color:var(--stone);border-radius:20px;padding:5px 11px;font-size:.74rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background .15s,transform .1s;white-space:nowrap; }
+  .cqr-btn:hover { background:var(--sage-light);transform:translateY(-1px); }
+  .chat-input-row { padding:10px 12px 12px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;flex-shrink:0; }
+  #medi-chat-input { flex:1;border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:.83rem;resize:none;outline:none;max-height:76px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--mist);transition:border-color .2s;line-height:1.4; }
+  #medi-chat-input:focus { border-color:var(--sage);background:var(--white); }
   #medi-chat-input::placeholder { color:var(--text-soft); }
-  #medi-chat-send { width:36px; height:36px; border-radius:9px; border:none; cursor:pointer; background:linear-gradient(135deg, var(--sage), var(--stone)); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:opacity .2s, transform .1s; }
-  #medi-chat-send:hover { opacity:.88; transform:scale(1.05); }
-  #medi-chat-send:disabled { opacity:.45; cursor:not-allowed; transform:none; }
-  #medi-chat-send svg { width:17px; height:17px; fill:#fff; }
-  @media(max-width:420px) { #medi-chat-panel { width:calc(100vw - 16px); right:8px; bottom:88px; } #medi-chat-btn { right:16px; bottom:20px; } }
+  #medi-chat-send { width:36px;height:36px;border-radius:9px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--sage),var(--stone));display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s,transform .1s; }
+  #medi-chat-send:hover { opacity:.88;transform:scale(1.05); }
+  #medi-chat-send:disabled { opacity:.45;cursor:not-allowed;transform:none; }
+  #medi-chat-send svg { width:17px;height:17px;fill:#fff; }
+  @media(max-width:420px) { #medi-chat-panel { width:calc(100vw - 16px);right:8px;bottom:88px; } #medi-chat-btn { right:16px;bottom:20px; } }
 
-  /* ══════════════════════════════════════
-     VOICE WIDGET
-  ══════════════════════════════════════ */
-  #sq-voice-btn { position:fixed; bottom:100px; right:28px; z-index:9997; width:52px; height:52px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%); box-shadow:0 5px 20px rgba(45,110,168,0.40); display:flex; align-items:center; justify-content:center; transition:transform .2s, box-shadow .2s; }
-  #sq-voice-btn:hover { transform:scale(1.1); box-shadow:0 7px 26px rgba(45,110,168,.55); }
-  #sq-voice-btn svg { width:22px; height:22px; fill:#fff; }
-  #sq-voice-btn::after { content:'Voice AI'; position:absolute; right:62px; top:50%; transform:translateY(-50%); background:#2d6ea8; color:#fff; font-family:'DM Sans',sans-serif; font-size:0.73rem; font-weight:500; padding:4px 10px; border-radius:8px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
+  /* VOICE WIDGET */
+  #sq-voice-btn { position:fixed;bottom:100px;right:28px;z-index:9997;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#5a9fd4 0%,#2d6ea8 100%);box-shadow:0 5px 20px rgba(45,110,168,0.40);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s; }
+  #sq-voice-btn:hover { transform:scale(1.1);box-shadow:0 7px 26px rgba(45,110,168,.55); }
+  #sq-voice-btn svg { width:22px;height:22px;fill:#fff; }
+  #sq-voice-btn::after { content:'Voice AI';position:absolute;right:62px;top:50%;transform:translateY(-50%);background:#2d6ea8;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.73rem;font-weight:500;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s; }
   #sq-voice-btn:hover::after { opacity:1; }
-  #sq-voice-panel { position:fixed; bottom:166px; right:28px; z-index:9996; width:340px; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-radius:20px; box-shadow:0 20px 60px rgba(45,110,168,.18), 0 0 0 1px #d0e4f4; display:flex; flex-direction:column; overflow:hidden; transform:scale(.88) translateY(28px); opacity:0; pointer-events:none; transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
-  #sq-voice-panel.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
-  .vp-header { background:linear-gradient(135deg, #5a9fd4 0%, #2d6ea8 100%); padding:14px 18px; display:flex; align-items:center; gap:11px; flex-shrink:0; }
-  .vp-header-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
-  .vp-header-info h3 { color:#fff; font-size:.88rem; font-weight:600; font-family:'DM Sans',sans-serif; }
-  .vp-header-info p  { color:rgba(255,255,255,.75); font-size:.7rem; margin-top:1px; display:flex; align-items:center; gap:4px; font-family:'DM Sans',sans-serif; }
-  .vp-status-dot { width:6px; height:6px; border-radius:50%; background:#90f0c0; display:inline-block; animation:vpBlink 1.8s ease infinite; }
+  #sq-voice-panel { position:fixed;bottom:166px;right:28px;z-index:9996;width:340px;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-radius:20px;box-shadow:0 20px 60px rgba(45,110,168,.18),0 0 0 1px #d0e4f4;display:flex;flex-direction:column;overflow:hidden;transform:scale(.88) translateY(28px);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .2s ease; }
+  #sq-voice-panel.open { transform:scale(1) translateY(0);opacity:1;pointer-events:all; }
+  .vp-header { background:linear-gradient(135deg,#5a9fd4 0%,#2d6ea8 100%);padding:14px 18px;display:flex;align-items:center;gap:11px;flex-shrink:0; }
+  .vp-header-avatar { width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0; }
+  .vp-header-info h3 { color:#fff;font-size:.88rem;font-weight:600;font-family:'DM Sans',sans-serif; }
+  .vp-header-info p { color:rgba(255,255,255,.75);font-size:.7rem;margin-top:1px;display:flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif; }
+  .vp-status-dot { width:6px;height:6px;border-radius:50%;background:#90f0c0;display:inline-block;animation:vpBlink 1.8s ease infinite; }
   @keyframes vpBlink { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .vp-close { margin-left:auto; background:rgba(255,255,255,.18); border:none; cursor:pointer; width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.9rem; transition:background .2s; }
+  .vp-close { margin-left:auto;background:rgba(255,255,255,.18);border:none;cursor:pointer;width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;transition:background .2s; }
   .vp-close:hover { background:rgba(255,255,255,.32); }
-  .vp-orb-wrap { display:flex; flex-direction:column; align-items:center; padding:22px 20px 14px; gap:10px; }
-  .vp-orb { width:80px; height:80px; border-radius:50%; position:relative; background:linear-gradient(135deg, #eaf3fb 0%, #d0e8f8 100%); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .15s; box-shadow:0 4px 18px rgba(45,110,168,.18); border:2px solid #c0d8f0; }
+  .vp-orb-wrap { display:flex;flex-direction:column;align-items:center;padding:22px 20px 14px;gap:10px; }
+  .vp-orb { width:80px;height:80px;border-radius:50%;position:relative;background:linear-gradient(135deg,#eaf3fb 0%,#d0e8f8 100%);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;box-shadow:0 4px 18px rgba(45,110,168,.18);border:2px solid #c0d8f0; }
   .vp-orb:hover { transform:scale(1.05); }
-  .vp-orb svg { width:32px; height:32px; fill:#2d6ea8; transition:all .2s; z-index:2; position:relative; }
-  .vp-orb .ring { position:absolute; border-radius:50%; border:2px solid rgba(45,110,168,.25); animation:none; pointer-events:none; }
-  .vp-orb.listening { background:linear-gradient(135deg, #d0e8f8, #b0d4f0); border-color:#5a9fd4; }
+  .vp-orb svg { width:32px;height:32px;fill:#2d6ea8;transition:all .2s;z-index:2;position:relative; }
+  .vp-orb .ring { position:absolute;border-radius:50%;border:2px solid rgba(45,110,168,.25);animation:none;pointer-events:none; }
+  .vp-orb.listening { background:linear-gradient(135deg,#d0e8f8,#b0d4f0);border-color:#5a9fd4; }
   .vp-orb.listening svg { fill:#1a5a9a; }
-  .vp-orb.listening .ring:nth-child(1) { width:100px; height:100px; top:-12px; left:-12px; animation:vpRing 1.4s ease-out infinite; }
-  .vp-orb.listening .ring:nth-child(2) { width:120px; height:120px; top:-22px; left:-22px; animation:vpRing 1.4s ease-out .35s infinite; }
-  .vp-orb.listening .ring:nth-child(3) { width:140px; height:140px; top:-32px; left:-32px; animation:vpRing 1.4s ease-out .7s infinite; }
+  .vp-orb.listening .ring:nth-child(1) { width:100px;height:100px;top:-12px;left:-12px;animation:vpRing 1.4s ease-out infinite; }
+  .vp-orb.listening .ring:nth-child(2) { width:120px;height:120px;top:-22px;left:-22px;animation:vpRing 1.4s ease-out .35s infinite; }
+  .vp-orb.listening .ring:nth-child(3) { width:140px;height:140px;top:-32px;left:-32px;animation:vpRing 1.4s ease-out .7s infinite; }
   @keyframes vpRing { 0%{transform:scale(.8);opacity:.7} 100%{transform:scale(1);opacity:0} }
-  .vp-orb.speaking { background:linear-gradient(135deg, #e8f8ee, #c8eedc); border-color:#5ab88a; }
+  .vp-orb.speaking { background:linear-gradient(135deg,#e8f8ee,#c8eedc);border-color:#5ab88a; }
   .vp-orb.speaking svg { fill:#2d8a5a; }
-  .vp-bars { display:flex; align-items:center; gap:3px; height:28px; position:absolute; bottom:14px; pointer-events:none; }
-  .vp-bars span { width:3px; background:#5ab88a; border-radius:3px; animation:none; display:block; }
-  .vp-orb.speaking .vp-bars span:nth-child(1) { animation:vpBar 0.7s ease-in-out infinite; height:8px; }
-  .vp-orb.speaking .vp-bars span:nth-child(2) { animation:vpBar 0.7s ease-in-out .15s infinite; height:16px; }
-  .vp-orb.speaking .vp-bars span:nth-child(3) { animation:vpBar 0.7s ease-in-out .05s infinite; height:22px; }
-  .vp-orb.speaking .vp-bars span:nth-child(4) { animation:vpBar 0.7s ease-in-out .25s infinite; height:14px; }
-  .vp-orb.speaking .vp-bars span:nth-child(5) { animation:vpBar 0.7s ease-in-out .1s infinite; height:8px; }
+  .vp-bars { display:flex;align-items:center;gap:3px;height:28px;position:absolute;bottom:14px;pointer-events:none; }
+  .vp-bars span { width:3px;background:#5ab88a;border-radius:3px;animation:none;display:block; }
+  .vp-orb.speaking .vp-bars span:nth-child(1) { animation:vpBar 0.7s ease-in-out infinite;height:8px; }
+  .vp-orb.speaking .vp-bars span:nth-child(2) { animation:vpBar 0.7s ease-in-out .15s infinite;height:16px; }
+  .vp-orb.speaking .vp-bars span:nth-child(3) { animation:vpBar 0.7s ease-in-out .05s infinite;height:22px; }
+  .vp-orb.speaking .vp-bars span:nth-child(4) { animation:vpBar 0.7s ease-in-out .25s infinite;height:14px; }
+  .vp-orb.speaking .vp-bars span:nth-child(5) { animation:vpBar 0.7s ease-in-out .1s infinite;height:8px; }
   @keyframes vpBar { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
-  .vp-orb-label { font-size:.78rem; font-weight:500; color:#2d6ea8; font-family:'DM Sans',sans-serif; min-height:18px; }
-  .vp-transcript { margin:0 16px 10px; padding:10px 13px; background:#f4f8fd; border:1px solid #d0e4f4; border-radius:12px; font-size:.8rem; color:#2d3d4d; font-family:'DM Sans',sans-serif; min-height:52px; max-height:120px; overflow-y:auto; line-height:1.55; }
-  .vp-transcript .heard { color:#5a6a7a; font-style:italic; margin-bottom:4px; font-size:.76rem; }
+  .vp-orb-label { font-size:.78rem;font-weight:500;color:#2d6ea8;font-family:'DM Sans',sans-serif;min-height:18px; }
+  .vp-transcript { margin:0 16px 10px;padding:10px 13px;background:#f4f8fd;border:1px solid #d0e4f4;border-radius:12px;font-size:.8rem;color:#2d3d4d;font-family:'DM Sans',sans-serif;min-height:52px;max-height:120px;overflow-y:auto;line-height:1.55; }
+  .vp-transcript .heard { color:#5a6a7a;font-style:italic;margin-bottom:4px;font-size:.76rem; }
   .vp-transcript .heard::before { content:'🎤 '; }
   .vp-transcript .reply { color:#1a3a5a; }
   .vp-transcript .reply::before { content:'🤖 '; }
-  .vp-chips { display:flex; flex-wrap:wrap; gap:5px; padding:0 16px 12px; }
-  .vp-chip { background:#eaf3fb; border:1px solid #c0d8f0; color:#2d6ea8; border-radius:20px; padding:4px 10px; font-size:.72rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:background .15s, transform .1s; white-space:nowrap; }
-  .vp-chip:hover { background:#c8e0f4; transform:translateY(-1px); }
-  .vp-controls { display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 16px 14px; border-top:1px solid #e8f0f8; }
-  .vp-ctrl-btn { border:none; cursor:pointer; border-radius:10px; padding:8px 16px; font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:500; display:flex; align-items:center; gap:5px; transition:all .15s; }
-  .vp-ctrl-btn.primary { background:linear-gradient(135deg,#5a9fd4,#2d6ea8); color:#fff; }
-  .vp-ctrl-btn.primary:hover { opacity:.88; transform:translateY(-1px); }
-  .vp-ctrl-btn.danger  { background:#fde8e8; color:#c0392b; }
-  .vp-ctrl-btn.danger:hover  { background:#fbd0d0; }
-  .vp-ctrl-btn.muted   { background:#f0f4f8; color:#5a7a8a; }
-  .vp-ctrl-btn.muted:hover   { background:#e0e8f0; }
-  .vp-ctrl-btn:disabled { opacity:.45; cursor:not-allowed; transform:none !important; }
-  @media(max-width:420px) { #sq-voice-panel { width:calc(100vw - 16px); right:8px; } #sq-voice-btn { right:16px; } }
+  .vp-chips { display:flex;flex-wrap:wrap;gap:5px;padding:0 16px 12px; }
+  .vp-chip { background:#eaf3fb;border:1px solid #c0d8f0;color:#2d6ea8;border-radius:20px;padding:4px 10px;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background .15s,transform .1s;white-space:nowrap; }
+  .vp-chip:hover { background:#c8e0f4;transform:translateY(-1px); }
+  .vp-controls { display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 16px 14px;border-top:1px solid #e8f0f8; }
+  .vp-ctrl-btn { border:none;cursor:pointer;border-radius:10px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;display:flex;align-items:center;gap:5px;transition:all .15s; }
+  .vp-ctrl-btn.primary { background:linear-gradient(135deg,#5a9fd4,#2d6ea8);color:#fff; }
+  .vp-ctrl-btn.primary:hover { opacity:.88;transform:translateY(-1px); }
+  .vp-ctrl-btn.danger { background:#fde8e8;color:#c0392b; }
+  .vp-ctrl-btn.danger:hover { background:#fbd0d0; }
+  .vp-ctrl-btn.muted { background:#f0f4f8;color:#5a7a8a; }
+  .vp-ctrl-btn.muted:hover { background:#e0e8f0; }
+  .vp-ctrl-btn:disabled { opacity:.45;cursor:not-allowed;transform:none !important; }
+  @media(max-width:420px) { #sq-voice-panel { width:calc(100vw - 16px);right:8px; } #sq-voice-btn { right:16px; } }
 </style>
 </head>
 <body>
-  <div class="bg-blob bg-blob-1"></div>
+
+<div class="bg-blob bg-blob-1"></div>
 <div class="bg-blob bg-blob-2"></div>
 <div class="bg-blob bg-blob-3"></div>
 <div class="bg-blob bg-blob-4"></div>
 <div class="bg-dots"></div>
 
-<!-- Decorative cross/plus marks (wellness motif) -->
 <div class="bg-cross" style="top:8%;left:3%">
   <svg width="40" height="40" viewBox="0 0 40 40"><rect x="17" y="5" width="6" height="30" rx="3" fill="#8aab8a"/><rect x="5" y="17" width="30" height="6" rx="3" fill="#8aab8a"/></svg>
 </div>
@@ -449,33 +354,43 @@
 <div class="bg-cross" style="bottom:30%;right:2%">
   <svg width="34" height="34" viewBox="0 0 34 34"><rect x="14.5" y="4" width="5" height="26" rx="2.5" fill="#c8ddc8"/><rect x="4" y="14.5" width="26" height="5" rx="2.5" fill="#c8ddc8"/></svg>
 </div>
-<div class="bg-cross" style="top:55%;left:1.5%">
-  <svg width="20" height="20" viewBox="0 0 20 20"><rect x="8.5" y="2" width="3" height="16" rx="1.5" fill="#a8c8e8"/><rect x="2" y="8.5" width="16" height="3" rx="1.5" fill="#a8c8e8"/></svg>
+
+<!-- Cancel Confirm Modal -->
+<div class="modal-overlay" id="cancelModal">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title" id="modal-title">Cancel Appointment?</div>
+    <div class="modal-sub" id="modal-sub">This action cannot be undone. The slot will be freed for other patients.</div>
+    <div class="modal-appt-info" id="modal-appt-info"></div>
+    <div class="modal-buttons">
+      <button class="btn btn-outline" onclick="closeModal()">
+        <span id="modal-keep-label">Keep Appointment</span>
+      </button>
+      <button class="btn btn-danger" onclick="confirmCancel()">
+        🗑️ <span id="modal-cancel-label">Yes, Cancel</span>
+      </button>
+    </div>
+  </div>
 </div>
 
-<!-- Decorative leaf SVGs (subtle organic) -->
-<div class="bg-cross" style="top:3%;right:15%;opacity:0.05">
-  <svg width="120" height="120" viewBox="0 0 120 120"><ellipse cx="60" cy="60" rx="40" ry="55" fill="#8aab8a" transform="rotate(20 60 60)"/><ellipse cx="60" cy="60" rx="40" ry="55" fill="#a8c8e8" transform="rotate(80 60 60)" opacity="0.5"/></svg>
-</div>
-<div class="bg-cross" style="bottom:5%;left:12%;opacity:0.05">
-  <svg width="100" height="100" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="32" ry="46" fill="#8aab8a" transform="rotate(-15 50 50)"/></svg>
-</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <nav>
   <div class="logo">Smart<span>Queue</span></div>
   <div class="nav-right">
     <div class="nav-steps">
-      <div class="nav-step active" id="ns1" onclick="goToScreen(1)" data-en="1. Register"        data-hi="१. पंजीकरण">1. Register</div>
-      <div class="nav-step"        id="ns2" onclick="goToScreen(2)" data-en="2. Hospital"         data-hi="२. अस्पताल">2. Hospital</div>
-      <div class="nav-step"        id="ns3" onclick="goToScreen(3)" data-en="3. Doctor"           data-hi="३. डॉक्टर">3. Doctor</div>
-      <div class="nav-step"        id="ns4" onclick="goToScreen(4)" data-en="4. Book Slot"        data-hi="४. स्लॉट बुक">4. Book Slot</div>
-      <div class="nav-step"        id="ns5" onclick="goToScreen(5)" data-en="📋 My Appointments" data-hi="📋 मेरे अपॉइंटमेंट">📋 My Appointments</div>
+      <div class="nav-step active" id="ns1" onclick="goToScreen(1)" data-en="1. Register" data-hi="१. पंजीकरण">1. Register</div>
+      <div class="nav-step" id="ns2" onclick="goToScreen(2)" data-en="2. Hospital" data-hi="२. अस्पताल">2. Hospital</div>
+      <div class="nav-step" id="ns3" onclick="goToScreen(3)" data-en="3. Doctor" data-hi="३. डॉक्टर">3. Doctor</div>
+      <div class="nav-step" id="ns4" onclick="goToScreen(4)" data-en="4. Book Slot" data-hi="४. स्लॉट बुक">4. Book Slot</div>
+      <div class="nav-step" id="ns5" onclick="goToScreen(5)" data-en="📋 My Appointments" data-hi="📋 मेरे अपॉइंटमेंट">📋 My Appointments</div>
     </div>
     <button id="nav-lang-btn" onclick="toggleLang()">🌐 हिन्दी में देखें</button>
   </div>
 </nav>
 
-<!-- SCREEN 1: REGISTER -->
+<!-- SCREEN 1 -->
 <div class="screen visible" id="screen1">
   <div class="container">
     <div class="hero-card">
@@ -501,11 +416,11 @@
         <div class="form-group">
           <label data-en="Gender *" data-hi="लिंग *">Gender *</label>
           <select id="gender">
-            <option value="" data-en="Select gender"        data-hi="लिंग चुनें">Select gender</option>
-            <option value="Male"               data-en="Male"               data-hi="पुरुष">Male</option>
-            <option value="Female"             data-en="Female"             data-hi="महिला">Female</option>
-            <option value="Other"              data-en="Other"              data-hi="अन्य">Other</option>
-            <option value="Prefer not to say"  data-en="Prefer not to say"  data-hi="बताना नहीं चाहते">Prefer not to say</option>
+            <option value="" data-en="Select gender" data-hi="लिंग चुनें">Select gender</option>
+            <option value="Male" data-en="Male" data-hi="पुरुष">Male</option>
+            <option value="Female" data-en="Female" data-hi="महिला">Female</option>
+            <option value="Other" data-en="Other" data-hi="अन्य">Other</option>
+            <option value="Prefer not to say" data-en="Prefer not to say" data-hi="बताना नहीं चाहते">Prefer not to say</option>
           </select>
         </div>
         <div class="form-group">
@@ -533,7 +448,7 @@
   </div>
 </div>
 
-<!-- SCREEN 2: HOSPITAL -->
+<!-- SCREEN 2 -->
 <div class="screen" id="screen2">
   <div class="container">
     <div class="screen-header">
@@ -548,12 +463,11 @@
         Continue to Select Doctor →
       </button>
     </div>
-    <button class="btn btn-outline" id="btn-back-1" style="margin-top:8px" onclick="goToScreen(1)"
-      data-en="← Back" data-hi="← वापस">← Back</button>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(1)" data-en="← Back" data-hi="← वापस">← Back</button>
   </div>
 </div>
 
-<!-- SCREEN 3: DOCTOR -->
+<!-- SCREEN 3 -->
 <div class="screen" id="screen3">
   <div class="container">
     <div class="screen-header">
@@ -564,22 +478,19 @@
       <div class="section-label" data-en="Your Health Concern" data-hi="आपकी स्वास्थ्य समस्या">Your Health Concern</div>
       <div class="form-group">
         <label data-en="Describe your problem *" data-hi="अपनी समस्या बताएं *">Describe your problem *</label>
-        <textarea id="problem"
-          data-en-placeholder="e.g. I have had a persistent headache for 3 days..."
-          data-hi-placeholder="उदा. मुझे 3 दिनों से लगातार सिरदर्द है..."
-          placeholder="e.g. I have had a persistent headache for 3 days..."></textarea>
+        <textarea id="problem" data-en-placeholder="e.g. I have had a persistent headache for 3 days..." data-hi-placeholder="उदा. मुझे 3 दिनों से लगातार सिरदर्द है..." placeholder="e.g. I have had a persistent headache for 3 days..."></textarea>
       </div>
       <div class="form-group" style="margin-top:14px">
         <label data-en="Specialization Needed" data-hi="किस विशेषज्ञ की ज़रूरत है">Specialization Needed</label>
         <select id="specFilter" onchange="filterDoctors()">
-          <option value=""                  data-en="All Specializations" data-hi="सभी विशेषज्ञ">All Specializations</option>
-          <option value="General Physician" data-en="General Physician"   data-hi="सामान्य चिकित्सक">General Physician</option>
-          <option value="Cardiologist"      data-en="Cardiologist"        data-hi="हृदय रोग विशेषज्ञ">Cardiologist</option>
-          <option value="Dermatologist"     data-en="Dermatologist"       data-hi="त्वचा रोग विशेषज्ञ">Dermatologist</option>
-          <option value="Orthopedic"        data-en="Orthopedic"          data-hi="हड्डी रोग विशेषज्ञ">Orthopedic</option>
-          <option value="Pediatrician"      data-en="Pediatrician"        data-hi="बाल रोग विशेषज्ञ">Pediatrician</option>
-          <option value="ENT Specialist"    data-en="ENT Specialist"      data-hi="कान-नाक-गला विशेषज्ञ">ENT Specialist</option>
-          <option value="Neurologist"       data-en="Neurologist"         data-hi="न्यूरोलॉजिस्ट">Neurologist</option>
+          <option value="" data-en="All Specializations" data-hi="सभी विशेषज्ञ">All Specializations</option>
+          <option value="General Physician" data-en="General Physician" data-hi="सामान्य चिकित्सक">General Physician</option>
+          <option value="Cardiologist" data-en="Cardiologist" data-hi="हृदय रोग विशेषज्ञ">Cardiologist</option>
+          <option value="Dermatologist" data-en="Dermatologist" data-hi="त्वचा रोग विशेषज्ञ">Dermatologist</option>
+          <option value="Orthopedic" data-en="Orthopedic" data-hi="हड्डी रोग विशेषज्ञ">Orthopedic</option>
+          <option value="Pediatrician" data-en="Pediatrician" data-hi="बाल रोग विशेषज्ञ">Pediatrician</option>
+          <option value="ENT Specialist" data-en="ENT Specialist" data-hi="कान-नाक-गला विशेषज्ञ">ENT Specialist</option>
+          <option value="Neurologist" data-en="Neurologist" data-hi="न्यूरोलॉजिस्ट">Neurologist</option>
         </select>
       </div>
     </div>
@@ -591,22 +502,21 @@
         Continue to Book Slot →
       </button>
     </div>
-    <button class="btn btn-outline" id="btn-back-2" style="margin-top:8px" onclick="goToScreen(2)"
-      data-en="← Back" data-hi="← वापस">← Back</button>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(2)" data-en="← Back" data-hi="← वापस">← Back</button>
   </div>
 </div>
 
-<!-- SCREEN 4: SLOTS -->
+<!-- SCREEN 4 -->
 <div class="screen" id="screen4">
   <div class="container">
     <div class="screen-header">
       <div class="screen-title" data-en="Pick a Time Slot" data-hi="समय स्लॉट चुनें">Pick a Time Slot</div>
       <div class="screen-subtitle" data-en="Select a date and your preferred time" data-hi="तारीख और अपना पसंदीदा समय चुनें">Select a date and your preferred time</div>
     </div>
-    <div class="card" id="apptSummary" style="margin-bottom:16px; background:rgba(238,245,238,0.92); border-color:var(--sage-light);"></div>
+    <div class="card" id="apptSummary" style="margin-bottom:16px;background:rgba(238,245,238,0.92);border-color:var(--sage-light);"></div>
     <div class="card">
       <div class="section-label" data-en="Select Date" data-hi="तारीख चुनें">Select Date</div>
-      <div style="display:flex; gap:10px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px;" id="dateRow"></div>
+      <div style="display:flex;gap:10px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;" id="dateRow"></div>
       <div class="divider"></div>
       <div class="section-label" data-en="Morning Slots" data-hi="सुबह के स्लॉट">Morning Slots</div>
       <div class="slots-grid" id="slotsAM"></div>
@@ -617,8 +527,7 @@
         ✅ Confirm Appointment
       </button>
     </div>
-    <button class="btn btn-outline" id="btn-back-3" style="margin-top:8px" onclick="goToScreen(3)"
-      data-en="← Back" data-hi="← वापस">← Back</button>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="goToScreen(3)" data-en="← Back" data-hi="← वापस">← Back</button>
   </div>
 </div>
 
@@ -630,11 +539,9 @@
       <div class="success-title" data-en="Appointment Confirmed!" data-hi="अपॉइंटमेंट पक्का हो गया!">Appointment Confirmed!</div>
       <div class="success-sub" data-en="Your appointment has been booked successfully.<br>We'll send a reminder before your visit." data-hi="आपका अपॉइंटमेंट सफलतापूर्वक बुक हो गया है।<br>हम आपकी यात्रा से पहले एक अनुस्मारक भेजेंगे।">Your appointment has been booked successfully.<br>We'll send a reminder before your visit.</div>
     </div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; margin-top:16px">
-      <div style="font-family:'DM Serif Display',serif; font-size:1.6rem"
-        data-en="My Appointments" data-hi="मेरे अपॉइंटमेंट">My Appointments</div>
-      <button class="btn btn-outline" id="btn-new-appt" onclick="goToScreen(1)" style="font-size:0.82rem"
-        data-en="+ New Appointment" data-hi="+ नया अपॉइंटमेंट">+ New Appointment</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;margin-top:16px">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem" data-en="My Appointments" data-hi="मेरे अपॉइंटमेंट">My Appointments</div>
+      <button class="btn btn-outline" onclick="goToScreen(1)" style="font-size:0.82rem" data-en="+ New Appointment" data-hi="+ नया अपॉइंटमेंट">+ New Appointment</button>
     </div>
     <div id="apptList"></div>
   </div>
@@ -696,7 +603,7 @@
     <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'स्मार्ट क्यू क्या है?':'What is Smart Queue?')" data-en="What is Smart Queue?" data-hi="स्मार्ट क्यू क्या है?">What is Smart Queue?</div>
     <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'कैसे जुड़ें?':'How do I join a queue?')" data-en="How do I join?" data-hi="कैसे जुड़ें?">How do I join?</div>
     <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'क्या यह मुफ़्त है?':'Is it free?')" data-en="Is it free?" data-hi="क्या यह मुफ़्त है?">Is it free?</div>
-    <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'मुझे समझ नहीं आ रहा':'I am confused')" data-en="I'm confused" data-hi="मुझे समझ नहीं आ रहा">I'm confused</div>
+    <div class="vp-chip" onclick="vpAskText(currentLang==='hi'?'अपॉइंटमेंट कैसे रद्द करें?':'How to cancel appointment?')" data-en="How to cancel?" data-hi="कैसे रद्द करें?">How to cancel?</div>
   </div>
   <div class="vp-controls">
     <button class="vp-ctrl-btn primary" id="vp-mic-btn" onclick="vpToggleMic()">
@@ -718,7 +625,131 @@
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzGSTGuORSw7xdqQMd21qOFx505axeMBEJ8IF7SO7jMOjXIbQgN7ktSTgBBCy7XENRj/exec";
 
 let currentLang = 'en';
+let pendingCancelId = null; // track which appointment to cancel
 
+// ── CANCELLATION HELPERS ──────────────────────────────
+/**
+ * Parse "YYYY-MM-DD" + "09:00 AM" → Date object
+ */
+function parseApptDateTime(dateStr, slotStr) {
+  // slotStr e.g. "09:00 AM" or "02:30 PM"
+  const [datePart] = [dateStr];
+  const [time, meridiem] = slotStr.split(' ');
+  let [hours, minutes] = time.split(':').map(Number);
+  if (meridiem === 'PM' && hours !== 12) hours += 12;
+  if (meridiem === 'AM' && hours === 12) hours = 0;
+  const d = new Date(datePart);
+  d.setHours(hours, minutes, 0, 0);
+  return d;
+}
+
+/**
+ * Returns ms until appointment. Negative = past.
+ */
+function msUntilAppt(appt) {
+  const apptTime = parseApptDateTime(appt.date, appt.slot);
+  return apptTime - Date.now();
+}
+
+/**
+ * Can cancel if appointment is > 1 hour away and not already cancelled.
+ */
+function canCancel(appt) {
+  if (appt.cancelled) return false;
+  return msUntilAppt(appt) > 60 * 60 * 1000;
+}
+
+/**
+ * Format remaining time nicely
+ */
+function formatTimeLeft(ms) {
+  if (ms <= 0) return null;
+  const totalMins = Math.floor(ms / 60000);
+  if (totalMins < 60) return `${totalMins}m left`;
+  const hrs = Math.floor(totalMins / 60);
+  const mins = totalMins % 60;
+  return mins > 0 ? `${hrs}h ${mins}m left` : `${hrs}h left`;
+}
+
+// ── TOAST ────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type}`;
+  void el.offsetWidth;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+// ── MODAL ────────────────────────────────────────────
+function openCancelModal(apptId) {
+  const appt = state.appointments.find(a => a.id === apptId);
+  if (!appt) return;
+  pendingCancelId = apptId;
+
+  const l = currentLang;
+  document.getElementById('modal-title').textContent =
+    l === 'hi' ? 'अपॉइंटमेंट रद्द करें?' : 'Cancel Appointment?';
+  document.getElementById('modal-sub').textContent =
+    l === 'hi'
+      ? 'यह कार्रवाई वापस नहीं की जा सकती। स्लॉट दूसरे मरीज़ों के लिए खाली हो जाएगा।'
+      : 'This action cannot be undone. The slot will be freed for other patients.';
+  document.getElementById('modal-keep-label').textContent =
+    l === 'hi' ? 'नहीं, रखें' : 'Keep Appointment';
+  document.getElementById('modal-cancel-label').textContent =
+    l === 'hi' ? 'हाँ, रद्द करें' : 'Yes, Cancel';
+
+  const spec = l === 'hi' ? appt.doctor.spec_hi : appt.doctor.spec_en;
+  const hosLoc = l === 'hi' ? appt.hospital.loc_hi : appt.hospital.loc_en;
+  document.getElementById('modal-appt-info').innerHTML = `
+    <div>👨‍⚕️ <strong>${appt.doctor.name}</strong> — ${spec}</div>
+    <div>🏥 ${appt.hospital.name}, ${hosLoc}</div>
+    <div>📅 ${appt.date} &nbsp;⏰ ${appt.slot}</div>`;
+
+  document.getElementById('cancelModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('cancelModal').classList.remove('open');
+  pendingCancelId = null;
+}
+
+function confirmCancel() {
+  if (!pendingCancelId) return;
+  const appt = state.appointments.find(a => a.id === pendingCancelId);
+  if (!appt) return;
+
+  // Double-check the 1-hour rule at time of confirmation
+  if (!canCancel(appt)) {
+    closeModal();
+    showToast(
+      currentLang === 'hi'
+        ? '⛔ अपॉइंटमेंट से 1 घंटे से कम समय बचा है — रद्द नहीं किया जा सकता।'
+        : '⛔ Less than 1 hour to appointment — cancellation not allowed.',
+      'danger'
+    );
+    return;
+  }
+
+  appt.cancelled = true;
+  appt.status_en = 'Cancelled';
+  appt.status_hi = 'रद्द';
+  closeModal();
+  renderAppointments(false);
+  showToast(
+    currentLang === 'hi'
+      ? '✅ अपॉइंटमेंट सफलतापूर्वक रद्द कर दिया गया।'
+      : '✅ Appointment cancelled successfully.',
+    'success'
+  );
+}
+
+// Close modal on overlay click
+document.getElementById('cancelModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── DATA ─────────────────────────────────────────────
 const HOSPITAL_TIER = {
   "Government":"gov","Semi-Government":"semigov","Private":"private",
   "Multi-Specialty":"private","Clinic":"semigov","Eye Specialist":"semigov","General":"semigov"
@@ -738,37 +769,34 @@ function getDocFee(spec){
 }
 
 const HOSPITALS = [
-  {id:1, name:"AIIMS Rishikesh",      loc_en:"Rishikesh, Uttarakhand",  loc_hi:"ऋषिकेश, उत्तराखंड",  badge:"Government"},
-  {id:2, name:"Shivalik Hospital",     loc_en:"Haridwar, Uttarakhand",   loc_hi:"हरिद्वार, उत्तराखंड", badge:"Private"},
-  {id:3, name:"Himalayan Institute",   loc_en:"Dehradun, Uttarakhand",   loc_hi:"देहरादून, उत्तराखंड", badge:"Multi-Specialty"},
-  {id:4, name:"Max Super Specialty",  loc_en:"Saharanpur, UP",           loc_hi:"सहारनपुर, उ.प्र.",    badge:"Private"},
-  {id:5, name:"Kailash Hospital",      loc_en:"Roorkee, Uttarakhand",    loc_hi:"रुड़की, उत्तराखंड",   badge:"Private"},
-  {id:6, name:"Gangotri Medical",      loc_en:"Haridwar, Uttarakhand",   loc_hi:"हरिद्वार, उत्तराखंड", badge:"Clinic"},
-  {id:7, name:"Drishti Eye Centre",    loc_en:"Rishikesh",               loc_hi:"ऋषिकेश",              badge:"Eye Specialist"},
-  {id:8, name:"Life Care Hospital",    loc_en:"Muzaffarnagar, UP",       loc_hi:"मुज़फ्फरनगर, उ.प्र.", badge:"General"},
+  {id:1,name:"AIIMS Rishikesh",loc_en:"Rishikesh, Uttarakhand",loc_hi:"ऋषिकेश, उत्तराखंड",badge:"Government"},
+  {id:2,name:"Shivalik Hospital",loc_en:"Haridwar, Uttarakhand",loc_hi:"हरिद्वार, उत्तराखंड",badge:"Private"},
+  {id:3,name:"Himalayan Institute",loc_en:"Dehradun, Uttarakhand",loc_hi:"देहरादून, उत्तराखंड",badge:"Multi-Specialty"},
+  {id:4,name:"Max Super Specialty",loc_en:"Saharanpur, UP",loc_hi:"सहारनपुर, उ.प्र.",badge:"Private"},
+  {id:5,name:"Kailash Hospital",loc_en:"Roorkee, Uttarakhand",loc_hi:"रुड़की, उत्तराखंड",badge:"Private"},
+  {id:6,name:"Gangotri Medical",loc_en:"Haridwar, Uttarakhand",loc_hi:"हरिद्वार, उत्तराखंड",badge:"Clinic"},
+  {id:7,name:"Drishti Eye Centre",loc_en:"Rishikesh",loc_hi:"ऋषिकेश",badge:"Eye Specialist"},
+  {id:8,name:"Life Care Hospital",loc_en:"Muzaffarnagar, UP",loc_hi:"मुज़फ्फरनगर, उ.प्र.",badge:"General"},
 ];
-
 const BADGE_HI = {
   "Government":"सरकारी","Private":"निजी","Multi-Specialty":"बहु-विशेषता",
   "Clinic":"क्लिनिक","Eye Specialist":"नेत्र विशेषज्ञ","General":"सामान्य"
 };
-
 const DOCTORS = [
-  {id:1, name:"Dr. Priya Sharma",  spec_en:"General Physician",  spec_hi:"सामान्य चिकित्सक",    avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9"},
-  {id:2, name:"Dr. Rohan Mehta",   spec_en:"Cardiologist",        spec_hi:"हृदय रोग विशेषज्ञ",   avail_en:"Available in 30m", avail_hi:"30 मिनट में उपलब्ध", status:"yellow", emoji:"👨‍⚕️", bg:"#fff8e1"},
-  {id:3, name:"Dr. Anita Gupta",   spec_en:"Dermatologist",       spec_hi:"त्वचा रोग विशेषज्ञ",  avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👩‍⚕️", bg:"#e8f5e9"},
-  {id:4, name:"Dr. Suresh Verma",  spec_en:"Orthopedic",          spec_hi:"हड्डी रोग विशेषज्ञ",  avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👨‍⚕️", bg:"#e3f2fd"},
-  {id:5, name:"Dr. Kavita Nair",   spec_en:"Pediatrician",        spec_hi:"बाल रोग विशेषज्ञ",    avail_en:"Available in 1h",  avail_hi:"1 घंटे में उपलब्ध",  status:"yellow", emoji:"👩‍⚕️", bg:"#fce4ec"},
-  {id:6, name:"Dr. Arun Tiwari",   spec_en:"ENT Specialist",      spec_hi:"कान-नाक-गला विशेषज्ञ",avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9"},
-  {id:7, name:"Dr. Neha Singh",    spec_en:"Neurologist",         spec_hi:"न्यूरोलॉजिस्ट",        avail_en:"Available in 45m", avail_hi:"45 मिनट में उपलब्ध",status:"yellow", emoji:"👩‍⚕️", bg:"#f3e5f5"},
-  {id:8, name:"Dr. Vikram Das",    spec_en:"General Physician",   spec_hi:"सामान्य चिकित्सक",    avail_en:"Available Now",    avail_hi:"अभी उपलब्ध",        status:"green",  emoji:"👨‍⚕️", bg:"#e8f5e9"},
+  {id:1,name:"Dr. Priya Sharma",spec_en:"General Physician",spec_hi:"सामान्य चिकित्सक",avail_en:"Available Now",avail_hi:"अभी उपलब्ध",status:"green",emoji:"👩‍⚕️",bg:"#e8f5e9"},
+  {id:2,name:"Dr. Rohan Mehta",spec_en:"Cardiologist",spec_hi:"हृदय रोग विशेषज्ञ",avail_en:"Available in 30m",avail_hi:"30 मिनट में उपलब्ध",status:"yellow",emoji:"👨‍⚕️",bg:"#fff8e1"},
+  {id:3,name:"Dr. Anita Gupta",spec_en:"Dermatologist",spec_hi:"त्वचा रोग विशेषज्ञ",avail_en:"Available Now",avail_hi:"अभी उपलब्ध",status:"green",emoji:"👩‍⚕️",bg:"#e8f5e9"},
+  {id:4,name:"Dr. Suresh Verma",spec_en:"Orthopedic",spec_hi:"हड्डी रोग विशेषज्ञ",avail_en:"Available Now",avail_hi:"अभी उपलब्ध",status:"green",emoji:"👨‍⚕️",bg:"#e3f2fd"},
+  {id:5,name:"Dr. Kavita Nair",spec_en:"Pediatrician",spec_hi:"बाल रोग विशेषज्ञ",avail_en:"Available in 1h",avail_hi:"1 घंटे में उपलब्ध",status:"yellow",emoji:"👩‍⚕️",bg:"#fce4ec"},
+  {id:6,name:"Dr. Arun Tiwari",spec_en:"ENT Specialist",spec_hi:"कान-नाक-गला विशेषज्ञ",avail_en:"Available Now",avail_hi:"अभी उपलब्ध",status:"green",emoji:"👨‍⚕️",bg:"#e8f5e9"},
+  {id:7,name:"Dr. Neha Singh",spec_en:"Neurologist",spec_hi:"न्यूरोलॉजिस्ट",avail_en:"Available in 45m",avail_hi:"45 मिनट में उपलब्ध",status:"yellow",emoji:"👩‍⚕️",bg:"#f3e5f5"},
+  {id:8,name:"Dr. Vikram Das",spec_en:"General Physician",spec_hi:"सामान्य चिकित्सक",avail_en:"Available Now",avail_hi:"अभी उपलब्ध",status:"green",emoji:"👨‍⚕️",bg:"#e8f5e9"},
 ];
-
 const AM_SLOTS = ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM"];
 const PM_SLOTS = ["12:00 PM","12:30 PM","02:00 PM","02:30 PM","03:00 PM","04:00 PM","04:30 PM","05:00 PM"];
 const TAKEN    = {"09:30 AM":true,"11:00 AM":true,"02:30 PM":true,"04:00 PM":true};
 
-let state = {patient:null, hospital:null, doctor:null, problem:"", date:null, slot:null, appointments:[]};
+let state = {patient:null,hospital:null,doctor:null,problem:"",date:null,slot:null,appointments:[]};
 
 function goToScreen(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
@@ -777,7 +805,7 @@ function goToScreen(n){
     el.classList.toggle('active',i+1===n);
     el.classList.toggle('done',i+1<n);
   });
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function registerPatient(){
@@ -786,7 +814,7 @@ function registerPatient(){
   const age=document.getElementById('age').value.trim();
   const gender=document.getElementById('gender').value;
   const phone=document.getElementById('phone').value.trim();
-  const errMsg = currentLang==='hi' ? "कृपया सभी आवश्यक फ़ील्ड भरें।" : "Please fill all required fields.";
+  const errMsg=currentLang==='hi'?"कृपया सभी आवश्यक फ़ील्ड भरें।":"Please fill all required fields.";
   if(!fname||!lname||!age||!gender||!phone){alert(errMsg);return;}
   state.patient={fname,lname,age,gender,phone,
     email:document.getElementById('email').value,
@@ -800,15 +828,12 @@ function renderHospitals(){
     <div class="hospital-card ${state.hospital?.id===h.id?'selected':''}" onclick="pickHospital(${h.id})">
       <div class="h-name">🏥 ${h.name}</div>
       <div class="h-loc">📍 ${l==='hi'?h.loc_hi:h.loc_en}</div>
-      <div class="h-badges">
-        <span class="h-badge">${l==='hi'?(BADGE_HI[h.badge]||h.badge):h.badge}</span>
-      </div>
+      <div class="h-badges"><span class="h-badge">${l==='hi'?(BADGE_HI[h.badge]||h.badge):h.badge}</span></div>
     </div>`).join('');
 }
 function pickHospital(id){state.hospital=HOSPITALS.find(h=>h.id===id);renderHospitals();}
 function selectHospital(){
-  const errMsg=currentLang==='hi'?"कृपया एक अस्पताल चुनें।":"Please select a hospital.";
-  if(!state.hospital){alert(errMsg);return;}
+  if(!state.hospital){alert(currentLang==='hi'?"कृपया एक अस्पताल चुनें।":"Please select a hospital.");return;}
   renderDoctors();goToScreen(3);
 }
 
@@ -820,8 +845,7 @@ function renderDoctors(filter=""){
     const spec=l==='hi'?d.spec_hi:d.spec_en;
     const avail=l==='hi'?d.avail_hi:d.avail_en;
     const consultLabel=l==='hi'?'परामर्श':'Consult';
-    return `
-    <div class="doctor-card ${state.doctor?.id===d.id?'selected':''}" onclick="pickDoctor(${d.id})">
+    return `<div class="doctor-card ${state.doctor?.id===d.id?'selected':''}" onclick="pickDoctor(${d.id})">
       <div class="doc-avatar" style="background:${d.bg}">${d.emoji}</div>
       <div style="flex:1">
         <div class="doc-name">${d.name}</div>
@@ -836,19 +860,17 @@ function filterDoctors(){renderDoctors(document.getElementById('specFilter').val
 function pickDoctor(id){state.doctor=DOCTORS.find(d=>d.id===id);renderDoctors(document.getElementById('specFilter').value);}
 function selectDoctor(){
   state.problem=document.getElementById('problem').value.trim();
-  const errProblem=currentLang==='hi'?"कृपया अपनी स्वास्थ्य समस्या बताएं।":"Please describe your health concern.";
-  const errDoc=currentLang==='hi'?"कृपया एक डॉक्टर चुनें।":"Please select a doctor.";
-  if(!state.problem){alert(errProblem);return;}
-  if(!state.doctor){alert(errDoc);return;}
+  if(!state.problem){alert(currentLang==='hi'?"कृपया अपनी स्वास्थ्य समस्या बताएं।":"Please describe your health concern.");return;}
+  if(!state.doctor){alert(currentLang==='hi'?"कृपया एक डॉक्टर चुनें।":"Please select a doctor.");return;}
   renderSlotScreen();goToScreen(4);
 }
 
 function renderSlotScreen(){
   const l=currentLang;
   const docFee=getDocFee(state.doctor.spec_en);
-  const labels = l==='hi'
-    ? {patient:"मरीज़",hospital:"अस्पताल",doctor:"डॉक्टर",fee:"परामर्श शुल्क"}
-    : {patient:"Patient",hospital:"Hospital",doctor:"Doctor",fee:"Consultation Fee"};
+  const labels=l==='hi'
+    ?{patient:"मरीज़",hospital:"अस्पताल",doctor:"डॉक्टर",fee:"परामर्श शुल्क"}
+    :{patient:"Patient",hospital:"Hospital",doctor:"Doctor",fee:"Consultation Fee"};
   const docSpec=l==='hi'?state.doctor.spec_hi:state.doctor.spec_en;
   document.getElementById('apptSummary').innerHTML=`
     <div style="display:flex;gap:24px;flex-wrap:wrap">
@@ -893,68 +915,122 @@ function renderSlots(gridId,slots){
 function pickSlot(s){state.slot=s;renderSlots('slotsAM',AM_SLOTS);renderSlots('slotsPM',PM_SLOTS);}
 
 function bookAppointment(){
-  const errMsg=currentLang==='hi'?"कृपया एक समय स्लॉट चुनें।":"Please select a time slot.";
-  if(!state.slot){alert(errMsg);return;}
+  if(!state.slot){alert(currentLang==='hi'?"कृपया एक समय स्लॉट चुनें।":"Please select a time slot.");return;}
   const appt={
-    id:Date.now(), patient:{...state.patient}, hospital:{...state.hospital},
-    doctor:{...state.doctor}, problem:state.problem, date:state.date, slot:state.slot,
-    status_en:"Confirmed", status_hi:"पुष्टि हुई",
+    id:Date.now(),patient:{...state.patient},hospital:{...state.hospital},
+    doctor:{...state.doctor},problem:state.problem,date:state.date,slot:state.slot,
+    status_en:"Confirmed",status_hi:"पुष्टि हुई",cancelled:false,
     booked:new Date().toLocaleDateString('en-IN')
   };
   state.appointments.unshift(appt);
   fetch(BACKEND_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},
     body:JSON.stringify({
       bookingId:"SQ-"+Date.now().toString().slice(-6),
-      firstName:state.patient.fname, lastName:state.patient.lname,
-      age:state.patient.age, gender:state.patient.gender,
-      phone:state.patient.phone, email:state.patient.email||"",
-      bloodGroup:state.patient.blood||"", hospital:state.hospital.name,
-      doctor:state.doctor.name, specialization:state.doctor.spec_en,
-      concern:state.problem, date:state.date, timeSlot:state.slot
+      firstName:state.patient.fname,lastName:state.patient.lname,
+      age:state.patient.age,gender:state.patient.gender,
+      phone:state.patient.phone,email:state.patient.email||"",
+      bloodGroup:state.patient.blood||"",hospital:state.hospital.name,
+      doctor:state.doctor.name,specialization:state.doctor.spec_en,
+      concern:state.problem,date:state.date,timeSlot:state.slot
     })
   }).catch(()=>{});
   renderAppointments(true);goToScreen(5);state.slot=null;
 }
-
+// ── RENDER APPOINTMENTS (with cancel zone) ───────────
 function renderAppointments(justBooked=false){
   document.getElementById('successBanner').style.display=justBooked?'block':'none';
   const list=document.getElementById('apptList');
   const l=currentLang;
+
   if(!state.appointments.length){
     const msg=l==='hi'?"अभी तक कोई अपॉइंटमेंट नहीं।":"No appointments yet.";
     list.innerHTML=`<div class="empty"><div class="empty-icon">📅</div><div>${msg}</div></div>`;
     return;
   }
+
   list.innerHTML=state.appointments.map(a=>{
     const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.hospital.name+', '+(l==='hi'?a.hospital.loc_hi:a.hospital.loc_en))}`;
-    const status=l==='hi'?a.status_hi:a.status_en;
-    const spec=l==='hi'?a.doctor.spec_hi:a.doctor.spec_en;
-    const hosLoc=l==='hi'?a.hospital.loc_hi:a.hospital.loc_en;
-    const liveTxt=l==='hi'?"लाइव ट्रैकिंग":"Live Tracking";
-    const dirTxt=l==='hi'?"🗺️ दिशा-निर्देश पाएं":"🗺️ Get Directions";
-    const availTxt=l==='hi'?"उपलब्धता":"Availability";
-    const bookedTxt=l==='hi'?"बुकिंग तिथि":"Booked on";
-    const availStr=l==='hi'?a.doctor.avail_hi:a.doctor.avail_en;
-    return `<div class="appt-card">
-      <div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span class="appt-badge badge-confirmed">${status}</span>
-          <span class="live-pill"><span class="live-dot"></span>${liveTxt}</span>
+    const status    = l==='hi'?a.status_hi:a.status_en;
+    const spec      = l==='hi'?a.doctor.spec_hi:a.doctor.spec_en;
+    const hosLoc    = l==='hi'?a.hospital.loc_hi:a.hospital.loc_en;
+    const liveTxt   = l==='hi'?"लाइव ट्रैकिंग":"Live Tracking";
+    const dirTxt    = l==='hi'?"🗺️ दिशा-निर्देश पाएं":"🗺️ Get Directions";
+    const availStr  = l==='hi'?a.doctor.avail_hi:a.doctor.avail_en;
+    const bookedTxt = l==='hi'?"बुकिंग तिथि":"Booked on";
+    const badgeClass= a.cancelled ? 'badge-cancelled' : 'badge-confirmed';
+
+    // --- Cancel zone logic ---
+    let cancelZoneHTML = '';
+    if (!a.cancelled) {
+      const msLeft = msUntilAppt(a);
+      const timeLeft = formatTimeLeft(msLeft);
+      const canDo = msLeft > 60 * 60 * 1000;
+
+      if (canDo) {
+        const cancelBtnTxt = l==='hi' ? '🗑️ अपॉइंटमेंट रद्द करें' : '🗑️ Cancel Appointment';
+        const timerTxt     = l==='hi' ? `⏳ ${timeLeft} बाकी` : `⏳ ${timeLeft} until appointment`;
+        cancelZoneHTML = `
+          <div class="cancel-zone">
+            <div class="cancel-timer">
+              <span class="timer-badge">${timerTxt}</span>
+              <span style="font-size:0.74rem;">${l==='hi'?'· 1 घंटे पहले तक रद्द कर सकते हैं':'· Cancellable until 1 hour before'}</span>
+            </div>
+            <button class="btn-cancel" onclick="openCancelModal(${a.id})">${cancelBtnTxt}</button>
+          </div>`;
+      } else if (msLeft > 0) {
+        // Within 1 hour — too late
+        const tooLateTxt = l==='hi'
+          ? '⛔ अब रद्द नहीं हो सकता — अपॉइंटमेंट में 1 घंटे से कम समय बचा है।'
+          : '⛔ Cancellation window closed — less than 1 hour to appointment.';
+        cancelZoneHTML = `
+          <div class="cancel-zone">
+            <div class="cancel-timer">
+              <span class="expired-badge">${tooLateTxt}</span>
+            </div>
+            <button class="btn-cancel" disabled>🗑️ ${l==='hi'?'रद्द नहीं कर सकते':'Cannot Cancel'}</button>
+          </div>`;
+      } else {
+        // Past appointment
+        const pastTxt = l==='hi' ? 'अपॉइंटमेंट हो चुका है' : 'Appointment has passed';
+        cancelZoneHTML = `
+          <div class="cancel-zone">
+            <div class="cancel-timer"><span class="expired-badge">📋 ${pastTxt}</span></div>
+          </div>`;
+      }
+    } else {
+      const cancelledNote = l==='hi'
+        ? '✅ आपका अपॉइंटमेंट रद्द कर दिया गया है। स्लॉट अब उपलब्ध है।'
+        : '✅ Appointment was cancelled. The slot has been freed.';
+      cancelZoneHTML = `
+        <div class="cancel-zone" style="border-top:1px solid #f5b7b1;background:rgba(253,236,234,0.4);border-radius:0 0 8px 8px;padding:10px 0 0;">
+          <div class="cancel-timer"><span class="expired-badge">${cancelledNote}</span></div>
+        </div>`;
+    }
+
+    return `
+    <div class="appt-card ${a.cancelled?'cancelled':''}" id="appt-${a.id}">
+      <div class="appt-card-top">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span class="appt-badge ${badgeClass}">${status}</span>
+            ${!a.cancelled?`<span class="live-pill"><span class="live-dot"></span>${liveTxt}</span>`:''}
+          </div>
+          <div class="appt-doc">${a.doctor.emoji} ${a.doctor.name}</div>
+          <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${hosLoc}</div>
+          <div class="appt-meta">📅 ${a.date} · ⏰ ${a.slot}</div>
+          <div class="appt-meta" style="margin-top:4px">🩺 ${spec}</div>
+          ${!a.cancelled?`<a class="map-link" href="${mapUrl}" target="_blank">${dirTxt}</a>`:''}
         </div>
-        <div class="appt-doc">${a.doctor.emoji} ${a.doctor.name}</div>
-        <div class="appt-meta">🏥 ${a.hospital.name} · 📍 ${hosLoc}</div>
-        <div class="appt-meta">📅 ${a.date} · ⏰ ${a.slot}</div>
-        <div class="appt-meta" style="margin-top:4px">🩺 ${spec}</div>
-        <a class="map-link" href="${mapUrl}" target="_blank">${dirTxt}</a>
-      </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">${availTxt}</div>
-        <div class="doc-avail avail-${a.doctor.status}" style="font-size:0.82rem;white-space:nowrap">
-          <span class="avail-dot"></span>${availStr}
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:0.72rem;color:var(--text-soft);margin-bottom:4px">${l==='hi'?'उपलब्धता':'Availability'}</div>
+          <div class="doc-avail avail-${a.doctor.status}" style="font-size:0.82rem;white-space:nowrap">
+            <span class="avail-dot"></span>${availStr}
+          </div>
+          <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">${bookedTxt}</div>
+          <div style="font-size:0.82rem;font-weight:500">${a.booked}</div>
         </div>
-        <div style="font-size:0.72rem;color:var(--text-soft);margin-top:12px">${bookedTxt}</div>
-        <div style="font-size:0.82rem;font-weight:500">${a.booked}</div>
       </div>
+      ${cancelZoneHTML}
     </div>`;
   }).join('');
 }
@@ -962,11 +1038,10 @@ function renderAppointments(justBooked=false){
 function toggleLang(){
   currentLang = currentLang==='en'?'hi':'en';
   const l = currentLang;
-  const btn = document.getElementById('nav-lang-btn');
-  btn.textContent = l==='hi' ? '🌐 View in English' : '🌐 हिन्दी में देखें';
+  document.getElementById('nav-lang-btn').textContent = l==='hi'?'🌐 View in English':'🌐 हिन्दी में देखें';
 
   document.querySelectorAll('[data-en]').forEach(el=>{
-    const val = l==='hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+    const val = l==='hi'?el.getAttribute('data-hi'):el.getAttribute('data-en');
     if(!val) return;
     if(el.classList.contains('nav-step')){el.textContent=val;return;}
     if(['BUTTON','LABEL','DIV','SPAN','H1','H2','H3'].includes(el.tagName)){el.innerHTML=val;return;}
@@ -975,8 +1050,8 @@ function toggleLang(){
 
   document.querySelectorAll('[data-en-placeholder]').forEach(el=>{
     el.placeholder = l==='hi'
-      ? (el.getAttribute('data-hi-placeholder')||'')
-      : (el.getAttribute('data-en-placeholder')||'');
+      ?(el.getAttribute('data-hi-placeholder')||'')
+      :(el.getAttribute('data-en-placeholder')||'');
   });
 
   document.getElementById('chat-title').textContent   = l==='hi'?"स्मार्ट क्यू सहायक":"Smart Queue Assistant";
@@ -987,25 +1062,22 @@ function toggleLang(){
   document.getElementById('vp-mic-label').textContent = l==='hi'?"सुनना शुरू करें":"Start Listening";
   document.getElementById('vp-stop-label').textContent= l==='hi'?"रोकें":"Stop";
   document.getElementById('vp-clear-label').textContent=l==='hi'?"साफ़ करें":"Clear";
-  const hint = document.getElementById('vp-transcript-hint');
-  if(hint) hint.textContent = l==='hi'
-    ? "माइक दबाएं और स्मार्ट क्यू के बारे में कुछ भी पूछें…"
-    : "Tap the mic and ask anything about Smart Queue…";
+  const hint=document.getElementById('vp-transcript-hint');
+  if(hint) hint.textContent=l==='hi'?"माइक दबाएं और स्मार्ट क्यू के बारे में कुछ भी पूछें…":"Tap the mic and ask anything about Smart Queue…";
 
-  renderHospitals();
-  filterDoctors();
+  renderHospitals();filterDoctors();
   if(state.appointments.length) renderAppointments(false);
   if(state.doctor) renderSlotScreen();
 }
 
-// ══════════════ CHAT WIDGET ══════════════
+// ── CHAT WIDGET ───────────────────────────────────────
 (function(){
-  const SYSTEM=`You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India. You help users with: booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot), finding the right specialist based on symptoms, hospital info and directions, general health guidance (always advise consulting a doctor for diagnosis), platform navigation and troubleshooting. Hospitals: AIIMS Rishikesh (Government, ₹100), Shivalik Hospital - Haridwar (Private, ₹400), Himalayan Institute - Dehradun (Multi-Specialty, ₹400), Max Super Specialty - Saharanpur (Private, ₹400), Kailash Hospital - Roorkee (Private, ₹400), Gangotri Medical - Haridwar (Clinic, ₹200), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹200), Life Care Hospital - Muzaffarnagar (General, ₹200). Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician). Be concise, warm and helpful. Respond in the same language the user writes in (Hindi or English).`;
+  const SYSTEM=`You are Smart Queue Assistant — a warm, knowledgeable AI for the Smart Queue appointment platform serving hospitals in Uttarakhand and UP, India. You help users with: booking appointments (4 steps: Register → Choose Hospital → Select Doctor → Pick Time Slot), cancelling appointments (allowed only if more than 1 hour before appointment time — go to My Appointments and click Cancel), finding the right specialist based on symptoms, hospital info and directions, general health guidance (always advise consulting a doctor for diagnosis), platform navigation and troubleshooting. Hospitals: AIIMS Rishikesh (Government, ₹100), Shivalik Hospital - Haridwar (Private, ₹400), Himalayan Institute - Dehradun (Multi-Specialty, ₹400), Max Super Specialty - Saharanpur (Private, ₹400), Kailash Hospital - Roorkee (Private, ₹400), Gangotri Medical - Haridwar (Clinic, ₹200), Drishti Eye Centre - Rishikesh (Eye Specialist, ₹200), Life Care Hospital - Muzaffarnagar (General, ₹200). Doctors: Dr. Priya Sharma (General Physician), Dr. Rohan Mehta (Cardiologist), Dr. Anita Gupta (Dermatologist), Dr. Suresh Verma (Orthopedic), Dr. Kavita Nair (Pediatrician), Dr. Arun Tiwari (ENT Specialist), Dr. Neha Singh (Neurologist), Dr. Vikram Das (General Physician). Cancellation policy: Appointments can be cancelled up to 1 hour before the scheduled time. Within 1 hour, cancellation is not allowed. Be concise, warm and helpful. Respond in the same language the user writes in (Hindi or English).`;
 
-  const QR_EN_INIT   = ["How to book appointment?","Which doctor for fever?","Hospital in Dehradun","OPD timings"];
-  const QR_HI_INIT   = ["अपॉइंटमेंट कैसे बुक करें?","बुखार के लिए कौन डॉक्टर?","देहरादून में अस्पताल","OPD समय"];
-  const QR_EN_FOLLOW = ["Book an appointment","Find specialist","View hospitals","Help with form"];
-  const QR_HI_FOLLOW = ["अपॉइंटमेंट बुक करें","विशेषज्ञ खोजें","अस्पताल देखें","फ़ॉर्म में मदद"];
+  const QR_EN_INIT   = ["How to book appointment?","Which doctor for fever?","How to cancel?","OPD timings"];
+  const QR_HI_INIT   = ["अपॉइंटमेंट कैसे बुक करें?","बुखार के लिए कौन डॉक्टर?","रद्द कैसे करें?","OPD समय"];
+  const QR_EN_FOLLOW = ["Book an appointment","Cancel appointment","Find specialist","View hospitals"];
+  const QR_HI_FOLLOW = ["अपॉइंटमेंट बुक करें","रद्द करें","विशेषज्ञ खोजें","अस्पताल देखें"];
 
   let isOpen=false,isLoading=false;
   const chatHistory=[];
@@ -1025,18 +1097,16 @@ function toggleLang(){
   closeBtn.addEventListener('click',()=>{isOpen=false;panel.classList.remove('open');});
 
   function greet(){
-    const msg = currentLang==='hi'
-      ? "नमस्ते! 👋 मैं स्मार्ट क्यू AI सहायक हूँ।\n\nमैं आपको सही डॉक्टर ढूंढने, अपॉइंटमेंट बुक करने या हमारे अस्पतालों के बारे में जानकारी देने में मदद कर सकता हूँ।\n\nआज मैं आपकी कैसे सहायता कर सकता हूँ?"
-      : "Hi there! 👋 I'm the Smart Queue AI Assistant.\n\nI can help you find the right doctor, book appointments, or answer questions about our hospitals.\n\nWhat can I help you with today?";
-    addMsg('bot',msg);
-    showQR(currentLang==='hi'?QR_HI_INIT:QR_EN_INIT);
+    const msg=currentLang==='hi'
+      ?"नमस्ते! 👋 मैं स्मार्ट क्यू AI सहायक हूँ।\n\nमैं अपॉइंटमेंट बुकिंग, रद्दीकरण, या अस्पतालों के बारे में जानकारी देने में मदद कर सकता हूँ।\n\nआज मैं आपकी कैसे सहायता कर सकता हूँ?"
+      :"Hi there! 👋 I'm the Smart Queue AI Assistant.\n\nI can help you book or cancel appointments, find the right doctor, or answer questions about our hospitals.\n\nWhat can I help you with today?";
+    addMsg('bot',msg);showQR(currentLang==='hi'?QR_HI_INIT:QR_EN_INIT);
   }
 
   function showQR(replies){
     qrEl.innerHTML='';
     replies.forEach(r=>{
-      const b=document.createElement('button');
-      b.className='cqr-btn';b.textContent=r;
+      const b=document.createElement('button');b.className='cqr-btn';b.textContent=r;
       b.addEventListener('click',()=>{qrEl.innerHTML='';send(r);});
       qrEl.appendChild(b);
     });
@@ -1069,12 +1139,12 @@ function toggleLang(){
       const res=await fetch(BACKEND_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
         body:JSON.stringify({type:'chat',system:SYSTEM,history:chatHistory})});
       const data=await res.json();hideTyping();
-      const reply=data?.reply||(currentLang==='hi'?"क्षमा करें, अभी उत्तर नहीं मिला। पुनः प्रयास करें।":"Sorry, I couldn't get a response right now. Please try again!");
+      const reply=data?.reply||(currentLang==='hi'?"क्षमा करें, अभी उत्तर नहीं मिला।":"Sorry, I couldn't get a response right now. Please try again!");
       addMsg('bot',reply);chatHistory.push({role:'model',parts:[{text:reply}]});
       if(chatHistory.length===2) showQR(currentLang==='hi'?QR_HI_FOLLOW:QR_EN_FOLLOW);
     }catch(err){
       hideTyping();
-      addMsg('bot',currentLang==='hi'?"⚠️ AI से कनेक्ट नहीं हो पाया। इंटरनेट जांचें और पुनः प्रयास करें।":"⚠️ Could not connect to AI. Please check your internet and try again.");
+      addMsg('bot',currentLang==='hi'?"⚠️ AI से कनेक्ट नहीं हो पाया।":"⚠️ Could not connect to AI. Please check your internet and try again.");
     }
     isLoading=false;sendEl.disabled=false;
   }
@@ -1083,9 +1153,9 @@ function toggleLang(){
   inputEl.addEventListener('input',()=>{inputEl.style.height='auto';inputEl.style.height=Math.min(inputEl.scrollHeight,76)+'px';});
 })();
 
-// ══════════════ VOICE WIDGET ══════════════
+// ── VOICE WIDGET ──────────────────────────────────────
 (function(){
-  const VP_SYSTEM=`You are an AI Voice Assistant for Smart Queue. Help users understand and use Smart Queue: a digital queue management system to avoid long physical lines. Keep ALL responses under 3 sentences — they will be spoken aloud. Never use bullet points, asterisks, markdown, or special characters. Write in natural spoken sentences only. Be friendly and clear. You can mix light Hinglish if user does. Smart Queue lets users book slots online, check queue position, and come when it is their turn. It is completely free and mobile-friendly.`;
+  const VP_SYSTEM=`You are an AI Voice Assistant for Smart Queue. Help users understand and use Smart Queue: a digital queue management system. Keep ALL responses under 3 sentences — they will be spoken aloud. Never use bullet points, asterisks, markdown, or special characters. Write in natural spoken sentences only. Be friendly and clear. Smart Queue lets users book slots online, check queue position, and come when it is their turn. Appointments can be cancelled up to 1 hour before the scheduled time — go to My Appointments and click Cancel. Within 1 hour of appointment, cancellation is not allowed. It is completely free and mobile-friendly.`;
 
   let vpOpen=false,vpListening=false,vpSpeaking=false,recognition=null;
   const vpHistory=[];
@@ -1119,7 +1189,7 @@ function toggleLang(){
     recognition.onerror=(e)=>{
       resetMicBtn();
       if(e.error==='not-allowed') addTx('system',currentLang==='hi'?'माइक एक्सेस अस्वीकृत।':'Microphone access denied.');
-      else if(e.error!=='aborted') addTx('system',currentLang==='hi'?'स्पष्ट रूप से नहीं सुना। पुनः प्रयास करें।':'Could not hear clearly. Try again.');
+      else if(e.error!=='aborted') addTx('system',currentLang==='hi'?'स्पष्ट रूप से नहीं सुना।':'Could not hear clearly. Try again.');
     };
     recognition.onend=()=>{vpListening=false;resetMicBtn();};
   }
@@ -1165,11 +1235,11 @@ function toggleLang(){
       const res=await fetch(BACKEND_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
         body:JSON.stringify({type:'voice',system:VP_SYSTEM,history:vpHistory})});
       const data=await res.json();
-      const reply=data?.reply||(currentLang==='hi'?"माफ़ करें, उत्तर नहीं मिला। पुनः प्रयास करें।":"I'm sorry, I couldn't get a response. Please try again.");
+      const reply=data?.reply||(currentLang==='hi'?"माफ़ करें, उत्तर नहीं मिला।":"I'm sorry, I couldn't get a response. Please try again.");
       vpHistory.push({role:'model',parts:[{text:reply}]});
       addTx('bot',reply);speak(reply);
     }catch(err){
-      const msg=currentLang==='hi'?"कनेक्शन त्रुटि। इंटरनेट जांचें।":"Connection error. Please check your internet.";
+      const msg=currentLang==='hi'?"कनेक्शन त्रुटि।":"Connection error. Please check your internet.";
       addTx('system',msg);speak(msg);
     }
     vpMicBtn.disabled=false;
